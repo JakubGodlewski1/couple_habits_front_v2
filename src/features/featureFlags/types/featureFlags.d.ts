@@ -1,0 +1,3 @@
+type FeatureFlags = {
+  isPaywallEnabled: boolean
+}

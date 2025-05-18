@@ -1,0 +1,116 @@
+{
+  "name": "couple_habits",
+  "main": "expo-router/entry",
+  "version": "2.0.0",
+  "scripts": {
+    "prod": "NODE_ENV=production expo start",
+    "dev": "NODE_ENV=development expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "test": "NODE_ENV=test jest --watchAll",
+    "lint": "eslint",
+    "lint:fix": "eslint ../couple_habits/src --fix",
+    "prettier": "prettier --write ../couple_habits/src/**/*",
+    "prepare": "husky"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[jt]sx?$": [
+        "babel-jest",
+        {
+          "caller": {
+            "preserveEnvVars": true
+          }
+        }
+      ]
+    },
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "<rootDir>/tests/mocks/style.mock.ts"
+    },
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "./jest-setup.ts"
+    ]
+  },
+  "dependencies": {
+    "@clerk/clerk-expo": "^2.6.9",
+    "@expo/vector-icons": "^14.0.2",
+    "@hookform/resolvers": "^3.10.0",
+    "@js-temporal/polyfill": "^0.4.4",
+    "@react-navigation/bottom-tabs": "^7.2.0",
+    "@react-navigation/native": "^7.0.14",
+    "@tanstack/react-query": "^5.63.0",
+    "axios": "^1.7.9",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "expo": "~52.0.46",
+    "expo-blur": "~14.0.3",
+    "expo-clipboard": "~7.0.0",
+    "expo-constants": "~17.0.3",
+    "expo-font": "~13.0.2",
+    "expo-haptics": "~14.0.0",
+    "expo-image-picker": "~16.0.6",
+    "expo-linking": "~7.0.5",
+    "expo-router": "^4.0.21",
+    "expo-secure-store": "^14.0.1",
+    "expo-sharing": "~13.0.1",
+    "expo-splash-screen": "~0.29.24",
+    "expo-status-bar": "~2.0.0",
+    "expo-symbols": "~0.2.2",
+    "expo-system-ui": "~4.0.9",
+    "expo-web-browser": "~14.0.1",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "immer": "^10.1.1",
+    "jest": "~29.7.0",
+    "nativewind": "^4.1.23",
+    "prettier": "^3.4.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "^7.54.2",
+    "react-icons": "^5.5.0",
+    "react-native": "0.76.9",
+    "react-native-bouncy-checkbox": "^4.1.2",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-modal": "^13.0.1",
+    "react-native-purchases": "^8.9.5",
+    "react-native-purchases-ui": "^8.9.5",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0",
+    "react-native-toast-message": "^2.2.1",
+    "react-native-url-polyfill": "^2.0.0",
+    "react-native-web": "~0.19.13",
+    "react-native-webview": "13.12.5",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^3.4.17",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@eslint/js": "^9.15.0",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^13.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.15",
+    "@types/react": "~18.3.12",
+    "@types/react-test-renderer": "^18.3.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-boundaries": "^5.0.1",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-testing-library": "^7.0.0",
+    "jest": "^29.2.1",
+    "jest-expo": "~52.0.6",
+    "lint-staged": "^15.2.10",
+    "react-test-renderer": "18.3.1",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^8.19.1"
+  },
+  "private": true
+}

@@ -1,0 +1,30 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "types": [
+      "react-native",
+      "jest",
+      "node",
+      "@testing-library/jest-native",
+      "@testing-library/react-native/extend-expect"
+    ],
+    "jsx": "react-jsx",
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "../couple_habits/jest-setup.ts",
+    "../couple_habits/images.d.ts",
+    "../couple_habits/src/**/*.ts",
+    "../couple_habits/src/**/*.tsx",
+    ".expo/types/**/*.ts",
+    "../couple_habits/expo-env.d.ts",
+    "../couple_habits/nativewind-env.d.ts",
+    "nativewind-env.d.ts",
+    "expo-env.d.ts"
+  ]
+}

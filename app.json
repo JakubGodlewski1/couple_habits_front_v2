@@ -1,0 +1,70 @@
+{
+  "expo": {
+    "name": "Couple Habits",
+    "slug": "couple-habits",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icons/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.anonymous.coupleHabits",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Let’s bring your avatar to life! Allow access to your photo library to upload the perfect picture.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/icons/adaptive-icon.png"
+      },
+      "package": "com.anonymous.couplehabits",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Let’s bring your avatar to life! Allow access to your photo library to upload the perfect picture."
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Quicksand-Light.ttf",
+            "./src/assets/fonts/Quicksand-Regular.ttf",
+            "./src/assets/fonts/Quicksand-Medium.ttf",
+            "./src/assets/fonts/Quicksand-SemiBold.ttf",
+            "./src/assets/fonts/Quicksand-Bold.ttf"
+          ]
+        }
+      ],
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/icons/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2e6a9c12-7a9a-49cd-bb06-53830a8332bb"
+      }
+    }
+  }
+}

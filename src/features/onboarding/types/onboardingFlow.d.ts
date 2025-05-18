@@ -1,0 +1,3 @@
+type OnboardingFlowFormType = {
+  partnerName: string
+}

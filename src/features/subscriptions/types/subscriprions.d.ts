@@ -1,0 +1,3 @@
+type SubscriptionInfo = {
+  hasProAccess: boolean
+}
