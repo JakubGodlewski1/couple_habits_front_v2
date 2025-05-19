@@ -16,12 +16,6 @@ const specificDays = ({
 }: HabitFromBackend | CreateHabit | HabitFormType) =>
   frequency.type === "specificDays"
 
-const completed = ({ user, partner }: HabitFromBackend) =>
-  user.isCompleted && partner.isCompleted
-
-const uncompleted = ({ user, partner }: HabitFromBackend) =>
-  !user.isCompleted || !partner.isCompleted
-
 const scheduledForThisWeek = weekly
 
 const scheduledForToday = ({
@@ -77,8 +71,6 @@ export const habitFilters: {
   scheduledForTodayIncludingWeekly: HabitFilterFunction<
     HabitFromBackend | CreateHabit | HabitFormType
   >
-  uncompleted: HabitFilterFunction<HabitFromBackend>
-  completed: HabitFilterFunction<HabitFromBackend>
 } = {
   daily,
   weekly,
@@ -86,6 +78,4 @@ export const habitFilters: {
   scheduledForThisWeek,
   scheduledForTodayIncludingWeekly,
   scheduledForToday,
-  uncompleted,
-  completed,
 }

@@ -25,7 +25,7 @@ export const useAppEvents = () => {
       refetch()
     })
 
-    //connecting with partner
+    //connecting with a partner
     socketInstance.on("user.connect", async () => {
       await queryClient.invalidateQueries({ queryKey: queryKeys.users.get })
       await queryClient.invalidateQueries({ queryKey: queryKeys.avatars.get })
@@ -44,7 +44,7 @@ export const useAppEvents = () => {
     })
 
     //partner requests
-    socketInstance.on("partnerRequests", async () => {
+    socketInstance.on("partner-requests", async () => {
       await queryClient.refetchQueries()
     })
 

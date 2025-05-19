@@ -5,11 +5,7 @@ import { frequencySchema } from "@/features/habits/schemas/frequencySchema"
 export const habitFormSchema = z
   .object({
     frequency: frequencySchema,
-    userLabel: z
-      .string()
-      .min(2, "Label is too short.")
-      .max(50, "Label is too long. max 50 characters"),
-    partnerLabel: z
+    label: z
       .string()
       .min(2, "Label is too short.")
       .max(50, "Label is too long. max 50 characters"),

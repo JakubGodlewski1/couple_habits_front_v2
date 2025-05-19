@@ -1,5 +1,4 @@
-import { ScrollView, TouchableOpacity, View } from "react-native"
-import Checkbox from "../../../components/Checkbox"
+import { ScrollView, View } from "react-native"
 import Input from "../../../components/Input"
 import Button from "../../../components/Button"
 import { router } from "expo-router"
@@ -10,8 +9,6 @@ import { FREQUENCY_OPTIONS } from "../consts/consts"
 import { useHabitForm } from "@/features/habits/hooks/useHabitForm"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
-import IsLoadingProAccount from "@/features/subscriptions/components/IsLoadingProAccount"
-import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 
 type Props = {
   initialData?: HabitFormType
@@ -24,63 +21,33 @@ export default function HabitForm({
   onCloseModal,
   initialData,
 }: Props) {
-  const { partnerName } = useGetUser().user!
-
   const onCancel = () =>
     onCloseModal ? onCloseModal() : router.navigate("/home")
 
   const {
-    isProLoading,
-    toggleAreDifferentHabits,
-    areDifferentHabits,
     errors,
     handleSubmit,
-    values: { userLabel, partnerLabel, frequency },
+    values: { label, frequency },
     onChange,
   } = useHabitForm({ habitId, initialData, onSettled: onCancel })
-
-  if (isProLoading) return <IsLoadingProAccount />
 
   return (
     <ScrollView
       keyboardShouldPersistTaps="never"
       scrollEnabled={false}
-      contentContainerClassName="gap-8 grow"
+      contentContainerClassName="gap-5 grow"
     >
       <Text className="mb-0" type="h1">
         {habitId ? "Update" : "Create"} a habit
       </Text>
       <View className="gap-4">
-        <TouchableOpacity
-          onPress={toggleAreDifferentHabits}
-          activeOpacity={1}
-          className="flex-row"
-        >
-          <Checkbox
-            color="red"
-            onPress={toggleAreDifferentHabits}
-            isChecked={!!areDifferentHabits}
-          />
-          <Text className="text-center -ml-2.5 -mb-1">
-            We want to implement different habits
-          </Text>
-        </TouchableOpacity>
         <Input
-          errorMessage={errors.userLabel?.message}
+          errorMessage={errors.label?.message}
           placeholder="Wake up before 6am"
-          label={areDifferentHabits ? "My habit" : "Our habit"}
-          value={userLabel}
-          onChangeText={onChange.userLabel}
+          label="Habit name"
+          value={label}
+          onChangeText={onChange.label}
         />
-        {areDifferentHabits && (
-          <Input
-            errorMessage={errors.partnerLabel?.message}
-            placeholder="Read for at least 20 minutes"
-            label={`${partnerName}'s habit`}
-            value={partnerLabel}
-            onChangeText={onChange.partnerLabel}
-          />
-        )}
       </View>
       <View>
         <Text className="mb-2">How often</Text>

@@ -4,20 +4,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { showToast } from "@/utils/showToast"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import l from "lodash"
-import { useOptimisticStatsUpdateOnHabitCTUD } from "@/features/stats/hooks/useOptimisticStatsUpdateOnHabitCTUD"
 import { queryKeys } from "@/config/queryKeys"
 
 export const useUpdateHabit = () => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
-  const { onHabitCTUDUpdateStats } = useOptimisticStatsUpdateOnHabitCTUD()
 
   const habitOptimisticUpdate = ({
-    data: { userLabel, partnerLabel, frequency },
+    data: { label, frequency },
     id,
   }: {
     data: HabitFormType
-    id: string
+    id: number
   }) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
@@ -26,8 +24,7 @@ export const useUpdateHabit = () => {
 
         const habitToUpdate = l.cloneDeep(habits.find((h) => h.id === id)!)
         habitToUpdate.frequency = frequency
-        habitToUpdate.user.label = userLabel
-        habitToUpdate.partner.label = partnerLabel
+        habitToUpdate.label = label
 
         return habits.map((h) => (h.id === id ? habitToUpdate : h))
       },
@@ -39,13 +36,12 @@ export const useUpdateHabit = () => {
     data,
   }: {
     data: HabitFormType
-    id: string
+    id: number
   }) => {
     habitOptimisticUpdate({
       data,
       id,
     })
-    onHabitCTUDUpdateStats()
 
     const axios = await getAxiosInstance()
     return await axios.put(`/habits/${id}`, data)

@@ -1,8 +1,7 @@
+import { useState } from "react"
+import { Dimensions, Image, ScrollView, View } from "react-native"
 import SafeAreaWrapper from "../../../../components/SafeAreaWrapper"
 import HabitsTabs from "../../../../features/habits/components/habitsForm/HabitsTabs"
-import { useState } from "react"
-import { Image, View } from "react-native"
-import Avatar from "../../../../features/avatar/components/Avatar"
 import Text from "../../../../components/Text"
 import coupleHighFive from "../../../../assets/illustrations/couple-high-five.png"
 import GoToAddPartnerPageBtn from "../../../../features/addPartner/components/GoToAddPartnerPageBtn"
@@ -13,12 +12,14 @@ import IsLoading from "@/components/IsLoading"
 import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisplay"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 
+const SCREEN_WIDTH = Dimensions.get("window").width
+const PAGE_WIDTH = SCREEN_WIDTH * 0.9
+
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
   const { user, isPending, error } = useGetUser()
 
-  if (isPending) return <IsLoading />
-  if (error) return <IsLoading />
+  if (isPending || error) return <IsLoading />
 
   return (
     <SafeAreaWrapper className="gap-3">
@@ -28,16 +29,38 @@ export default function Home() {
         onPress={setCurrentTab}
         value={currentTab}
       />
-      <View className="bg-white rounded-t-main border-main flex-1 p-2 border-b-0">
-        {/*<View className=" absolute bg-gray-200 w-[1px] h-full right-1/2 -translate-x-1/2 mr-2" />*/}
-        <View className="flex-row justify-around mb-6 mt-4">
-          <Avatar type="user" />
-          <Avatar type="partner" />
-        </View>
+
+      <View className="flex-1">
         {user!.hasPartner ? (
-          <HabitsDisplay currentTab={currentTab} />
+          <ScrollView
+            horizontal
+            snapToInterval={PAGE_WIDTH}
+            decelerationRate="fast"
+            showsHorizontalScrollIndicator={false}
+          >
+            <View
+              style={{
+                width: PAGE_WIDTH,
+                marginRight: 8, // spacing between the two
+              }}
+              className="bg-white rounded-t-main border-main p-2 border-b-0"
+            >
+              <HabitsDisplay owner="user" currentTab={currentTab} />
+            </View>
+
+            <View
+              style={{
+                width: PAGE_WIDTH,
+              }}
+              className="bg-white rounded-t-main border-main p-2 border-b-0"
+            >
+              <HabitsDisplay owner="partner" currentTab={currentTab} />
+            </View>
+          </ScrollView>
         ) : (
-          <NotConnectedDisplay />
+          <View className="bg-white rounded-t-main border-main flex-1 p-2 border-b-0">
+            <NotConnectedDisplay />
+          </View>
         )}
       </View>
     </SafeAreaWrapper>

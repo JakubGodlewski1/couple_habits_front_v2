@@ -4,7 +4,7 @@ export const queryKeys = {
     update: ["update-habit"],
     delete: ["delete-habit"],
     create: ["create-habit"],
-    complete: ["complete-habit"],
+    toggle: ["toggle-habit"],
   },
   stats: {
     get: ["stats"],

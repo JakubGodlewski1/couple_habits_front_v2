@@ -23,7 +23,7 @@ const ResetCache = () => {
   return <GetInitialData />
 }
 
-//3 fetch all initial data that is needed
+//3. fetch all initial data that is needed
 const GetInitialData = () => {
   const { isPending: isUserPending, error: userError, user } = useGetUser()
   const { isPending: isSubscriptionPending, error: subscriptionError } =

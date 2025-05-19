@@ -3,20 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { showToast } from "@/utils/showToast"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import { CreateHabit } from "@/features/habits/types/habit"
-import { useOptimisticStatsUpdateOnHabitCTUD } from "@/features/stats/hooks/useOptimisticStatsUpdateOnHabitCTUD"
 import { queryKeys } from "@/config/queryKeys"
 
 export const useCreateHabit = () => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
-  const { onHabitCTUDUpdateStats } = useOptimisticStatsUpdateOnHabitCTUD()
 
-  const habitOptimisticUpdate = ({
-    userLabel,
-    partnerLabel,
-    frequency,
-    id,
-  }: CreateHabit) => {
+  const habitOptimisticUpdate = ({ label, frequency, id }: CreateHabit) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
       (habits: HabitFromBackend[]) => {
@@ -24,15 +17,8 @@ export const useCreateHabit = () => {
           ...habits,
           {
             id,
-            user: {
-              isCompleted: false,
-              label: userLabel,
-            },
             frequency,
-            partner: {
-              label: partnerLabel,
-              isCompleted: false,
-            },
+            label,
             strike: 0,
           },
         ] as HabitFromBackend[]
@@ -41,9 +27,8 @@ export const useCreateHabit = () => {
   }
 
   const createHabitMutation = async (data: CreateHabit) => {
-    //optimistic updates
+    //optimistic update
     habitOptimisticUpdate(data)
-    onHabitCTUDUpdateStats()
 
     const axios = await getAxiosInstance()
     return await axios.post(`/habits`, data)

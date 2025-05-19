@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { HideTabbarProvider } from "@/contexts/HideTabbar"
 import Toast from "react-native-toast-message"
 import { ClerkProviderWithToken } from "@/features/auth/components/ClerkProviderWithToken"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 export const GlobalProviders = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient({
@@ -18,7 +19,7 @@ export const GlobalProviders = ({ children }: PropsWithChildren) => {
     <ClerkProviderWithToken>
       <QueryClientProvider client={queryClient}>
         <HideTabbarProvider>
-          {children}
+          <GestureHandlerRootView>{children}</GestureHandlerRootView>
           <Toast />
         </HideTabbarProvider>
       </QueryClientProvider>

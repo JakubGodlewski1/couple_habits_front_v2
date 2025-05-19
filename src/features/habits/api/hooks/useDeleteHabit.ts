@@ -3,15 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { withWarning } from "@/utils/withWarning"
 import { showToast } from "@/utils/showToast"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
-import { useOptimisticStatsUpdateOnHabitCTUD } from "@/features/stats/hooks/useOptimisticStatsUpdateOnHabitCTUD"
 import { queryKeys } from "@/config/queryKeys"
 
 export const useDeleteHabit = () => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
-  const { onHabitCTUDUpdateStats } = useOptimisticStatsUpdateOnHabitCTUD()
 
-  const habitOptimisticUpdate = ({ id }: { id: string }) => {
+  const habitOptimisticUpdate = ({ id }: { id: number }) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
       (habits: HabitFromBackend[]) => {
@@ -22,10 +20,9 @@ export const useDeleteHabit = () => {
     )
   }
 
-  const deleteHabitMutation = async (id: string) => {
+  const deleteHabitMutation = async (id: number) => {
     //optimistic update
     habitOptimisticUpdate({ id })
-    onHabitCTUDUpdateStats()
 
     const axios = await getAxiosInstance()
     const res = await axios.delete(`/habits/${id}`)
@@ -52,7 +49,7 @@ export const useDeleteHabit = () => {
     },
   })
 
-  const deleteHabitWithWarning = (id: string) =>
+  const deleteHabitWithWarning = (id: number) =>
     withWarning({
       message: "Are you sure you want to delete this Habit?",
       btnLabel: "Delete",

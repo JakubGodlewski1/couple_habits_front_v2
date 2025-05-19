@@ -6,8 +6,6 @@ export default function RedirectPage() {
   const { user } = useGetUser()
 
   const href =
-    user!.partnerName !== "partner"
-      ? "/home"
-      : "/(authorized)/(tutorial)/how-to-play"
+    user!.partnerName !== "partner" ? "/home" : "/(authorized)/(onboarding)"
   return <Redirect href={href} />
 }

@@ -1,9 +1,6 @@
 import { Stack } from "expo-router"
-import { useTogglePartnerRequestModal } from "@/features/shared/partnerRequests/hooks/useTogglePartnerRequestModals"
 
 export default function HomeLayout() {
-  useTogglePartnerRequestModal()
-
   return (
     <Stack
       initialRouteName="home"

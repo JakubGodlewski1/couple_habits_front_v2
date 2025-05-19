@@ -1,7 +1,7 @@
 import { DayOfTheWeek } from "@/types/daysOfWeek"
 
-export type HabitFromBackend = {
-  id: string
+export type HabitCard = {
+  id: number
   strike: number
   frequency:
     | {
@@ -12,12 +12,8 @@ export type HabitFromBackend = {
         type: "specificDays"
         value: DayOfTheWeek[]
       }
-  user: {
-    label: string
-    isCompleted: boolean
-  }
-  partner: {
-    label: string
-    isCompleted: boolean
-  }
+  label: string
+  isCompleted: boolean
 }
+
+export type HabitFromBackend = HabitCard

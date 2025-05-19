@@ -14,8 +14,10 @@ import {
 
 export default function HabitsDisplay({
   currentTab,
+  owner,
 }: {
   currentTab: HabitStateTab
+  owner: "partner" | "user"
 }) {
   const { data: habits, isError, isLoading } = useGetHabits()
 
@@ -26,12 +28,13 @@ export default function HabitsDisplay({
     )
 
   //get filtered habits by tabs
-  const habitsByTabs = getHabitsByTabs(habits!)
+  const habitsByTabs = getHabitsByTabs(habits![owner])
 
   return (
     <MessageWhenNoHabits habitsByTabs={habitsByTabs} currentTab={currentTab}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HabitsByBudges
+          owner={owner}
           habits={habitsByTabs[currentTab]}
           currentTab={currentTab}
         />
@@ -44,9 +47,11 @@ export default function HabitsDisplay({
 const HabitsByBudges = ({
   currentTab,
   habits,
+  owner,
 }: {
   habits: HabitFromBackend[]
   currentTab: HabitStateTab
+  owner: "partner" | "user"
 }) => {
   return budgesByDisplayTab[currentTab].map(({ label, filter }) => {
     const filteredHabits = habits.filter(filter)
@@ -57,10 +62,13 @@ const HabitsByBudges = ({
         <Budge label={label} />
         <View className="gap-3.5">
           {filteredHabits
-            .sort((a, b) => b.id.localeCompare(a.id))
+            .sort((a, b) => a.id - b.id)
             .map((habit) => (
               <HabitCard
-                options={{ toggleHidden: currentTab === "all" }}
+                owner={owner}
+                options={{
+                  toggleHidden: currentTab === "all",
+                }}
                 key={habit.id}
                 habit={habit}
               />

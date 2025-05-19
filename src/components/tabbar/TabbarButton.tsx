@@ -67,6 +67,10 @@ export default function TabbarButton({
 
     return { transform: [{ scale: scaleValue }], top }
   })
+
+  console.log({
+    routeName,
+  })
   return (
     <Pressable
       testID={testID}

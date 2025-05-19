@@ -5,8 +5,7 @@ type FrequencyType = "repeat" | "specificDays"
 type SpecificDaysValue = DayOfTheWeek[]
 
 type HabitFormType = {
-  userLabel: string
-  partnerLabel: string
+  label: string
   frequency: Frequency
 }
 

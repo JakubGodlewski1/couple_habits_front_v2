@@ -1,8 +1,6 @@
 import { Tabs } from "expo-router"
 import TabBar from "../../../components/tabbar/Tabbar"
 import { MainLayoutProviders } from "@/providers/MainLayoutProviders"
-import PartnerRequestModal from "@/features/shared/partnerRequests/components/partnerRequestModal/PartnerRequestModal"
-import { WaitForPartnerResponseModal } from "@/features/shared/partnerRequests/components/WaitForPartnerResponseModal"
 
 export default function MainLayoutWrapper() {
   return (
@@ -15,8 +13,6 @@ export default function MainLayoutWrapper() {
 function MainLayout() {
   return (
     <>
-      <PartnerRequestModal />
-      <WaitForPartnerResponseModal />
       <Tabs
         screenOptions={{
           animation: "shift",
@@ -47,22 +43,22 @@ function MainLayout() {
               const currentRouteName = state.routes[state.index]?.name
 
               if (currentRouteName !== "(home)") {
-                navigation.navigate("(home)")
+                navigation.navigate("(home)", { owner: "user" })
               }
             },
           })}
-          name="(home)"
+          name="home"
           options={{
             title: "Home",
             href: "/home",
           }}
         />
-        <Tabs.Screen
-          name="add-habit"
-          options={{
-            title: "Add habit",
-          }}
-        />
+        {/*<Tabs.Screen*/}
+        {/*  name="add-habit"*/}
+        {/*  options={{*/}
+        {/*    title: "Add habit",*/}
+        {/*  }}*/}
+        {/*/>*/}
       </Tabs>
     </>
   )

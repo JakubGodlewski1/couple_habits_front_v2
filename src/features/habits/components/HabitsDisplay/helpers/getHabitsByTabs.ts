@@ -10,11 +10,11 @@ export const getHabitsByTabs = (
   todo: [
     ...habits!.filter(habitFilters.scheduledForToday),
     ...habits.filter(habitFilters.scheduledForThisWeek),
-  ].filter(habitFilters.uncompleted),
+  ].filter((h) => !h.isCompleted),
   completed: [
     ...habits!.filter(habitFilters.scheduledForToday),
     ...habits.filter(habitFilters.scheduledForThisWeek),
-  ].filter(habitFilters.completed),
+  ].filter((h) => h.isCompleted),
 })
 
 export const budgesByDisplayTab: Record<
