@@ -3,6 +3,7 @@ import { Feather } from "@expo/vector-icons"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import UpdateHabitModal from "@/features/habits/modals/UpdateHabitModal"
 import { useState } from "react"
+import { useDeleteHabit } from "@/features/habits/api/hooks/useDeleteHabit"
 
 type Props = {
   closeHabitCard: () => void
@@ -11,6 +12,7 @@ type Props = {
 
 const MenuContainer = ({ habit, closeHabitCard }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const { deleteHabitWithWarning } = useDeleteHabit()
 
   return (
     <View className="m-1 ml-2 rounded-r-main gap-1">
@@ -20,7 +22,7 @@ const MenuContainer = ({ habit, closeHabitCard }: Props) => {
         isOpen={isModalVisible}
       />
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => deleteHabitWithWarning(habit.id)}
         className="bg-primary rounded-main px-5 flex-1 items-center justify-center"
       >
         <Feather color="white" size={20} name="trash-2" />

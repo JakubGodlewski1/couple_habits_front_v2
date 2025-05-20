@@ -4,6 +4,7 @@ import { withWarning } from "@/utils/withWarning"
 import { showToast } from "@/utils/showToast"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import { queryKeys } from "@/config/queryKeys"
+import { HabitsFromBackend } from "@/features/habits/types/habit"
 
 export const useDeleteHabit = () => {
   const { getAxiosInstance } = useAxios()
@@ -12,10 +13,13 @@ export const useDeleteHabit = () => {
   const habitOptimisticUpdate = ({ id }: { id: number }) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
-      (habits: HabitFromBackend[]) => {
-        if (!habits || !habits.length) return []
+      (habits: HabitsFromBackend) => {
+        if (!habits.user || habits.user.length === 0) return habits
 
-        return habits.filter((h) => h.id !== id)
+        return {
+          user: habits.user.filter((h) => h.id !== id),
+          partner: habits.partner,
+        }
       },
     )
   }
