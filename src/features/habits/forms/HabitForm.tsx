@@ -9,6 +9,7 @@ import { FREQUENCY_OPTIONS } from "../consts/consts"
 import { useHabitForm } from "@/features/habits/hooks/useHabitForm"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
+import SpecificDaysMultiTabs from "@/features/habits/components/habitsForm/SpecificDaysMultiTabs"
 
 type Props = {
   initialData?: HabitFormType
@@ -63,7 +64,7 @@ export default function HabitForm({
             value={frequency.value}
           />
         ) : (
-          <SpecificDaysMultiTabsSecured
+          <SpecificDaysMultiTabs
             onChange={onChange.specificDaysValue}
             value={frequency.value}
           />

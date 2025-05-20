@@ -10,22 +10,32 @@ import { HabitFromBackend } from "@/features/habits/types/habitCard"
 type Props = {
   children: ReactNode
   habit: HabitFromBackend
+  isDisabled?: boolean
 }
 
-export default function SwapeableHabitCardWrapper({ children, habit }: Props) {
+export default function SwapeableHabitCardWrapper({
+  children,
+  habit,
+  isDisabled = false,
+}: Props) {
   const swipeableRef = useRef<SwipeableMethods>(null)
   const closeHabitCard = () =>
     swipeableRef.current && swipeableRef.current.close()
+
+  const renderLeftActions = () =>
+    isDisabled ? null : <StrikeContainer strike={habit.strike} />
+  const renderRightActions = () =>
+    isDisabled ? null : (
+      <MenuContainer closeHabitCard={closeHabitCard} habit={habit} />
+    )
 
   return (
     <GestureHandlerRootView style={{ flexGrow: 1 }}>
       <Swipeable
         ref={swipeableRef}
         containerStyle={{ borderRadius: 8, backgroundColor: "white" }}
-        renderLeftActions={() => <StrikeContainer strike={habit.strike} />}
-        renderRightActions={() => (
-          <MenuContainer closeHabitCard={closeHabitCard} habit={habit} />
-        )}
+        renderLeftActions={renderLeftActions}
+        renderRightActions={renderRightActions}
       >
         {children}
       </Swipeable>

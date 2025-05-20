@@ -21,8 +21,8 @@ const icon: Record<string, (props: { color: string }) => ReactNode> = {
     />
   ),
   "(home)": (props) => <Ionicons {...props} size={28} name="home-outline" />,
-  "add-habit": (props) => (
-    <Ionicons {...props} size={28} name="add-circle-outline" />
+  "partner-home": (props) => (
+    <MaterialCommunityIcons {...props} name="heart-outline" size={28} />
   ),
 } as const
 
@@ -68,9 +68,6 @@ export default function TabbarButton({
     return { transform: [{ scale: scaleValue }], top }
   })
 
-  console.log({
-    routeName,
-  })
   return (
     <Pressable
       testID={testID}

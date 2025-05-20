@@ -20,6 +20,12 @@ export default function HomeLayout() {
           gestureEnabled: false,
         }}
       />
+      <Stack.Screen
+        name="add-habit"
+        options={{
+          gestureEnabled: false,
+        }}
+      />
     </Stack>
   )
 }

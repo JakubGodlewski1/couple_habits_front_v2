@@ -1,18 +1,17 @@
 import { useState } from "react"
-import { View } from "react-native"
-import SafeAreaWrapper from "../../../../components/SafeAreaWrapper"
-import HabitsTabs from "../../../../features/habits/components/habitsForm/HabitsTabs"
-import Text from "../../../../components/Text"
-import GoToAddPartnerPageBtn from "../../../../features/addPartner/components/GoToAddPartnerPageBtn"
+import { Image, View } from "react-native"
 import { HabitStateTab } from "@/features/habits/types/habitStateTabs"
 import { HABIT_STATE_TABS } from "@/consts/consts"
 import HomeStatsBar from "@/features/stats/components/HomeStatsBar"
 import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisplay"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
-import { Image } from "react-native"
+import SafeAreaWrapper from "@/components/SafeAreaWrapper"
+import HabitsTabs from "@/features/habits/components/habitsForm/HabitsTabs"
+import Text from "@/components/Text"
+import GoToAddPartnerPageBtn from "@/features/addPartner/components/GoToAddPartnerPageBtn"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
 
-export default function Home() {
+export default function PartnerHome() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
   const { user } = useGetUser()
 
@@ -28,11 +27,11 @@ export default function Home() {
       <View className="flex-1">
         {user!.hasPartner ? (
           <View className="bg-white rounded-t-main border-main p-2 border-b-0 flex-1">
-            <HabitsDisplay owner="user" currentTab={currentTab} />
+            <HabitsDisplay owner="partner" currentTab={currentTab} />
           </View>
         ) : (
           <View className="bg-white rounded-t-main border-main flex-1 p-2 border-b-0">
-            <NotConnectedDisplay />
+            <NotConnectedDisplay user={user!} />
           </View>
         )}
       </View>
@@ -40,9 +39,7 @@ export default function Home() {
   )
 }
 
-const NotConnectedDisplay = () => {
-  const { user } = useGetUser()
-
+const NotConnectedDisplay = ({ user }: { user: UserFromBackend }) => {
   return (
     <View className="gap-1 items-center grow justify-between">
       <View />
@@ -53,7 +50,7 @@ const NotConnectedDisplay = () => {
           source={coupleHighFive}
         />
         <Text type="h3" className="text-center">
-          Connect with {user!.partnerName} {"\n"} to add habits
+          Connect with {user!.partnerName} {"\n"} to see their habits here
         </Text>
       </View>
       <GoToAddPartnerPageBtn />

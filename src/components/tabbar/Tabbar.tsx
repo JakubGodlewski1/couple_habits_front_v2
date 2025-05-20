@@ -1,9 +1,4 @@
-import {
-  LayoutChangeEvent,
-  Platform,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { LayoutChangeEvent, Platform } from "react-native"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import { useEffect, useState } from "react"
 import TabbarButton from "./TabbarButton"
@@ -12,8 +7,8 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { useHideTabbarContext } from "../../contexts/HideTabbar"
-import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { useHideTabbarContext } from "@/contexts/HideTabbar"
+import AddHabitBtn from "@/features/habits/components/AddHabitBtn"
 
 export default function TabBar({
   state,
@@ -23,7 +18,7 @@ export default function TabBar({
   const [dimensions, setDimensions] = useState({ height: 0, width: 0 })
   const [buttonWidth, setButtonWidth] = useState(0)
 
-  const { setIsHidden, animatedPosition } = useHideTabbarContext()
+  const { animatedPosition } = useHideTabbarContext()
 
   useEffect(() => {
     setButtonWidth(dimensions.width / state.routes.length)
@@ -51,15 +46,6 @@ export default function TabBar({
     })
   }, [state.index, buttonWidth])
 
-  /*tabbar position x*/
-  useEffect(() => {
-    if (state.routes[state.index].name === "add-habit") {
-      setIsHidden(true)
-    } else {
-      setIsHidden(false)
-    }
-  }, [state.index])
-
   return (
     <Animated.View
       style={[
@@ -72,12 +58,9 @@ export default function TabBar({
       onLayout={onTabbarLayout}
       className="flex-row  absolute bg-white py-3 rounded-main shadow-sm border-subtle border-[1px]"
     >
-      <TouchableOpacity
-        onPress={() => navigation.navigate("add-habit")}
-        className="absolute -top-20 right-0 bg-primary p-4 rounded-full shadow-lg"
-      >
-        <AntDesign name="plus" size={28} color="#fff" />
-      </TouchableOpacity>
+      {state.routes[state.index].name === "(home)" && (
+        <AddHabitBtn iconType={true} />
+      )}
       <>
         <Animated.View
           style={[

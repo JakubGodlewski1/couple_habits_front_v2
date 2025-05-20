@@ -1,6 +1,8 @@
 import { Tabs } from "expo-router"
 import TabBar from "../../../components/tabbar/Tabbar"
 import { MainLayoutProviders } from "@/providers/MainLayoutProviders"
+import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import IsLoading from "@/components/IsLoading"
 
 export default function MainLayoutWrapper() {
   return (
@@ -11,6 +13,10 @@ export default function MainLayoutWrapper() {
 }
 
 function MainLayout() {
+  const { user, isPending, error } = useGetUser()
+
+  if (isPending || error) return <IsLoading />
+
   return (
     <>
       <Tabs
@@ -47,10 +53,16 @@ function MainLayout() {
               }
             },
           })}
-          name="home"
+          name="(home)"
           options={{
             title: "Home",
             href: "/home",
+          }}
+        />
+        <Tabs.Screen
+          name="partner-home"
+          options={{
+            title: `${user?.partnerName || "Partner"}`,
           }}
         />
         {/*<Tabs.Screen*/}
