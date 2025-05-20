@@ -1,17 +1,9 @@
-import { DayOfTheWeek } from "@/types/daysOfWeek"
+import { Frequency } from "@/features/habits/types/habitForm"
 
 export type HabitCard = {
   id: number
   strike: number
-  frequency:
-    | {
-        type: "repeat"
-        value: "daily" | "weekly"
-      }
-    | {
-        type: "specificDays"
-        value: DayOfTheWeek[]
-      }
+  frequency: Frequency
   label: string
   isCompleted: boolean
 }

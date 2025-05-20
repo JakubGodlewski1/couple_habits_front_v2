@@ -1,32 +1,40 @@
 import { useAxios } from "@/api/hooks/useAxios"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { showToast } from "@/utils/showToast"
-import { HabitFromBackend } from "@/features/habits/types/habitCard"
-import { CreateHabit } from "@/features/habits/types/habit"
 import { queryKeys } from "@/config/queryKeys"
+import { HabitFormType } from "@/features/habits/types/habitForm"
+import { HabitsFromBackend } from "@/features/habits/types/habit"
 
-export const useCreateHabit = () => {
+export const useCreateHabit = (
+  { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
+) => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
 
-  const habitOptimisticUpdate = ({ label, frequency, id }: CreateHabit) => {
+  const habitOptimisticUpdate = ({ label, frequency }: HabitFormType) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
-      (habits: HabitFromBackend[]) => {
-        return [
-          ...habits,
-          {
-            id,
-            frequency,
-            label,
-            strike: 0,
-          },
-        ] as HabitFromBackend[]
+      (habits: HabitsFromBackend) => {
+        return {
+          partner: habits.partner,
+          user: [
+            ...habits.user,
+            {
+              label,
+              frequency,
+              isCompleted: false,
+              strike: 0,
+              id:
+                Math.floor(Math.random() * (10_000_000 - 1_000_000 + 1)) +
+                1_000_000,
+            },
+          ],
+        } as HabitsFromBackend
       },
     )
   }
 
-  const createHabitMutation = async (data: CreateHabit) => {
+  const createHabitMutation = async (data: HabitFormType) => {
     //optimistic update
     habitOptimisticUpdate(data)
 
@@ -38,6 +46,7 @@ export const useCreateHabit = () => {
     mutationKey: queryKeys.habits.create,
     mutationFn: createHabitMutation,
     onSettled: () => {
+      if (onSettled) onSettled()
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })

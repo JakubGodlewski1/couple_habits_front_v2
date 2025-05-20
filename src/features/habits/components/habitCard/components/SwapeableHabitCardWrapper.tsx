@@ -22,8 +22,7 @@ export default function SwapeableHabitCardWrapper({
   const closeHabitCard = () =>
     swipeableRef.current && swipeableRef.current.close()
 
-  const renderLeftActions = () =>
-    isDisabled ? null : <StrikeContainer strike={habit.strike} />
+  const renderLeftActions = () => <StrikeContainer strike={habit.strike} />
   const renderRightActions = () =>
     isDisabled ? null : (
       <MenuContainer closeHabitCard={closeHabitCard} habit={habit} />

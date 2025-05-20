@@ -11,6 +11,8 @@ import { DayOfTheWeek } from "@/types/daysOfWeek"
 import "react-native-get-random-values"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { Alert } from "react-native"
+import { useMutate } from "@/api/hooks/useMutate"
+import { useCreateHabit } from "@/features/habits/api/hooks/useCreateHabit"
 
 type Props = {
   initialData?: HabitFormType
@@ -20,6 +22,8 @@ type Props = {
 
 export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   const { hasPartner, partnerName } = useGetUser().user!
+
+  const { createHabit, isPending } = useCreateHabit({ onSettled })
 
   const {
     handleSubmit,
@@ -77,12 +81,13 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
       )
     }
 
-    // Add logic here to handle the valid form data (e.g., save habit)
+    createHabit(data)
   }
 
   const [label, frequency] = watch(["label", "frequency"])
 
   return {
+    isPending,
     values: {
       label,
       frequency,

@@ -8,7 +8,6 @@ import RepeatDropdown from "../components/habitsForm/RepeatDropdown"
 import { FREQUENCY_OPTIONS } from "../consts/consts"
 import { useHabitForm } from "@/features/habits/hooks/useHabitForm"
 import { HabitFormType } from "@/features/habits/types/habitForm"
-import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
 import SpecificDaysMultiTabs from "@/features/habits/components/habitsForm/SpecificDaysMultiTabs"
 
 type Props = {
@@ -26,6 +25,7 @@ export default function HabitForm({
     onCloseModal ? onCloseModal() : router.navigate("/home")
 
   const {
+    isPending,
     errors,
     handleSubmit,
     values: { label, frequency },
@@ -80,6 +80,7 @@ export default function HabitForm({
           title="Cancel"
         />
         <Button
+          disabled={isPending}
           classNames={{
             wrapper: "flex-1",
           }}
