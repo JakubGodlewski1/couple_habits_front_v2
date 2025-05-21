@@ -7,12 +7,41 @@ import {
 import { showToast } from "@/utils/showToast"
 import { getAxiosErrorMessage } from "@/utils/getAxiosErrorMessage"
 import { queryKeys } from "@/config/queryKeys"
+import { HabitFormType } from "@/features/habits/types/habitForm"
+import { HabitsFromBackend } from "@/features/habits/types/habit"
+import l from "lodash"
 
 export const useToggleHabit = () => {
   const { getAxiosInstance } = useAxios()
 
   const queryClient = useQueryClient()
   const isFetching = useIsFetching({ queryKey: queryKeys.habits.get }) > 0
+
+  const habitOptimisticUpdate = ({
+    id,
+    isCompleted,
+  }: {
+    isCompleted: boolean
+    id: number
+  }) => {
+    queryClient.setQueryData(
+      queryKeys.habits.get,
+      (habits: HabitsFromBackend) => {
+        if (!habits.user || !habits.user.length) return habits
+
+        const habitToUpdate = l.cloneDeep(habits.user.find((h) => h.id === id)!)
+        habitToUpdate.isCompleted = isCompleted
+        habitToUpdate.strike = isCompleted
+          ? habitToUpdate.strike + 1
+          : habitToUpdate.strike - 1
+
+        return {
+          partner: habits.partner,
+          user: habits.user.map((h) => (h.id === id ? habitToUpdate : h)),
+        } as HabitsFromBackend
+      },
+    )
+  }
 
   const toggleHabitMutation = async ({
     id,
@@ -22,7 +51,7 @@ export const useToggleHabit = () => {
     id: number
   }) => {
     const axios = await getAxiosInstance()
-    return await axios.patch(`/habits/${id}`, { isCompleted })
+    return await axios.put(`/habits/${id}/completion`, { isCompleted })
   }
 
   const { mutate: toggleHabit, isPending } = useMutation({
