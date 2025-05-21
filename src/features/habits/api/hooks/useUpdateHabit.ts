@@ -5,8 +5,11 @@ import { showToast } from "@/utils/showToast"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import l from "lodash"
 import { queryKeys } from "@/config/queryKeys"
+import { HabitsFromBackend } from "@/features/habits/types/habit"
 
-export const useUpdateHabit = () => {
+export const useUpdateHabit = (
+  { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
+) => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
 
@@ -19,14 +22,17 @@ export const useUpdateHabit = () => {
   }) => {
     queryClient.setQueryData(
       queryKeys.habits.get,
-      (habits: HabitFromBackend[]) => {
-        if (!habits || !habits.length) return []
+      (habits: HabitsFromBackend) => {
+        if (!habits.user || !habits.user.length) return habits
 
-        const habitToUpdate = l.cloneDeep(habits.find((h) => h.id === id)!)
+        const habitToUpdate = l.cloneDeep(habits.user.find((h) => h.id === id)!)
         habitToUpdate.frequency = frequency
         habitToUpdate.label = label
 
-        return habits.map((h) => (h.id === id ? habitToUpdate : h))
+        return {
+          partner: habits.partner,
+          user: habits.user.map((h) => (h.id === id ? habitToUpdate : h)),
+        } as HabitsFromBackend
       },
     )
   }
@@ -55,6 +61,7 @@ export const useUpdateHabit = () => {
     mutationKey: queryKeys.habits.update,
     mutationFn: updateHabitMutation,
     onSettled: () => {
+      if (onSettled) onSettled()
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })

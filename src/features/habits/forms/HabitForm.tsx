@@ -25,7 +25,7 @@ export default function HabitForm({
     onCloseModal ? onCloseModal() : router.navigate("/home")
 
   const {
-    isPending,
+    isLoading,
     errors,
     handleSubmit,
     values: { label, frequency },
@@ -80,7 +80,7 @@ export default function HabitForm({
           title="Cancel"
         />
         <Button
-          disabled={isPending}
+          disabled={isLoading}
           classNames={{
             wrapper: "flex-1",
           }}

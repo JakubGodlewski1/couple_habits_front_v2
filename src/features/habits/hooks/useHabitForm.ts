@@ -13,6 +13,7 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { Alert } from "react-native"
 import { useMutate } from "@/api/hooks/useMutate"
 import { useCreateHabit } from "@/features/habits/api/hooks/useCreateHabit"
+import { useUpdateHabit } from "@/features/habits/api/hooks/useUpdateHabit"
 
 type Props = {
   initialData?: HabitFormType
@@ -23,7 +24,10 @@ type Props = {
 export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   const { hasPartner, partnerName } = useGetUser().user!
 
-  const { createHabit, isPending } = useCreateHabit({ onSettled })
+  const { createHabit, isPending: isCreating } = useCreateHabit({ onSettled })
+  const { updateHabit, isPending: isUpdating } = useUpdateHabit({ onSettled })
+
+  const isLoading = isCreating || isUpdating
 
   const {
     handleSubmit,
@@ -34,9 +38,9 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     trigger,
     clearErrors,
   } = useForm<HabitFormType>({
-    defaultValues: initialData || {
-      label: "",
-      frequency: { type: "repeat", value: "daily" },
+    defaultValues: {
+      label: initialData?.label || "",
+      frequency: initialData?.frequency || { type: "repeat", value: "daily" },
     },
     resolver: zodResolver(habitFormSchema),
     mode: "all",
@@ -81,13 +85,17 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
       )
     }
 
-    createHabit(data)
+    if (!habitId) {
+      createHabit(data)
+    } else {
+      updateHabit({ data, id: habitId! })
+    }
   }
 
   const [label, frequency] = watch(["label", "frequency"])
 
   return {
-    isPending,
+    isLoading,
     values: {
       label,
       frequency,
