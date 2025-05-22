@@ -11,7 +11,6 @@ import { DayOfTheWeek } from "@/types/daysOfWeek"
 import "react-native-get-random-values"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { Alert } from "react-native"
-import { useMutate } from "@/api/hooks/useMutate"
 import { useCreateHabit } from "@/features/habits/api/hooks/useCreateHabit"
 import { useUpdateHabit } from "@/features/habits/api/hooks/useUpdateHabit"
 
@@ -22,7 +21,7 @@ type Props = {
 }
 
 export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
-  const { hasPartner, partnerName } = useGetUser().user!
+  const { user } = useGetUser()
 
   const { createHabit, isPending: isCreating } = useCreateHabit({ onSettled })
   const { updateHabit, isPending: isUpdating } = useUpdateHabit({ onSettled })
@@ -78,10 +77,12 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   }
 
   const onSubmit = async (data: HabitFormType) => {
-    if (!hasPartner) {
+    if (!user) return
+
+    if (!user.hasPartner) {
       return Alert.alert(
-        `Connect with ${partnerName} first`,
-        `You have to connect with ${partnerName} before creating your first habit.`,
+        `Connect with ${user.partnerName} first`,
+        `You have to connect with ${user.partnerName} before creating your first habit.`,
       )
     }
 

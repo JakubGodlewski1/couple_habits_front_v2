@@ -4,11 +4,17 @@ import Input from "@/components/Input"
 import Button from "@/components/Button"
 import { useAddPartnerForm } from "@/features/addPartner/hooks/useAddPartnerForm"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import IsLoading from "@/components/IsLoading"
+import IsError from "@/components/IsError"
 
 const AddPartnerForm = () => {
-  const { user } = useGetUser()
+  const { user, isPending: isUserPending, error: userError } = useGetUser()
+
   const { connectionCode, onCodeChange, handleSubmit, error, isPending } =
     useAddPartnerForm()
+
+  if (isUserPending) return <IsLoading />
+  if (userError) return <IsError />
 
   return (
     <View className="gap-2">

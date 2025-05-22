@@ -11,10 +11,14 @@ import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisp
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { Image } from "react-native"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
+import IsLoading from "@/components/IsLoading"
+import IsError from "@/components/IsError"
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
-  const { user } = useGetUser()
+  const { user, isPending, error } = useGetUser()
+  if (isPending) return <IsLoading />
+  if (error) return <IsError />
 
   return (
     <SafeAreaWrapper className="gap-3">
@@ -41,7 +45,10 @@ export default function Home() {
 }
 
 const NotConnectedDisplay = () => {
-  const { user } = useGetUser()
+  const { user, isPending, error } = useGetUser()
+
+  if (isPending) return <IsLoading />
+  if (error) return <IsError />
 
   return (
     <View className="gap-1 items-center grow justify-between">

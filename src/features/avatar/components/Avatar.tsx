@@ -7,9 +7,9 @@ type Props = { type: "user" | "partner" }
 
 export default function Avatar({ type }: Props) {
   const { avatars, isPending, isError } = useGetAvatars()
-  const { user } = useGetUser()
+  const { user, isPending: isUserPending, error: userError } = useGetUser()
 
-  if (isPending || isError) {
+  if (isPending || isError || isUserPending || userError) {
     return <WithText text={type === "user" ? "You" : user!.partnerName} />
   }
 

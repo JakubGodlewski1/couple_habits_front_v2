@@ -6,16 +6,16 @@ import IsLoadingProAccount from "@/features/subscriptions/components/IsLoadingPr
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
 
 const BuyProBtn = () => {
-  const { hasPartner } = useGetUser().user!
+  const { user, isPending } = useGetUser()
   const { buyPro, isLoading } = useBuyPro()
   const { subscriptionInfo } = useGetSubscriptionInfo()
 
-  if (isLoading) return <IsLoadingProAccount />
-  if (!hasPartner || subscriptionInfo?.hasProAccess) return
+  if (isLoading || isPending) return <IsLoadingProAccount />
+  if (!user?.hasPartner || subscriptionInfo?.hasProAccess) return
 
   return (
     <Button
-      disabled={!hasPartner}
+      disabled={!user?.hasPartner}
       type="primary"
       classNames={{
         wrapper: "justify-between",

@@ -7,7 +7,6 @@ import {
 import { showToast } from "@/utils/showToast"
 import { getAxiosErrorMessage } from "@/utils/getAxiosErrorMessage"
 import { queryKeys } from "@/config/queryKeys"
-import { HabitFormType } from "@/features/habits/types/habitForm"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 import l from "lodash"
 
@@ -50,6 +49,12 @@ export const useToggleHabit = () => {
     isCompleted: boolean
     id: number
   }) => {
+    //optimistic update
+    habitOptimisticUpdate({
+      isCompleted,
+      id,
+    })
+
     const axios = await getAxiosInstance()
     return await axios.put(`/habits/${id}/completion`, { isCompleted })
   }

@@ -8,10 +8,15 @@ import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import { router } from "expo-router"
 import AddPartnerForm from "@/features/addPartner/forms/AddPartnerForm"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import IsLoading from "@/components/IsLoading"
+import IsError from "@/components/IsError"
 
 export default function AddPartner() {
   const { setIsHidden } = useHideTabbarContext()
-  const { user } = useGetUser()
+  const { user, isPending, error } = useGetUser()
+
+  if (isPending) return <IsLoading />
+  if (error) return <IsError />
 
   return (
     <SafeAreaWrapper className="mt-4">

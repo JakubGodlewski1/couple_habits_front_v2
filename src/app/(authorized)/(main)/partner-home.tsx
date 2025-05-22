@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Image, View } from "react-native"
 import { HabitStateTab } from "@/features/habits/types/habitStateTabs"
 import { HABIT_STATE_TABS } from "@/consts/consts"
-import HomeStatsBar from "@/features/stats/components/HomeStatsBar"
 import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisplay"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import SafeAreaWrapper from "@/components/SafeAreaWrapper"
@@ -10,14 +9,20 @@ import HabitsTabs from "@/features/habits/components/habitsForm/HabitsTabs"
 import Text from "@/components/Text"
 import GoToAddPartnerPageBtn from "@/features/addPartner/components/GoToAddPartnerPageBtn"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
+import PartnerNameBox from "@/components/PartnerNameBox"
+import IsLoading from "@/components/IsLoading"
+import IsError from "@/components/IsError"
 
 export default function PartnerHome() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
-  const { user } = useGetUser()
+  const { user, isPending, error } = useGetUser()
+
+  if (isPending) return <IsLoading />
+  if (error) return <IsError />
 
   return (
     <SafeAreaWrapper className="gap-3">
-      <HomeStatsBar isDisabled={!user!.hasPartner} />
+      <PartnerNameBox />
       <HabitsTabs
         options={HABIT_STATE_TABS}
         onPress={setCurrentTab}

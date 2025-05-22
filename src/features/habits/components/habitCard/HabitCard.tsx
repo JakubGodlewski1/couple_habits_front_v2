@@ -24,8 +24,7 @@ export default function HabitCard({
 
   return (
     <View
-      className={`border-[1px] rounded-xl p-1
-      ${owner === "partner" ? (habit.isCompleted ? "border-r-success border-l-subtle border-y-subtle  border-r-4" : "border-r-error  border-l-subtle border-y-subtle  border-r-4") : "border-subtle"}
+      className={`border-[1px] rounded-xl p-1 border-subtle
        `}
     >
       <SwapeableHabitCardWrapper isDisabled={owner === "partner"} habit={habit}>

@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+import PartnerTabbarButton from "@/components/tabbar/PartnerTabbarButton"
 
 const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
@@ -21,9 +22,6 @@ const icon: Record<string, (props: { color: string }) => ReactNode> = {
     />
   ),
   "(home)": (props) => <Ionicons {...props} size={28} name="home-outline" />,
-  "partner-home": (props) => (
-    <MaterialCommunityIcons {...props} name="heart-outline" size={28} />
-  ),
 } as const
 
 type Props = {
@@ -76,12 +74,24 @@ export default function TabbarButton({
       onPress={onPress}
       onLongPress={onLongPress}
     >
-      <Animated.View style={animatedIconStyle}>
-        {icon[routeName]({ color: isFocused ? "white" : "black" })}
-      </Animated.View>
-      <Animated.Text style={animatedTextStyle} className="text-sm">
-        {typeof label === "string" && label}
-      </Animated.Text>
+      <>
+        {routeName === "partner-home" ? (
+          <PartnerTabbarButton
+            isFocused={isFocused}
+            animatedIconStyle={animatedIconStyle}
+            animatedTextStyle={animatedTextStyle}
+          />
+        ) : (
+          <>
+            <Animated.View style={animatedIconStyle}>
+              {icon[routeName]({ color: isFocused ? "white" : "black" })}
+            </Animated.View>
+            <Animated.Text style={animatedTextStyle} className="text-sm">
+              {typeof label === "string" && label}
+            </Animated.Text>
+          </>
+        )}
+      </>
     </Pressable>
   )
 }

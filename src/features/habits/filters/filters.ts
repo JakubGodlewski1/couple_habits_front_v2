@@ -2,6 +2,7 @@ import { HabitFromBackend } from "../types/habitCard"
 import { CreateHabit } from "@/features/habits/types/habit"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import { isSunday } from "date-fns"
+import { DAYS_OF_THE_WEEK_FROM_INT } from "@/consts/consts"
 
 const daily = ({ frequency }: HabitFromBackend | CreateHabit | HabitFormType) =>
   frequency.type === "repeat" && frequency.value === "daily"
@@ -21,20 +22,13 @@ const scheduledForThisWeek = weekly
 const scheduledForToday = ({
   frequency,
 }: HabitFromBackend | CreateHabit | HabitFormType) => {
-  const daysMap = {
-    0: "sunday",
-    1: "monday",
-    2: "tuesday",
-    3: "wednesday",
-    4: "thursday",
-    5: "friday",
-    6: "saturday",
-  } as const
-
-  const todayDayOfTheWeek = new Date().getDay() as keyof typeof daysMap
+  const todayDayOfTheWeek =
+    new Date().getDay() as keyof typeof DAYS_OF_THE_WEEK_FROM_INT
 
   if (frequency.type === "specificDays") {
-    return frequency.value.includes(daysMap[todayDayOfTheWeek])
+    return frequency.value.includes(
+      DAYS_OF_THE_WEEK_FROM_INT[todayDayOfTheWeek],
+    )
   }
 
   return frequency.type === "repeat" && frequency.value === "daily"

@@ -26,13 +26,20 @@ const ResetCache = () => {
 //3. fetch all initial data that is needed
 const GetInitialData = () => {
   const { isPending: isUserPending, error: userError, user } = useGetUser()
-  const { isPending: isSubscriptionPending, error: subscriptionError } =
-    useGetSubscriptionInfo()
+  const {
+    isPending: isSubscriptionPending,
+    error: subscriptionError,
+    subscriptionInfo,
+  } = useGetSubscriptionInfo()
   const { isPending: isFeatureFlagsPending, error: featureFlagsError } =
     useGetFeatureFlags()
 
   const isPending =
-    isUserPending || isSubscriptionPending || isFeatureFlagsPending
+    isUserPending ||
+    isSubscriptionPending ||
+    isFeatureFlagsPending ||
+    !subscriptionInfo ||
+    !user
   const error = userError || subscriptionError || featureFlagsError
 
   if (isPending) return <IsLoading />
