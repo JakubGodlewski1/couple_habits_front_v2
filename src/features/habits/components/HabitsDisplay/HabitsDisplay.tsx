@@ -31,7 +31,11 @@ export default function HabitsDisplay({
   const habitsByTabs = getHabitsByTabs(habits![owner])
 
   return (
-    <MessageWhenNoHabits habitsByTabs={habitsByTabs} currentTab={currentTab}>
+    <MessageWhenNoHabits
+      owner={owner}
+      habitsByTabs={habitsByTabs}
+      currentTab={currentTab}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
         <HabitsByBudges
           owner={owner}

@@ -21,7 +21,7 @@ export default function Home() {
   if (error) return <IsError />
 
   return (
-    <SafeAreaWrapper className="gap-3">
+    <SafeAreaWrapper className="gap-2">
       <HomeStatsBar isDisabled={!user!.hasPartner} />
       <HabitsTabs
         options={HABIT_STATE_TABS}

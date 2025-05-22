@@ -21,7 +21,7 @@ export default function PartnerHome() {
   if (error) return <IsError />
 
   return (
-    <SafeAreaWrapper className="gap-3">
+    <SafeAreaWrapper className="gap-2">
       <PartnerNameBox />
       <HabitsTabs
         options={HABIT_STATE_TABS}
@@ -55,7 +55,7 @@ const NotConnectedDisplay = ({ user }: { user: UserFromBackend }) => {
           source={coupleHighFive}
         />
         <Text type="h3" className="text-center">
-          Connect with {user!.partnerName} {"\n"} to see their habits here
+          Connect with {user!.partnerName} {"\n"} first
         </Text>
       </View>
       <GoToAddPartnerPageBtn />
