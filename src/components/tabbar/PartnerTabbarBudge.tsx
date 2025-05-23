@@ -20,11 +20,10 @@ const PartnerTabbarBudge = ({ isFocused }: { isFocused: boolean }) => {
 
   return (
     <Animated.View
-      className={`absolute -top-2 right-1 h-7 w-7 rounded-full flex items-center justify-center ${isFocused ? "bg-white" : "bg-secondary"}`}
+      className={`absolute -top-2 right-[17px] h-6 w-6 z-50 rounded-full flex items-center justify-center ${isFocused ? "bg-white" : "bg-secondary"}`}
     >
       <Text
-        className={`${isFocused ? "text-secondary" : "text-white"} font-bold`}
-        type="sm"
+        className={`${isFocused ? "text-secondary" : "text-white"} font-bold -mt-0.5 text-[13px]`}
       >
         {uncompletedHabitsScheduledForToday.length}
       </Text>
