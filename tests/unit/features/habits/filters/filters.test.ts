@@ -20,14 +20,7 @@ describe("filters", () => {
     ...specificDaysCompleted,
   ]
 
-  const {
-    daily,
-    completed,
-    scheduledForToday,
-    weekly,
-    uncompleted,
-    specificDays,
-  } = habitFilters
+  const { daily, scheduledForToday, weekly, specificDays } = habitFilters
 
   describe("daily", () => {
     const dailyHabits = habits.filter(daily)

@@ -13,7 +13,7 @@ const PartnerTabbarBudge = ({ isFocused }: { isFocused: boolean }) => {
   if (isError) return null
 
   const uncompletedHabitsScheduledForToday = data!.partner
-    .filter(habitFilters.scheduledForToday)
+    .filter(habitFilters.scheduledForTodayIncludingWeekly)
     .filter((h) => !h.isCompleted)
 
   if (uncompletedHabitsScheduledForToday.length === 0) return null

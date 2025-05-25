@@ -9,14 +9,16 @@ import { getAxiosErrorMessage } from "@/utils/getAxiosErrorMessage"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 import l from "lodash"
+import { useOptimisticStatsUpdate } from "@/features/stats/hooks/useOptimisticStatsUpdate"
 
 export const useToggleHabit = () => {
   const { getAxiosInstance } = useAxios()
+  const { optimisticStatsUpdate } = useOptimisticStatsUpdate()
 
   const queryClient = useQueryClient()
   const isFetching = useIsFetching({ queryKey: queryKeys.habits.get }) > 0
 
-  const habitOptimisticUpdate = ({
+  const optimisticHabitUpdate = ({
     id,
     isCompleted,
   }: {
@@ -49,10 +51,15 @@ export const useToggleHabit = () => {
     isCompleted: boolean
     id: number
   }) => {
-    //optimistic update
-    habitOptimisticUpdate({
+    //optimistic updates
+    optimisticHabitUpdate({
       isCompleted,
       id,
+    })
+
+    optimisticStatsUpdate({
+      habitId: id,
+      isCompleted,
     })
 
     const axios = await getAxiosInstance()
