@@ -9,7 +9,7 @@ import HabitsTabs from "@/features/habits/components/habitsForm/HabitsTabs"
 import Text from "@/components/Text"
 import GoToAddPartnerPageBtn from "@/features/addPartner/components/GoToAddPartnerPageBtn"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
-import PartnerNameBox from "@/components/PartnerNameBox"
+import PartnerAvatarBox from "@/components/PartnerAvatarBox"
 import IsLoading from "@/components/IsLoading"
 import IsError from "@/components/IsError"
 
@@ -22,7 +22,7 @@ export default function PartnerHome() {
 
   return (
     <SafeAreaWrapper className="gap-2">
-      <PartnerNameBox />
+      <PartnerAvatarBox />
       <HabitsTabs
         options={HABIT_STATE_TABS}
         onPress={setCurrentTab}

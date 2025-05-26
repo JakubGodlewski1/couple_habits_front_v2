@@ -3,6 +3,7 @@ import TabBar from "../../../components/tabbar/Tabbar"
 import { MainLayoutProviders } from "@/providers/MainLayoutProviders"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import IsLoading from "@/components/IsLoading"
+import PartnerRequestModal from "@/features/shared/partnerRequests/modals/PartnerRequestModal"
 
 export default function MainLayoutWrapper() {
   return (
@@ -19,6 +20,7 @@ function MainLayout() {
 
   return (
     <>
+      <PartnerRequestModal />
       <Tabs
         screenOptions={{
           animation: "shift",

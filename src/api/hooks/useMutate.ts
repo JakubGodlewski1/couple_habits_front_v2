@@ -59,9 +59,10 @@ export const useMutate = <T>({
     return await res.data
   }
 
-  const deleteMutation = async (id: number) => {
+  const deleteMutation = async (id?: number) => {
     const axios = await getAxiosInstance()
-    const res = await axios.delete(`${endpoint}/${id}`)
+    const finalEndpoint = id ? `${endpoint}/${id}` : `${endpoint}`
+    const res = await axios.delete(finalEndpoint)
     return await res.data
   }
 
@@ -129,6 +130,7 @@ export const useMutate = <T>({
 
   //delete mutation
   const {
+    mutateAsync: deleteAsync,
     isPending: isDeleting,
     mutate: deleteItem,
     error: deleteError,
@@ -150,6 +152,7 @@ export const useMutate = <T>({
     create,
     update,
     deleteItem,
+    deleteAsync,
     isPending,
   }
 }

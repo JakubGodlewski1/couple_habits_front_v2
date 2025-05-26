@@ -1,5 +1,6 @@
 export const queryKeys = {
   habits: {
+    skip: ["skip-habit"],
     get: ["habits"],
     update: ["update-habit"],
     delete: ["delete-habit"],

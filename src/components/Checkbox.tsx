@@ -21,7 +21,7 @@ export default function Checkbox({
     <BouncyCheckbox
       useBuiltInState={false}
       disabled={disabled}
-      className={`p-2.5 -m-2.5 ${className}`}
+      className={`p-2.5 -m-2.5 max-w-12 ${className}`}
       fillColor={colorHash}
       isChecked={isChecked}
       onPress={() => {

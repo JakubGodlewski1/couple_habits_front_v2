@@ -41,7 +41,8 @@ const PartnerPageTabbarBudgeWrapper = ({
   if (isPending) return <IsLoading />
   if (error) return <IsError />
 
-  if (user!.hasPartner) return <PartnerTabbarBudge isFocused={isFocused} />
+  if (user!.hasPartner && !isFocused)
+    return <PartnerTabbarBudge isFocused={isFocused} />
   else return null
 }
 

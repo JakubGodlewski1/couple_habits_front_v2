@@ -63,7 +63,7 @@ export const useToggleHabit = () => {
     })
 
     const axios = await getAxiosInstance()
-    return await axios.put(`/habits/${id}/completion`, { isCompleted })
+    return await axios.put(`/habits/${id}/toggle`, { isCompleted })
   }
 
   const { mutate: toggleHabit, isPending } = useMutation({

@@ -17,7 +17,9 @@ export const useOptimisticStatsUpdate = () => {
     const habits = queryClient.getQueryData<HabitsFromBackend>(["habits"])
     const { globalStrikeUpdatedAt } =
       queryClient.getQueryData<StatsStateFromBackend>(["stats-state"])!
-    const habit = habits?.user.find((h) => h.id === habitId)!
+    const habit = [...(habits?.user || []), ...(habits?.partner || [])].find(
+      (h) => h.id === habitId,
+    )!
 
     if (!habits) return
 
@@ -35,17 +37,6 @@ export const useOptimisticStatsUpdate = () => {
     // - toggled habit is scheduled for today
     // - (!globalStrikeUpdatedAt || globalStrikeUpdatedAt !== today)
     // - uncompleted habits scheduled for today after toggle = 0
-
-    console.log({
-      isCompleted,
-      isHabitScheduledForToday,
-      globalStrikeUpdatedAt,
-      isGlobalStrikeUpdatedToday: globalStrikeUpdatedAt
-        ? isToday(globalStrikeUpdatedAt)
-        : null,
-      uncompletedHabitsScheduledForTodayLength:
-        uncompletedHabitsScheduledForToday.length,
-    })
 
     if (
       isCompleted &&

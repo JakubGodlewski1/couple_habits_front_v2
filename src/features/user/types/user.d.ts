@@ -4,6 +4,7 @@ type UserFromBackend = {
   hasPartner: boolean
   partnerName: string
   gameAccountId: number | null
+  habitSkipPrice: number
 }
 
 type UpdateUser = {
