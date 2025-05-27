@@ -4,7 +4,7 @@ import { Image, ScrollView, View } from "react-native"
 import SignOutBtn from "@/features/auth/components/SignOutBtn"
 import DeleteAccountBtn from "@/features/user/components/DeleteAccountBtn"
 import SendFeedbackBtn from "@/features/feedback/components/SendFeedbackBtn"
-import ChangeAvatarBtn from "@/features/avatar/components/ChangeAvatarBtn"
+import ChangePartnerAvatarBtn from "@/features/avatar/components/ChangePartnerAvatarBtn"
 import UpdatePartnerNameBtn from "@/features/user/components/updatePartnerNameBtn"
 import DiscordBtn from "@/features/contactWithClient/components/DiscordBtn"
 import UnmountOnBlur from "@/components/UnmountOnBlur"
@@ -24,17 +24,8 @@ export default function Settings() {
   return (
     <SafeAreaWrapper className="max-h-full">
       <View className="flex-row justify-between items-center">
-        <View className="flex-row justify-between items-start w-full">
-          <Text type="h1">Settings</Text>
-          {avatars?.userAvatarBase64 && (
-            <Image
-              className="w-12 h-12 rounded-full border-2 border-main"
-              source={{
-                uri: `${avatars!.userAvatarBase64}`,
-              }}
-            />
-          )}
-        </View>
+        <Text type="h1">Settings</Text>
+
         {subscriptionInfo!.hasProAccess && (
           <Text className="mb-8 bg-[#C6AE79] font-medium text-white px-4 py-1 rounded-lg mt-1">
             Pro account
@@ -43,7 +34,7 @@ export default function Settings() {
       </View>
       <ScrollView contentContainerClassName="gap-2 flex-grow">
         <BuyProBtn />
-        <ChangeAvatarBtn />
+        <ChangePartnerAvatarBtn />
         <SendFeedbackBtn />
         <UpdatePartnerNameBtn />
         <DiscordBtn />

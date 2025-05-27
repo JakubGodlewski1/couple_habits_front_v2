@@ -6,7 +6,7 @@ import { useUploadFile } from "@/api/hooks/useUploadFile"
 import { router } from "expo-router"
 import { queryKeys } from "@/config/queryKeys"
 
-export const useUploadAvatar = () => {
+export const useUploadPartnerAvatar = () => {
   const { uploadFile } = useUploadFile()
   const queryClient = useQueryClient()
 
@@ -39,7 +39,7 @@ export const useUploadAvatar = () => {
       queryClient.refetchQueries({
         queryKey: queryKeys.avatars.get,
       })
-      router.replace("/home")
+      router.replace("/partner-home")
       showToast({
         type: "success",
         message: "Avatar added successfully",
@@ -54,5 +54,5 @@ export const useUploadAvatar = () => {
     mutate(uri)
   }
 
-  return { isPending, uploadAvatar, error }
+  return { isPending, uploadPartnerAvatar: uploadAvatar, error }
 }
