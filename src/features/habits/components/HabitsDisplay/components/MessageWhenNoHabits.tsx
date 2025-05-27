@@ -53,7 +53,7 @@ export default function MessageWhenNoHabits({
     return (
       <View>
         <Message label={labels.noHabits[owner]} />
-        <AddHabitBtn />
+        {owner ==="user" &&  <AddHabitBtn />}
       </View>
     )
   }

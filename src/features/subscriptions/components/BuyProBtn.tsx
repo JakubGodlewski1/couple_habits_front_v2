@@ -1,17 +1,26 @@
 import Button from "@/components/Button"
-import { MaterialIcons } from "@expo/vector-icons"
+import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useBuyPro } from "@/features/subscriptions/hooks/useBuyPro"
 import IsLoadingProAccount from "@/features/subscriptions/components/IsLoadingProAccount"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
+import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
 const BuyProBtn = () => {
   const { user, isPending } = useGetUser()
   const { buyPro, isLoading } = useBuyPro()
   const { subscriptionInfo } = useGetSubscriptionInfo()
+  const { data: featureFlags, isPending: isFeatureFlagsLoading } =
+    useGetFeatureFlags()
 
-  if (isLoading || isPending) return <IsLoadingProAccount />
-  if (!user?.hasPartner || subscriptionInfo?.hasProAccess) return
+  if (isLoading || isPending || isFeatureFlagsLoading)
+    return <IsLoadingProAccount />
+  if (
+    !user?.hasPartner ||
+    subscriptionInfo?.hasProAccess ||
+    !featureFlags?.isPaywallEnabled
+  )
+    return
 
   return (
     <Button
@@ -22,9 +31,9 @@ const BuyProBtn = () => {
       }}
       iconPosition="right"
       onPress={buyPro}
-      title="Buy premium"
+      title="I want pro access!"
     >
-      <MaterialIcons name="workspace-premium" size={24} color="white" />
+      <Feather name="star" size={24} color="white" />
     </Button>
   )
 }

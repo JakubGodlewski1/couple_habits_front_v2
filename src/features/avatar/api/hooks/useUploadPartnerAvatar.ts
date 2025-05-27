@@ -29,6 +29,11 @@ export const useUploadPartnerAvatar = () => {
   const { isPending, mutate, error } = useMutation({
     mutationKey: queryKeys.avatars.upload,
     mutationFn: uploadAvatarMutation,
+    onSettled: () => {
+      queryClient.refetchQueries({
+        queryKey: queryKeys.avatars.get,
+      })
+    },
     onError: (error) => {
       showToast({
         type: "error",
@@ -36,10 +41,6 @@ export const useUploadPartnerAvatar = () => {
       })
     },
     onSuccess: () => {
-      queryClient.refetchQueries({
-        queryKey: queryKeys.avatars.get,
-      })
-      router.replace("/partner-home")
       showToast({
         type: "success",
         message: "Avatar added successfully",
@@ -47,11 +48,24 @@ export const useUploadPartnerAvatar = () => {
     },
   })
 
+  const optimisticUpdate = (uri: string) => {
+    queryClient.setQueryData(
+      queryKeys.avatars.get,
+      (prev: AvatarsFromBackend) => ({
+        ...prev,
+        partnerAvatarBase64: uri,
+      }),
+    )
+  }
+
   const uploadAvatar = async () => {
     //select image
     const uri = await chooseImage(0.5)
-    if (!uri) return
-    mutate(uri)
+    if (uri) {
+      optimisticUpdate(uri)
+      router.replace("/partner-home")
+      mutate(uri)
+    }
   }
 
   return { isPending, uploadPartnerAvatar: uploadAvatar, error }

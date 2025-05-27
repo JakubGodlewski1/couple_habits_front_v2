@@ -21,8 +21,10 @@ export default function HabitForm({
   onCloseModal,
   initialData,
 }: Props) {
-  const onCancel = () =>
-    onCloseModal ? onCloseModal() : router.navigate("/home")
+  const onCancel = () => {
+    if (onCloseModal) onCloseModal()
+    router.navigate("/home")
+  }
 
   const {
     isLoading,

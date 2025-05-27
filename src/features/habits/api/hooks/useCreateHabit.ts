@@ -4,6 +4,7 @@ import { showToast } from "@/utils/showToast"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
+import { Alert } from "react-native"
 
 export const useCreateHabit = (
   { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
@@ -45,6 +46,12 @@ export const useCreateHabit = (
   const { mutate: createHabit, isPending } = useMutation({
     mutationKey: queryKeys.habits.create,
     mutationFn: createHabitMutation,
+    onSuccess: () => {
+      showToast({
+        type: "success",
+        message: "Habit added successfully",
+      })
+    },
     onSettled: () => {
       if (onSettled) onSettled()
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })

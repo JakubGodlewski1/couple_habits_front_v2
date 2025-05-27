@@ -11,7 +11,7 @@ type Props = {
 }
 
 const TextTypeMap: Record<TextType, string> = {
-  h1: "text-[36px] font-main900 mb-8",
+  h1: "text-[32px] font-main900 mb-8",
   h2: "text-3xl font-main800",
   h3: "text-2xl font-main700",
   span: "text-xl font-main600",

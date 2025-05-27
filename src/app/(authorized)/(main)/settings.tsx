@@ -16,7 +16,6 @@ import { useGetAvatars } from "@/features/avatar/api/hooks/useGetAvatars"
 
 export default function Settings() {
   const { subscriptionInfo, isPending, error } = useGetSubscriptionInfo()
-  const { avatars } = useGetAvatars()
 
   if (isPending) return <IsLoading />
   if (error) return <IsError />
@@ -35,8 +34,8 @@ export default function Settings() {
       <ScrollView contentContainerClassName="gap-2 flex-grow">
         <BuyProBtn />
         <ChangePartnerAvatarBtn />
-        <SendFeedbackBtn />
         <UpdatePartnerNameBtn />
+        <SendFeedbackBtn />
         <DiscordBtn />
         <SignOutBtn />
         <UnmountOnBlur>

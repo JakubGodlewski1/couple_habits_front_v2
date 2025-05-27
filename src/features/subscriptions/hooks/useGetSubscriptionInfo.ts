@@ -4,8 +4,6 @@ import { queryKeys } from "@/config/queryKeys"
 import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
 export const useGetSubscriptionInfo = () => {
-  const { data: featureFlags } = useGetFeatureFlags()
-
   const { getAxiosInstance } = useAxios()
   const getSubscriptionInfo = async (): Promise<SubscriptionInfo> => {
     const axios = await getAxiosInstance()
@@ -21,10 +19,6 @@ export const useGetSubscriptionInfo = () => {
   })
 
   //if paywall is disabled by feature flag, return pro access to for everyone
-  const dataToReturn =
-    featureFlags && !featureFlags.isPaywallEnabled
-      ? { ...data, hasProAccess: true }
-      : data
 
-  return { subscriptionInfo: dataToReturn, error, isPending }
+  return { subscriptionInfo: data, error, isPending }
 }

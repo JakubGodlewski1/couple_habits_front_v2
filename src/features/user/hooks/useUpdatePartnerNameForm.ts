@@ -50,7 +50,7 @@ export const useUpdatePartnerNameForm = ({
       partnerName,
     }))
     if (onSettled) onSettled() //close form
-    router.push("/home")
+    router.push("/partner-home")
     update({ update: { partnerName } })
   }
 

@@ -23,7 +23,7 @@ export default function PartnerAvatarBox() {
   return (
     <View className="w-full justify-center  items-center">
       <View className="border-main rounded-full border-1 p-1.5 z-20 bg-white">
-        {isIcon ? (
+        {isIcon || !avatars.partnerAvatarBase64 ? (
           <Image
             source={avatarPlaceholder}
             style={{ width: 120, height: 120, borderRadius: 99, zIndex: 50 }}
