@@ -21,7 +21,7 @@ export default function PartnerAvatarBox() {
     isAvatarPending || isAvatarError || !avatars?.partnerAvatarBase64
 
   return (
-    <View className="w-full  justify-center  p-4  rounded-main border-main  bg-white items-center">
+    <View className="w-full justify-center  items-center">
       {isIcon ? (
         <MaterialCommunityIcons
           color={"black"} // or define `isFocused` logic if needed
@@ -33,12 +33,14 @@ export default function PartnerAvatarBox() {
           source={{
             uri: `${avatars.partnerAvatarBase64}`,
           }}
-          style={{ width: 100, height: 100, borderRadius: 99 }}
+          style={{ width: 100, height: 100, borderRadius: 99, zIndex: 50 }}
         />
       )}
-      <Text className=" text-xl  font-main800">
-        {user!.partnerName || "Partner"}
-      </Text>
+      <View className="w-full  justify-center  p-4  -mt-3  rounded-main border-main  bg-white items-center">
+        <Text className=" text-xl  font-main800">
+          {user!.partnerName || "Partner"}
+        </Text>
+      </View>
     </View>
   )
 }

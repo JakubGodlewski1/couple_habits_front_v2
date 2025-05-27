@@ -2,9 +2,10 @@ import PartnerPageTabbarBudge from "@/components/tabbar/PartnerTabbarBudge"
 import Animated from "react-native-reanimated"
 import PartnerTabbarAvatar from "@/components/tabbar/PartnerTabbarAvatar"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
-import { View } from "react-native"
+import { Image, View } from "react-native"
 import IsLoading from "@/components/IsLoading"
 import IsError from "@/components/IsError"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 type Props = {
   isFocused: boolean
@@ -25,10 +26,13 @@ const PartnerTabbarButton = ({
     <>
       <PartnerPageTabbarBudge isFocused={isFocused} />
       <View className="flex items-center">
-        <PartnerTabbarAvatar
-          isFocused={isFocused}
-          animatedIconStyle={animatedIconStyle}
-        />
+        <Animated.View className={"mb-1.5"} style={animatedIconStyle}>
+          <MaterialCommunityIcons
+            color={isFocused ? "white" : "black"}
+            name="heart-outline"
+            size={28}
+          />
+        </Animated.View>
         <Animated.Text style={animatedTextStyle} className="text-sm">
           {user!.partnerName || "Partner"}
         </Animated.Text>
