@@ -20,7 +20,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/icons/adaptive-icon.png"
       },
-      "package": "com.anonymous.couplehabits",
+      "package": "com.jakubgodlewski.couplehabits",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
