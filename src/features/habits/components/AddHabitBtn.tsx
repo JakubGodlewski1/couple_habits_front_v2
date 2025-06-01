@@ -13,25 +13,36 @@ export default function AddHabitBtn(
   return (
     <>
       {iconType ? (
-        <TouchableOpacity
-          onPress={() => setIsModalOpen(true)}
-          className="absolute -top-20 right-0 bg-primary p-4 rounded-full shadow-lg"
-        >
-          <AntDesign name="plus" size={28} color="#fff" />
-        </TouchableOpacity>
+        <IconButton openModal={() => setIsModalOpen(true)} />
       ) : (
-        <Button
-          classNames={{
-            wrapper: "mx-auto mt-5 py-3",
-          }}
-          onPress={() => setIsModalOpen(true)}
-          title="Add your first habit"
-        />
+        <ButtonWithText openModal={() => setIsModalOpen(true)} />
       )}
-
       <Modal onClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
         <HabitForm onCloseModal={() => setIsModalOpen(false)} />
       </Modal>
     </>
+  )
+}
+
+const ButtonWithText = ({ openModal }: { openModal: () => void }) => {
+  return (
+    <Button
+      classNames={{
+        wrapper: "mx-auto mt-5 py-3",
+      }}
+      onPress={openModal}
+      title="Add your first habit"
+    />
+  )
+}
+
+const IconButton = ({ openModal }: { openModal: () => void }) => {
+  return (
+    <TouchableOpacity
+      onPress={openModal}
+      className="absolute -top-20 right-0 bg-primary p-4 rounded-full shadow-lg"
+    >
+      <AntDesign name="plus" size={28} color="#fff" />
+    </TouchableOpacity>
   )
 }

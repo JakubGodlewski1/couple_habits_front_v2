@@ -1,5 +1,6 @@
 import { View } from "react-native"
 import Text from "./Text"
+import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 type Props = {
   strike: number | undefined
@@ -7,18 +8,24 @@ type Props = {
 }
 
 export default function StatsBar({ strike, points }: Props) {
+  const { setTutorialRef } = useTutorialRefContext()
+
   return (
     <View className="w-full flex-row justify-between p-4 bg-white rounded-main border-main">
-      <Text>
-        Strike:
-        <Text className="font-main800">
-          {" "}
-          {strike !== undefined ? strike + " days" : "0 days"}
+      <View ref={(node) => setTutorialRef("strike", node)}>
+        <Text>
+          Strike:
+          <Text className="font-main800">
+            {" "}
+            {strike !== undefined ? strike + " days" : "0 days"}
+          </Text>
         </Text>
-      </Text>
-      <Text>
-        Points:<Text className="font-main800"> {points ?? "0 days"}</Text>
-      </Text>
+      </View>
+      <View ref={(node) => setTutorialRef("points", node)}>
+        <Text>
+          Points:<Text className="font-main800"> {points ?? "0 days"}</Text>
+        </Text>
+      </View>
     </View>
   )
 }

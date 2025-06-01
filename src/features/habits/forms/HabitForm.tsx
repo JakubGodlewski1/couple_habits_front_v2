@@ -9,6 +9,7 @@ import { FREQUENCY_OPTIONS } from "../consts/consts"
 import { useHabitForm } from "@/features/habits/hooks/useHabitForm"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import SpecificDaysMultiTabs from "@/features/habits/components/habitsForm/SpecificDaysMultiTabs"
+import { useHideTabbarContext } from "@/contexts/HideTabbar"
 
 type Props = {
   initialData?: HabitFormType
@@ -21,8 +22,11 @@ export default function HabitForm({
   onCloseModal,
   initialData,
 }: Props) {
+  const { setIsHidden } = useHideTabbarContext()
+
   const onCancel = () => {
     if (onCloseModal) onCloseModal()
+    setIsHidden(false)
     router.navigate("/home")
   }
 

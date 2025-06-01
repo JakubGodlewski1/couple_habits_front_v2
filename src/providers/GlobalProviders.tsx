@@ -4,6 +4,8 @@ import { HideTabbarProvider } from "@/contexts/HideTabbar"
 import Toast from "react-native-toast-message"
 import { ClerkProviderWithToken } from "@/features/auth/components/ClerkProviderWithToken"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { TutorialContextProvider } from "@/features/tutorial/contexts/tutorialContext"
+import { TutorialRefProvider } from "@/features/tutorial/contexts/tutorialRefContext"
 
 export const GlobalProviders = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient({
@@ -18,10 +20,14 @@ export const GlobalProviders = ({ children }: PropsWithChildren) => {
   return (
     <ClerkProviderWithToken>
       <QueryClientProvider client={queryClient}>
-        <HideTabbarProvider>
-          <GestureHandlerRootView>{children}</GestureHandlerRootView>
-          <Toast />
-        </HideTabbarProvider>
+        <TutorialContextProvider>
+          <TutorialRefProvider>
+            <HideTabbarProvider>
+              <GestureHandlerRootView>{children}</GestureHandlerRootView>
+              <Toast />
+            </HideTabbarProvider>
+          </TutorialRefProvider>
+        </TutorialContextProvider>
       </QueryClientProvider>
     </ClerkProviderWithToken>
   )

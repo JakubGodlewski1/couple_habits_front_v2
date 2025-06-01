@@ -5,7 +5,7 @@ import { showToast } from "@/utils/showToast"
 import { useState } from "react"
 
 const DiscordBtn = () => {
-  const discordInvite = "https://discord.gg/nuRZj4ab"
+  const discordInvite = "https://discord.gg/ThcRMgRZuW"
   const [isLoading, setIsLoading] = useState(false)
 
   const openDiscord = async () => {
