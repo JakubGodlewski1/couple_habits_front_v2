@@ -5,7 +5,7 @@ import pluginReact from "eslint-plugin-react"
 import react from "eslint-plugin-react"
 import eslintConfigPrettier from "eslint-config-prettier"
 import boundaries from "eslint-plugin-boundaries"
-import testingLibrary from "eslint-plugin-testing-library"
+// Removed: import testingLibrary from "eslint-plugin-testing-library"
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
@@ -28,17 +28,16 @@ export default [
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-  //reqire imports
   {
-    files: ["**/*.{js,ts}"], // Apply to all other files
+    files: ["**/*.{js,ts}"],
     rules: {
-      "@typescript-eslint/no-require-imports": "off", // Disable the rule elsewhere
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
   {
-    files: ["src/**/*.{js,ts}"], // Apply only to files in the src folder
+    files: ["src/**/*.{js,ts}"],
     rules: {
-      "@typescript-eslint/no-require-imports": "error", // Enable the rule here
+      "@typescript-eslint/no-require-imports": "error",
     },
   },
   {
@@ -66,9 +65,10 @@ export default [
       ],
     },
   },
-  {
-    files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-    plugins: { testingLibrary },
-  },
+  // Removed this block entirely:
+  // {
+  //   files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+  //   plugins: { testingLibrary },
+  // },
   eslintConfigPrettier,
 ]
