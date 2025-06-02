@@ -38,7 +38,11 @@ export const useTutorial = () => {
       setVisibleTutorial("connection")
     }
     //show "add first habit" tutorial screen
-    else if (!seenTutorials.firstHabit && habits.length === 0) {
+    else if (
+      !seenTutorials.firstHabit &&
+      habits.length === 0 &&
+      user?.hasPartner
+    ) {
       setVisibleTutorial("firstHabit")
     }
     //show "intro" tutorial screen

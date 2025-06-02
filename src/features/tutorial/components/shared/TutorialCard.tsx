@@ -1,7 +1,6 @@
-import { View, TouchableOpacity } from "react-native"
+import { TouchableOpacity, View } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import Button from "@/components/Button"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Text from "@/components/Text"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 
@@ -11,49 +10,38 @@ type Props = {
   title: string
   text?: string
   btnLabel: string
-  positon: {
-    x: number
-    y: number
-  }
 }
 
 export default function TutorialCard({
   btnLabel,
   title,
   text,
-  positon,
   onPress,
   onClose,
 }: Props) {
-  const { top } = useSafeAreaInsets()
   const { user } = useGetUser()
 
   return (
-    <View className="h-full w-full bg-black/60 absolute z-10">
-      <View
-        style={{ top: top + positon.y }}
-        className="bg-black/60 p-5 rounded-xl w-[90vw] left-1/2 -translate-x-1/2 gap-6"
+    <View className="bg-black/60 p-5 rounded-xl w-[90vw] left-1/2 -translate-x-1/2 gap-6">
+      <TouchableOpacity
+        className="ml-auto absolute right-0 top-0 p-3  z-[100]"
+        onPress={onClose}
       >
-        <TouchableOpacity
-          className="ml-auto absolute right-0 top-0 p-3  z-[100]"
-          onPress={onClose}
-        >
-          <AntDesign name="close" size={20} color="white" />
-        </TouchableOpacity>
-        <Text
-          style={{ marginBottom: 0 }}
-          className="text-white text-center"
-          type="h1"
-        >
-          {title.replace("{partner}", user?.partnerName || "partner")}
+        <AntDesign name="close" size={20} color="white" />
+      </TouchableOpacity>
+      <Text
+        style={{ marginBottom: 0 }}
+        className="text-white text-center"
+        type="h1"
+      >
+        {title.replace("{partner}", user?.partnerName || "partner")}
+      </Text>
+      {text && (
+        <Text className="text-white text-center font-semibold">
+          {text.replace("{partner}", user?.partnerName || "partner")}
         </Text>
-        {text && (
-          <Text className="text-white text-center font-semibold">
-            {text.replace("{partner}", user?.partnerName || "partner")}
-          </Text>
-        )}
-        <Button onPress={onPress} title={btnLabel} />
-      </View>
+      )}
+      <Button onPress={onPress} title={btnLabel} />
     </View>
   )
 }

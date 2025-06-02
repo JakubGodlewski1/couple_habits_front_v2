@@ -2,6 +2,8 @@ import TutorialCard from "@/features/tutorial/components/shared/TutorialCard"
 import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import { router } from "expo-router"
 import { RefScreenPositions } from "@/features/tutorial/contexts/tutorialRefContext"
+import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
+import { View } from "react-native"
 
 type Props = {
   refScreenPositions: RefScreenPositions
@@ -14,19 +16,22 @@ export default function FirstHabitTutorialScreen({
 }: Props) {
   const { setIsHidden } = useHideTabbarContext()
 
-  const { x, y } = refScreenPositions.homeContainer
+  const { y } = refScreenPositions.homeContainer
 
   return (
-    <TutorialCard
-      onClose={onClose}
-      onPress={() => {
-        setIsHidden(true)
-        router.push("/add-habit")
-        onClose()
-      }}
-      title={`Its time to create Your first habit`}
-      btnLabel="Let's do it"
-      positon={{ x: x!, y: y! }}
-    />
+    <TutorialBackgroundWrapper>
+      <View style={{ top: y }}>
+        <TutorialCard
+          onClose={onClose}
+          onPress={() => {
+            setIsHidden(true)
+            router.push("/add-habit")
+            onClose()
+          }}
+          title={`Its time to create Your first habit`}
+          btnLabel="Let's do it"
+        />
+      </View>
+    </TutorialBackgroundWrapper>
   )
 }

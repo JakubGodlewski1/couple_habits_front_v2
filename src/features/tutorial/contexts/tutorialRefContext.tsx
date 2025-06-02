@@ -1,8 +1,10 @@
 import {
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useMemo,
+  useRef,
   useState,
 } from "react"
 import { View } from "react-native"
@@ -15,6 +17,8 @@ export interface RefScreenPositions {
   homeContainer: Position
 }
 
+type TutorialRefType = keyof RefScreenPositions
+
 interface TutorialRefContextType {
   setTutorialRef: (type: TutorialRefType, node: View | null) => void
   refScreenPositions: RefScreenPositions
@@ -24,11 +28,7 @@ const TutorialRefContext = createContext<TutorialRefContextType | undefined>(
   undefined,
 )
 
-export function TutorialRefProvider({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export function TutorialRefProvider({ children }: { children: ReactNode }) {
   const [refScreenPositions, setRefScreenPositions] =
     useState<RefScreenPositions>({
       strike: { x: null, y: null },
@@ -36,10 +36,7 @@ export function TutorialRefProvider({
       homeContainer: { x: null, y: null },
     })
 
-  //
-  const [hasUpdated, setHasUpdated] = useState<
-    Record<TutorialRefType, boolean>
-  >({
+  const hasUpdated = useRef<Record<TutorialRefType, boolean>>({
     strike: false,
     points: false,
     homeContainer: false,
@@ -47,22 +44,21 @@ export function TutorialRefProvider({
 
   const setTutorialRef = useCallback(
     (type: TutorialRefType, node: View | null) => {
-      if (hasUpdated[type]) return
-      if (node) {
-        node.measure((x, y, width, height, pageX, pageY) => {
-          setRefScreenPositions((prev) => {
-            const current = prev[type]
-            if (current.x === pageX && current.y === pageY) {
-              return prev
-            }
-            return {
-              ...prev,
-              [type]: { x: pageX, y: pageY },
-            }
-          })
+      if (!node || hasUpdated.current[type]) return
+
+      node.measure((x, y, width, height, pageX, pageY) => {
+        setRefScreenPositions((prev) => {
+          const current = prev[type]
+          if (current.x === pageX && current.y === pageY) return prev
+
+          return {
+            ...prev,
+            [type]: { x: pageX, y: pageY },
+          }
         })
-        setHasUpdated((prev) => ({ ...prev, [type]: true }))
-      }
+      })
+
+      hasUpdated.current[type] = true
     },
     [],
   )
