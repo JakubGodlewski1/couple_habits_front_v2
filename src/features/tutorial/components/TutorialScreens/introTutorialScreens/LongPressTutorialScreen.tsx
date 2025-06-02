@@ -1,6 +1,6 @@
 import { Image, View } from "react-native"
 import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
-import arrow from "@/assets/icons/arrow.png"
+import longPress from "@/assets/icons/long_press.png"
 import TutorialCard from "@/features/tutorial/components/shared/TutorialCard"
 import { RefScreenPositions } from "@/features/tutorial/contexts/tutorialRefContext"
 import TutorialHabitCard from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/components/tutorialHabitCard"
@@ -12,28 +12,29 @@ type Props = {
   goNext: () => void
 }
 
-export default function SwipeRightTutorialScreen({
+export default function LongPressTutorialScreen({
   goNext,
   onClose,
   safeAreaTopInset,
   refScreenPositions,
 }: Props) {
-  const { x, y } = refScreenPositions.homeContainer
+  const { y } = refScreenPositions.homeContainer
 
   return (
     <TutorialBackgroundWrapper>
       <View style={{ top: y! + safeAreaTopInset + 53 }}>
-        <TutorialHabitCard swiped="right" />
-        <Image
-          className="-bottom-4 z-[100]"
-          style={{ left: x! + 40 }}
-          source={arrow}
-        />
+        <View className="relative mb-10">
+          <TutorialHabitCard />
+          <Image
+            className="w-[120px] h-[120px] self-end absolute left-1/2 -translate-x-1/2 -bottom-8 -rotate-[45deg]"
+            source={longPress}
+          />
+        </View>
         <TutorialCard
           onClose={onClose}
           onPress={goNext}
-          title="Swipe right to see
-the habit’s strike"
+          text="It’ll use some shared points and needs your partner’s approval"
+          title="Long press to skip"
           btnLabel="Next"
         />
       </View>

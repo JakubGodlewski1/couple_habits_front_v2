@@ -1,11 +1,11 @@
 import PartnerPageTabbarBudge from "@/components/tabbar/PartnerTabbarBudge"
 import Animated from "react-native-reanimated"
-import PartnerTabbarAvatar from "@/components/tabbar/PartnerTabbarAvatar"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
-import { Image, View } from "react-native"
+import { View } from "react-native"
 import IsLoading from "@/components/IsLoading"
 import IsError from "@/components/IsError"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 type Props = {
   isFocused: boolean
@@ -19,13 +19,17 @@ const PartnerTabbarButton = ({
   animatedTextStyle,
 }: Props) => {
   const { user, isPending, error } = useGetUser()
+  const { setTutorialRef } = useTutorialRefContext()
 
   if (isPending) return <IsLoading />
   if (error) return <IsError />
   return (
     <>
       <PartnerPageTabbarBudge isFocused={isFocused} />
-      <View className="flex items-center">
+      <View
+        ref={(node) => setTutorialRef("partnerTabbar", node)}
+        className="flex items-cente "
+      >
         <Animated.View className={"mb-1.5"} style={animatedIconStyle}>
           <MaterialCommunityIcons
             color={isFocused ? "white" : "black"}

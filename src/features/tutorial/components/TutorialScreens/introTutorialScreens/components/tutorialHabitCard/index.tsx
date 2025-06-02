@@ -12,12 +12,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 export default function TutorialHabitCard({
   swiped,
 }: {
-  swiped: "left" | "right"
+  swiped?: "left" | "right"
 }) {
   const swipeableRef = useRef<SwipeableMethods>(null)
 
   useEffect(() => {
-    if (swipeableRef.current) {
+    if (swipeableRef.current && swiped) {
       const timeout = setTimeout(() => {
         if (swiped === "left") {
           swipeableRef.current!.openRight()

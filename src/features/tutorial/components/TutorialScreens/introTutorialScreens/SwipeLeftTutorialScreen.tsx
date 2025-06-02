@@ -24,19 +24,13 @@ export default function SwipeLeftTutorialScreen({
     <TutorialBackgroundWrapper>
       <View style={{ top: y! + safeAreaTopInset + 53 }}>
         <TutorialHabitCard swiped="left" />
-        <View
-          className="self-end "
-          style={{
-            marginRight: x! + 35,
-            bottom: -15,
-            width: 35,
-            height: 47,
-            zIndex: 100,
-            transform: [{ scaleX: -1 }],
-          }}
-        >
-          <Image source={arrow} />
-        </View>
+        <>
+          <Image
+            className="self-end -bottom-4 z-[100] rotate-[60deg]"
+            style={{ right: x! + 40 }}
+            source={arrow}
+          />
+        </>
         <TutorialCard
           onClose={onClose}
           onPress={goNext}

@@ -1,8 +1,7 @@
-import { TouchableOpacity, View } from "react-native"
-import { AntDesign } from "@expo/vector-icons"
-import Button from "@/components/Button"
+import { View } from "react-native"
 import Text from "@/components/Text"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import Button from "@/components/Button"
 
 type Props = {
   onClose: () => void
@@ -17,18 +16,17 @@ export default function TutorialCard({
   title,
   text,
   onPress,
-  onClose,
 }: Props) {
   const { user } = useGetUser()
 
   return (
     <View className="bg-black/60 p-5 rounded-xl w-[90vw] left-1/2 -translate-x-1/2 gap-6">
-      <TouchableOpacity
-        className="ml-auto absolute right-0 top-0 p-3  z-[100]"
-        onPress={onClose}
-      >
-        <AntDesign name="close" size={20} color="white" />
-      </TouchableOpacity>
+      {/*<TouchableOpacity*/}
+      {/*  className="ml-auto absolute right-0 top-0 p-3  z-[100]"*/}
+      {/*  onPress={onClose}*/}
+      {/*>*/}
+      {/*  <AntDesign name="close" size={20} color="white" />*/}
+      {/*</TouchableOpacity>*/}
       <Text
         style={{ marginBottom: 0 }}
         className="text-white text-center"

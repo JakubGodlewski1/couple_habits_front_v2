@@ -21,19 +21,12 @@ export default function PointsTutorialScreen({
 
   return (
     <TutorialBackgroundWrapper>
-      <View style={{ top: y! + safeAreaTopInset + 25 }}>
-        <View
-          style={{
-            width: 35,
-            height: 47,
-            left: x! + 50,
-            bottom: -15,
-            zIndex: 100,
-            transform: [{ scaleX: -1 }],
-          }}
-        >
-          <Image source={arrow} />
-        </View>
+      <View style={{ top: y! + safeAreaTopInset + 20 }}>
+        <Image
+          style={{ left: x! + 50 }}
+          className="z-[100] -bottom-4 rotate-[60deg]"
+          source={arrow}
+        />
         <TutorialCard
           onClose={onClose}
           onPress={goNext}

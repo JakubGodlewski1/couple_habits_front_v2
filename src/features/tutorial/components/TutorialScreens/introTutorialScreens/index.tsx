@@ -6,6 +6,9 @@ import PointsTutorialScreen from "@/features/tutorial/components/TutorialScreens
 import SwipeRightTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/SwipeRightTutorialScreen"
 import SwipeLeftTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/SwipeLeftTutorialScreen"
 import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext"
+import LongPressTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/LongPressTutorialScreen"
+import PartnerPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/PartnerPageTutorialScreen"
+import IdeasPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/IdeasPageTutorialScreen"
 
 type Props = {
   refScreenPositions: RefScreenPositions
@@ -25,6 +28,9 @@ const screens: Record<
   points: PointsTutorialScreen,
   swipeLeft: SwipeLeftTutorialScreen,
   swipeRight: SwipeRightTutorialScreen,
+  longPress: LongPressTutorialScreen,
+  partnerPage: PartnerPageTutorialScreen,
+  ideasPage: IdeasPageTutorialScreen,
   // Add more mappings here
 }
 
@@ -33,6 +39,9 @@ const screenOrder: IntroScreenType[] = [
   "points",
   "swipeLeft",
   "swipeRight",
+  "longPress",
+  "partnerPage",
+  "ideasPage",
 ]
 
 export default function IntroTutorialScreen({
