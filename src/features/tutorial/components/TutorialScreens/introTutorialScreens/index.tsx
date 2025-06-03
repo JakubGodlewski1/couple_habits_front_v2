@@ -9,6 +9,7 @@ import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext
 import LongPressTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/LongPressTutorialScreen"
 import PartnerPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/PartnerPageTutorialScreen"
 import IdeasPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/IdeasPageTutorialScreen"
+import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
 
 type Props = {
   refScreenPositions: RefScreenPositions
@@ -65,11 +66,13 @@ export default function IntroTutorialScreen({
   }
 
   return (
-    <ScreenComponent
-      goNext={goNext}
-      refScreenPositions={refScreenPositions}
-      onClose={onClose}
-      safeAreaTopInset={top}
-    />
+    <TutorialBackgroundWrapper>
+      <ScreenComponent
+        goNext={goNext}
+        refScreenPositions={refScreenPositions}
+        onClose={onClose}
+        safeAreaTopInset={top}
+      />
+    </TutorialBackgroundWrapper>
   )
 }

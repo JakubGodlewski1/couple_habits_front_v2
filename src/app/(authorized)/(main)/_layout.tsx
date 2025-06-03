@@ -85,6 +85,7 @@ const HandleTutorialReset = () => {
         await setTutorialSeen("connection", false)
         await setTutorialSeen("firstHabit", false)
         await setTutorialSeen("intro", false)
+        await setTutorialSeen("partnerAvatar", false)
       }}
       className="bg-red-900 w-20 h-20 absolute z-50 bottom-32"
     />

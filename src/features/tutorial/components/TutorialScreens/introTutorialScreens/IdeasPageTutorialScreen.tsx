@@ -1,5 +1,4 @@
 import { Image, View } from "react-native"
-import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
 import arrow from "@/assets/icons/arrow.png"
 import TutorialCard from "@/features/tutorial/components/shared/TutorialCard"
 import { RefScreenPositions } from "@/features/tutorial/contexts/tutorialRefContext"
@@ -19,17 +18,15 @@ export default function IdeasPageTutorialScreen({
   const { y } = refScreenPositions.partnerTabbar
 
   return (
-    <TutorialBackgroundWrapper>
-      <View className="-translate-y-[100%]" style={{ top: y! }}>
-        <TutorialCard
-          onClose={onClose}
-          onPress={goNext}
-          text="Running low on ideas? No worries — there’s plenty for you to explore!"
-          title="Hundreds of ideas"
-          btnLabel="Got it!"
-        />
-        <Image className="rotate-[200deg] left-36 bottom-2 " source={arrow} />
-      </View>
-    </TutorialBackgroundWrapper>
+    <View className="-translate-y-[100%]" style={{ top: y! }}>
+      <TutorialCard
+        onClose={onClose}
+        onPress={goNext}
+        text="Running low on ideas? No worries — there’s plenty for you to explore!"
+        title="Hundreds of ideas"
+        btnLabel="Got it!"
+      />
+      <Image className="rotate-[200deg] left-36 bottom-2 " source={arrow} />
+    </View>
   )
 }

@@ -1,10 +1,33 @@
-import { View } from "react-native"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect, useRef } from "react"
+import { Animated, StyleSheet } from "react-native"
 
 export default function TutorialBackgroundWrapper({
   children,
 }: PropsWithChildren) {
+  const opacity = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      delay: 1000,
+      useNativeDriver: true,
+    }).start()
+  }, [])
+
   return (
-    <View className="h-full w-full bg-black/60 absolute z-10">{children}</View>
+    <Animated.View style={[styles.wrapper, { opacity }]}>
+      {children}
+    </Animated.View>
   )
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    position: "absolute",
+    zIndex: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    height: "100%",
+    width: "100%",
+  },
+})

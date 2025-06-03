@@ -20,7 +20,7 @@ export default function PartnerAvatarTutorialScreen({
 
   return (
     <TutorialBackgroundWrapper>
-      <View style={{ top: y! + 150 }}>
+      <View style={{ top: y! + 160 }}>
         <Image
           className="z-[100] -bottom-4 rotate-[33deg] left-1/2 -translate-x-2/3"
           source={arrow}

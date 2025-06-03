@@ -1,15 +1,13 @@
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useGetAvatars } from "@/features/avatar/api/hooks/useGetAvatars"
-import IsLoading from "@/components/IsLoading"
-import IsError from "./IsError"
-import { View, Image, TouchableOpacity } from "react-native"
+import { Image, TouchableOpacity, View } from "react-native"
 import avatarPlaceholder from "@/assets/icons/avatar_placeholder.png"
 import Text from "@/components/Text"
 import { useUploadPartnerAvatar } from "@/features/avatar/api/hooks/useUploadPartnerAvatar"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 export default function PartnerAvatarBox() {
-  const { user, isPending: isUserPending, error: userError } = useGetUser()
+  const { user } = useGetUser()
   const {
     isPending: isAvatarPending,
     isError: isAvatarError,
@@ -18,9 +16,6 @@ export default function PartnerAvatarBox() {
 
   const { uploadPartnerAvatar, isPending } = useUploadPartnerAvatar()
   const { setTutorialRef } = useTutorialRefContext()
-
-  if (isUserPending || isAvatarPending) return <IsLoading />
-  if (userError) return <IsError />
 
   const isIcon =
     isAvatarPending || isAvatarError || !avatars?.partnerAvatarBase64
@@ -34,7 +29,7 @@ export default function PartnerAvatarBox() {
         activeOpacity={0.8}
         className="border-main rounded-full border-1 p-1.5 z-20 bg-white"
       >
-        {isIcon || !avatars.partnerAvatarBase64 ? (
+        {isIcon || !avatars?.partnerAvatarBase64 ? (
           <Image
             source={avatarPlaceholder}
             style={{ width: 120, height: 120, borderRadius: 99, zIndex: 50 }}
@@ -50,7 +45,7 @@ export default function PartnerAvatarBox() {
       </TouchableOpacity>
       <View className="w-full  justify-center  p-4  -mt-5  rounded-main border-main  bg-white items-center">
         <Text className=" text-xl  font-main800">
-          {user!.partnerName || "Partner"}
+          {user?.partnerName || "..."}
         </Text>
       </View>
     </View>

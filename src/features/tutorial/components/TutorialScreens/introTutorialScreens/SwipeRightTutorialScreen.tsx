@@ -1,5 +1,4 @@
 import { Image, View } from "react-native"
-import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
 import arrow from "@/assets/icons/arrow.png"
 import TutorialCard from "@/features/tutorial/components/shared/TutorialCard"
 import { RefScreenPositions } from "@/features/tutorial/contexts/tutorialRefContext"
@@ -21,22 +20,20 @@ export default function SwipeRightTutorialScreen({
   const { x, y } = refScreenPositions.homeContainer
 
   return (
-    <TutorialBackgroundWrapper>
-      <View style={{ top: y! + safeAreaTopInset + 53 }}>
-        <TutorialHabitCard swiped="right" />
-        <Image
-          className="-bottom-4 z-[100]"
-          style={{ left: x! + 40 }}
-          source={arrow}
-        />
-        <TutorialCard
-          onClose={onClose}
-          onPress={goNext}
-          title="Swipe right to see
+    <View style={{ top: y! + safeAreaTopInset + 53 }}>
+      <TutorialHabitCard swiped="right" />
+      <Image
+        className="-bottom-4 z-[100]"
+        style={{ left: x! + 40 }}
+        source={arrow}
+      />
+      <TutorialCard
+        onClose={onClose}
+        onPress={goNext}
+        title="Swipe right to see
 the habit’s strike"
-          btnLabel="Next"
-        />
-      </View>
-    </TutorialBackgroundWrapper>
+        btnLabel="Next"
+      />
+    </View>
   )
 }
