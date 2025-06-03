@@ -66,18 +66,12 @@ export default function Tabs<T extends string>({
           animatedStyle,
           { height: dimensions.height - 16, width: buttonWidth - 16 },
         ]}
-        className="absolute bg-primary rounded-main my-2 mx-2"
+        className="absolute bg-primary rounded-main my-2 mx-2 left-0"
       />
-      {options.map((option, i) => (
+      {options.map((option) => (
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => {
-            tabPositionX.value = withSpring(buttonWidth * i, {
-              duration: 1500,
-            })
-
-            onPress(option.key)
-          }}
+          onPress={() => onPress(option.key)}
           className={`flex-1 justify-center rounded-main py-2`}
           key={option.key}
         >

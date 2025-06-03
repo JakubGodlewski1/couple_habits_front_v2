@@ -28,7 +28,7 @@ const PartnerTabbarButton = ({
       <PartnerPageTabbarBudge isFocused={isFocused} />
       <View
         ref={(node) => setTutorialRef("partnerTabbar", node)}
-        className="flex items-cente "
+        className="flex items-center"
       >
         <Animated.View className={"mb-1.5"} style={animatedIconStyle}>
           <MaterialCommunityIcons
