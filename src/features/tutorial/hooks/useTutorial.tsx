@@ -3,11 +3,16 @@ import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext
 import { useEffect, useState } from "react"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
+import { usePathname } from "expo-router"
+import { useGetAvatars } from "@/features/avatar/api/hooks/useGetAvatars"
 
 export const useTutorial = () => {
   const [visibleTutorial, setVisibleTutorial] = useState<TutorialType | null>(
     null,
   )
+
+  const pathname = usePathname()
+
   const {
     isLoading,
     refScreenPositions,
@@ -15,6 +20,7 @@ export const useTutorial = () => {
     user,
     habits,
     setTutorialSeen,
+    partnerAvatar,
   } = useLoadData()
 
   useEffect(() => {
@@ -28,16 +34,20 @@ export const useTutorial = () => {
     seenTutorials.firstHabit,
     seenTutorials.connection,
     seenTutorials.intro,
-    seenTutorials.avatar,
+    seenTutorials.partnerAvatar,
+    pathname,
+    refScreenPositions.partnerAvatar.x,
+    refScreenPositions.partnerAvatar.y,
+    partnerAvatar,
   ])
 
   /*main logic*/
   const rules = () => {
-    //show "connect with partner" tutorial screen
+    //"connect with partner" screen
     if (!seenTutorials.connection && !user?.hasPartner) {
       setVisibleTutorial("connection")
     }
-    //show "add first habit" tutorial screen
+    //"add first habit" screen
     else if (
       !seenTutorials.firstHabit &&
       habits.length === 0 &&
@@ -45,9 +55,19 @@ export const useTutorial = () => {
     ) {
       setVisibleTutorial("firstHabit")
     }
-    //show "intro" tutorial screen
+    //"intro" screen
     else if (!seenTutorials.intro && habits.length === 1) {
       setVisibleTutorial("intro")
+    }
+    //"partner avatar" tutorial screen
+    else if (
+      !seenTutorials.partnerAvatar &&
+      !partnerAvatar &&
+      refScreenPositions.partnerAvatar.x &&
+      refScreenPositions.partnerAvatar.y &&
+      pathname.includes("/partner-home")
+    ) {
+      setVisibleTutorial("partnerAvatar")
     } else setVisibleTutorial(null)
   }
 
@@ -70,8 +90,12 @@ const useLoadData = () => {
     setTutorialSeen,
   } = useTutorialContext()
 
+  const { avatars, isPending: isLoadingAvatars } = useGetAvatars()
+
   const { homeContainer, points, strike } = refScreenPositions
+
   const isLoading =
+    isLoadingAvatars ||
     isLoadingHabits ||
     isLoadingUser ||
     isLoadingTutorialContext ||
@@ -84,6 +108,7 @@ const useLoadData = () => {
 
   return {
     setTutorialSeen,
+    partnerAvatar: avatars?.partnerAvatarBase64,
     isLoading,
     refScreenPositions,
     seenTutorials,

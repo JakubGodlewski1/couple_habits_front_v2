@@ -20,7 +20,7 @@ export const TutorialContext = createContext<Context>({
   seenTutorials: {
     connection: false,
     firstHabit: false,
-    avatar: false,
+    partnerAvatar: false,
     intro: false,
   },
   setTutorialSeen: async () => {},
@@ -31,7 +31,7 @@ export const TutorialContextProvider = ({ children }: PropsWithChildren) => {
   const [seenTutorials, setSeenTutorials] = useState<TutorialSeenMap>({
     connection: false,
     firstHabit: false,
-    avatar: false,
+    partnerAvatar: false,
     intro: false,
   })
   const [isLoading, setIsLoading] = useState(true)

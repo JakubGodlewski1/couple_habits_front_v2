@@ -1,4 +1,4 @@
-type TutorialType = "connection" | "firstHabit" | "avatar" | "intro"
+type TutorialType = "connection" | "firstHabit" | "intro" | "partnerAvatar"
 
 type TutorialRefType = "strike" | "points" | "homeContainer"
 

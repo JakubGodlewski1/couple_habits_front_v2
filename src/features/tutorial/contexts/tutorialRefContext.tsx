@@ -16,6 +16,7 @@ export interface RefScreenPositions {
   points: Position
   homeContainer: Position
   partnerTabbar: Position
+  partnerAvatar: Position
 }
 
 type TutorialRefType = keyof RefScreenPositions
@@ -36,6 +37,7 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
       points: { x: null, y: null },
       homeContainer: { x: null, y: null },
       partnerTabbar: { x: null, y: null },
+      partnerAvatar: { x: null, y: null },
     })
 
   const hasUpdated = useRef<Record<TutorialRefType, boolean>>({
@@ -43,6 +45,7 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
     points: false,
     homeContainer: false,
     partnerTabbar: false,
+    partnerAvatar: false,
   })
 
   const setTutorialRef = useCallback(
