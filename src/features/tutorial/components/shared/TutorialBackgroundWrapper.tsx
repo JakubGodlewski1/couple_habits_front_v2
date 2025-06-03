@@ -1,10 +1,13 @@
 import { PropsWithChildren, useEffect, useRef } from "react"
-import { Animated, StyleSheet } from "react-native"
+import { Animated, Platform, StyleSheet } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 export default function TutorialBackgroundWrapper({
   children,
 }: PropsWithChildren) {
   const opacity = useRef(new Animated.Value(0)).current
+
+  const { top: topInset } = useSafeAreaInsets()
 
   useEffect(() => {
     Animated.timing(opacity, {
@@ -16,7 +19,15 @@ export default function TutorialBackgroundWrapper({
   }, [])
 
   return (
-    <Animated.View style={[styles.wrapper, { opacity }]}>
+    <Animated.View
+      style={[
+        styles.wrapper,
+        {
+          opacity,
+          paddingTop: Platform.OS === "android" ? topInset * 2 : topInset,
+        },
+      ]}
+    >
       {children}
     </Animated.View>
   )

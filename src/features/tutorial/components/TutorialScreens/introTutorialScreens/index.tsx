@@ -36,11 +36,11 @@ const screens: Record<
 }
 
 const screenOrder: IntroScreenType[] = [
-  "strike",
-  "points",
   "swipeLeft",
   "swipeRight",
   "longPress",
+  "strike",
+  "points",
   "partnerPage",
   "ideasPage",
 ]

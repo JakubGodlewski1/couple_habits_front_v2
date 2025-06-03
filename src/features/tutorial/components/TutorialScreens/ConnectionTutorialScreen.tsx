@@ -22,6 +22,7 @@ export default function ConnectionTutorialScreen({
     <TutorialBackgroundWrapper>
       <View style={{ top: y }}>
         <TutorialCard
+          showCloseButton
           onClose={onClose}
           onPress={() => {
             setIsHidden(true)

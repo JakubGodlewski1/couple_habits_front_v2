@@ -14,13 +14,12 @@ type Props = {
 export default function SwipeLeftTutorialScreen({
   goNext,
   onClose,
-  safeAreaTopInset,
   refScreenPositions,
 }: Props) {
   const { x, y } = refScreenPositions.homeContainer
 
   return (
-    <View style={{ top: y! + safeAreaTopInset + 53 }}>
+    <View style={{ top: y! + 53 }}>
       <TutorialHabitCard swiped="left" />
       <>
         <Image

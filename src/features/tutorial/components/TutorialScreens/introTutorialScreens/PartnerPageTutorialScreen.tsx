@@ -14,11 +14,15 @@ export default function PartnerPageTutorialScreen({
   goNext,
   onClose,
   refScreenPositions,
+  safeAreaTopInset,
 }: Props) {
   const { y } = refScreenPositions.partnerTabbar
 
   return (
-    <View className="-translate-y-[100%]" style={{ top: y! }}>
+    <View
+      className="-translate-y-[100%]"
+      style={{ top: y! - safeAreaTopInset }}
+    >
       <TutorialCard
         onClose={onClose}
         onPress={goNext}

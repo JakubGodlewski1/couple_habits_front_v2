@@ -14,13 +14,12 @@ type Props = {
 export default function LongPressTutorialScreen({
   goNext,
   onClose,
-  safeAreaTopInset,
   refScreenPositions,
 }: Props) {
   const { y } = refScreenPositions.homeContainer
 
   return (
-    <View style={{ top: y! + safeAreaTopInset + 53 }}>
+    <View style={{ top: y! + 53 }}>
       <View className="relative mb-10">
         <TutorialHabitCard />
         <Image

@@ -13,13 +13,12 @@ type Props = {
 export default function PointsTutorialScreen({
   refScreenPositions,
   onClose,
-  safeAreaTopInset,
   goNext,
 }: Props) {
   const { x, y } = refScreenPositions.points
 
   return (
-    <View style={{ top: y! + safeAreaTopInset + 20 }}>
+    <View style={{ top: y! + 20 }}>
       <Image
         style={{ left: x! + 50 }}
         className="z-[100] -bottom-4 rotate-[60deg]"

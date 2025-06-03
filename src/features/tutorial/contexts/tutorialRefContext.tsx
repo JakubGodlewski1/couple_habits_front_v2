@@ -52,14 +52,11 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
     (type: TutorialRefType, node: View | null) => {
       if (!node || hasUpdated.current[type]) return
 
-      node.measure((x, y, width, height, pageX, pageY) => {
+      node.measureInWindow((x, y) => {
         setRefScreenPositions((prev) => {
-          const current = prev[type]
-          if (current.x === pageX && current.y === pageY) return prev
-
           return {
             ...prev,
-            [type]: { x: pageX, y: pageY },
+            [type]: { x, y },
           }
         })
       })

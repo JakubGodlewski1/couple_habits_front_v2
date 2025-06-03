@@ -4,6 +4,7 @@ import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/Tut
 import { Image, View } from "react-native"
 import arrow from "@/assets/icons/arrow.png"
 import { useUploadPartnerAvatar } from "@/features/avatar/api/hooks/useUploadPartnerAvatar"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 type Props = {
   refScreenPositions: RefScreenPositions
@@ -15,12 +16,13 @@ export default function PartnerAvatarTutorialScreen({
   onClose,
 }: Props) {
   const { y } = refScreenPositions.partnerAvatar
+  const { top } = useSafeAreaInsets()
 
   const { uploadPartnerAvatar } = useUploadPartnerAvatar()
 
   return (
     <TutorialBackgroundWrapper>
-      <View style={{ top: y! + 160 }}>
+      <View style={{ top: y! + 160 - top }}>
         <Image
           className="z-[100] -bottom-4 rotate-[33deg] left-1/2 -translate-x-2/3"
           source={arrow}

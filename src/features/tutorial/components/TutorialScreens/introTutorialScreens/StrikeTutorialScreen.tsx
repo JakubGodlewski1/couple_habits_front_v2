@@ -13,13 +13,12 @@ type Props = {
 export default function StrikeTutorialScreen({
   refScreenPositions,
   onClose,
-  safeAreaTopInset,
   goNext,
 }: Props) {
   const { x, y } = refScreenPositions.strike
 
   return (
-    <View style={{ marginTop: y! + safeAreaTopInset + 20 }}>
+    <View style={{ marginTop: y! + 20 }}>
       <Image
         className="z-[100px] -bottom-4"
         style={{ left: x! + 50 }}

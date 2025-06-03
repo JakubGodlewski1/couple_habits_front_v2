@@ -22,14 +22,15 @@ export default function FirstHabitTutorialScreen({
     <TutorialBackgroundWrapper>
       <View style={{ top: y }}>
         <TutorialCard
+          showCloseButton
           onClose={onClose}
           onPress={() => {
             setIsHidden(true)
             router.push("/add-habit")
             onClose()
           }}
-          title={`Its time to create Your first habit`}
-          btnLabel="Let's do it"
+          title={`It's time to create Your first habit`}
+          btnLabel="Let's do it!"
         />
       </View>
     </TutorialBackgroundWrapper>
