@@ -5,8 +5,6 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import IsLoading from "@/components/IsLoading"
 import PartnerRequestModal from "@/features/shared/partnerRequests/modals/PartnerRequestModal"
 import TutorialRouter from "@/features/tutorial/components/shared/TutorialRouter"
-import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext"
-import { TouchableOpacity } from "react-native"
 
 export default function MainLayoutWrapper() {
   return (
@@ -23,7 +21,7 @@ function MainLayout() {
 
   return (
     <>
-      <HandleTutorialReset />
+      {/*<HandleTutorialReset />*/}
       <TutorialRouter />
       <PartnerRequestModal />
       <Tabs
@@ -77,17 +75,17 @@ function MainLayout() {
   )
 }
 
-const HandleTutorialReset = () => {
-  const { setTutorialSeen } = useTutorialContext()
-  return (
-    <TouchableOpacity
-      onPress={async () => {
-        await setTutorialSeen("connection", false)
-        await setTutorialSeen("firstHabit", false)
-        await setTutorialSeen("intro", false)
-        await setTutorialSeen("partnerAvatar", false)
-      }}
-      className="bg-red-900 w-20 h-20 absolute z-50 bottom-32"
-    />
-  )
-}
+// const HandleTutorialReset = () => {
+//   const { setTutorialSeen } = useTutorialContext()
+//   return (
+//     <TouchableOpacity
+//       onPress={async () => {
+//         await setTutorialSeen("connection", false)
+//         await setTutorialSeen("firstHabit", false)
+//         await setTutorialSeen("intro", false)
+//         await setTutorialSeen("partnerAvatar", false)
+//       }}
+//       className="bg-red-900 w-20 h-20 absolute z-50 bottom-32"
+//     />
+//   )
+// }

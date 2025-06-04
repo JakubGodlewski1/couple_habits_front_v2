@@ -1,6 +1,6 @@
 import SafeAreaWrapper from "../../../components/SafeAreaWrapper"
 import Text from "../../../components/Text"
-import { Image, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import SignOutBtn from "@/features/auth/components/SignOutBtn"
 import DeleteAccountBtn from "@/features/user/components/DeleteAccountBtn"
 import SendFeedbackBtn from "@/features/feedback/components/SendFeedbackBtn"
@@ -10,22 +10,16 @@ import DiscordBtn from "@/features/contactWithClient/components/DiscordBtn"
 import UnmountOnBlur from "@/components/UnmountOnBlur"
 import BuyProBtn from "@/features/subscriptions/components/BuyProBtn"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
-import { useGetAvatars } from "@/features/avatar/api/hooks/useGetAvatars"
 
 export default function Settings() {
-  const { subscriptionInfo, isPending, error } = useGetSubscriptionInfo()
-
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
+  const { subscriptionInfo } = useGetSubscriptionInfo()
 
   return (
     <SafeAreaWrapper className="max-h-full">
       <View className="flex-row justify-between items-center">
         <Text type="h1">Settings</Text>
 
-        {subscriptionInfo!.hasProAccess && (
+        {subscriptionInfo?.hasProAccess && (
           <Text className="mb-8 bg-[#C6AE79] font-medium text-white px-4 py-1 rounded-lg mt-1">
             Pro account
           </Text>

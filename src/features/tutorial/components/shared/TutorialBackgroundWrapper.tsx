@@ -13,7 +13,7 @@ export default function TutorialBackgroundWrapper({
     Animated.timing(opacity, {
       toValue: 1,
       duration: 200,
-      delay: 1000,
+      delay: 500,
       useNativeDriver: true,
     }).start()
   }, [])

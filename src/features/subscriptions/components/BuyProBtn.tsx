@@ -1,8 +1,7 @@
 import Button from "@/components/Button"
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons"
+import { Feather } from "@expo/vector-icons"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useBuyPro } from "@/features/subscriptions/hooks/useBuyPro"
-import IsLoadingProAccount from "@/features/subscriptions/components/IsLoadingProAccount"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
 import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
@@ -13,9 +12,10 @@ const BuyProBtn = () => {
   const { data: featureFlags, isPending: isFeatureFlagsLoading } =
     useGetFeatureFlags()
 
-  if (isLoading || isPending || isFeatureFlagsLoading)
-    return <IsLoadingProAccount />
   if (
+    isLoading ||
+    isPending ||
+    isFeatureFlagsLoading ||
     !user?.hasPartner ||
     subscriptionInfo?.hasProAccess ||
     !featureFlags?.isPaywallEnabled

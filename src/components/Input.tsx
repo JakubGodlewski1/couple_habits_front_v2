@@ -19,6 +19,8 @@ type Props = {
   autoCapitalize?: "none" | "words" | "sentences"
   keyboardType?: KeyboardTypeOptions
   multiline?: boolean
+  onFocus?: () => void
+  onBlur?: () => void
 }
 
 export default function Input({
@@ -31,6 +33,8 @@ export default function Input({
   multiline,
   autoCapitalize = "sentences",
   label,
+  onFocus,
+  onBlur,
 }: Props) {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
 
@@ -41,6 +45,8 @@ export default function Input({
         className={`flex-row bg-white border-[1px] border-subtle rounded-main items-center pr-4 overflow-hidden`}
       >
         <TextInput
+          onFocus={onFocus}
+          onBlur={onBlur}
           className={`p-4 grow font-main700 ${multiline ? "h-48" : ""}`}
           autoCapitalize={autoCapitalize}
           secureTextEntry={

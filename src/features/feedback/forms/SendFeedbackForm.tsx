@@ -13,9 +13,13 @@ import { FEEDBACK_DROPDOWN_OPTIONS } from "@/features/feedback/consts/feedbackDr
 
 type Props = {
   closeModal: () => void
+  setIsEmailInputFocused: (isFocused: boolean) => void
 }
 
-export default function SendFeedbackForm({ closeModal }: Props) {
+export default function SendFeedbackForm({
+  closeModal,
+  setIsEmailInputFocused,
+}: Props) {
   const {
     control,
     handleSubmit,
@@ -32,7 +36,7 @@ export default function SendFeedbackForm({ closeModal }: Props) {
 
   return (
     <View className="grow">
-      <View className="gap-5">
+      <View className="gap-5 ">
         <Controller
           defaultValue={FEEDBACK_DROPDOWN_OPTIONS[0].key}
           control={control}
@@ -70,6 +74,8 @@ export default function SendFeedbackForm({ closeModal }: Props) {
             <View>
               <Text className="mb-2">Email</Text>
               <Input
+                onFocus={() => setIsEmailInputFocused(true)}
+                onBlur={() => setIsEmailInputFocused(false)}
                 errorMessage={errors.email?.message}
                 placeholder="your@email.com"
                 value={field.value || ""}
@@ -79,8 +85,9 @@ export default function SendFeedbackForm({ closeModal }: Props) {
           )}
           name="email"
         />
+
         <Controller
-          defaultValue={true}
+          defaultValue={false}
           control={control}
           render={({ field }) => (
             <TouchableOpacity
