@@ -11,10 +11,10 @@ export const useGetFeatureFlags = () => {
     return data
   }
 
-  const { data, isPending, error } = useQuery<FeatureFlags>({
+  const { data, isPending, error, isError } = useQuery<FeatureFlags>({
     queryFn: getFeatureFlags,
     queryKey: queryKeys.featureFlags.get,
   })
 
-  return { data, isPending, error }
+  return { data, isPending, error, isError }
 }

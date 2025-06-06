@@ -13,7 +13,7 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 
 export const useSkipHabit = () => {
   const { getAxiosInstance } = useAxios()
-  const { user } = useGetUser()
+  const user = useGetUser().user!
 
   const queryClient = useQueryClient()
   const isFetching = useIsFetching({ queryKey: queryKeys.habits.get }) > 0

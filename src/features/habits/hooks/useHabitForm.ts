@@ -21,7 +21,7 @@ type Props = {
 }
 
 export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
-  const { user } = useGetUser()
+  const user = useGetUser().user!
 
   const { createHabit, isPending: isCreating } = useCreateHabit({ onSettled })
   const { updateHabit, isPending: isUpdating } = useUpdateHabit({ onSettled })

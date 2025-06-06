@@ -10,10 +10,11 @@ export const useGetUser = () => {
     return response.data
   }
 
-  const { data, error, isPending } = useQuery<UserFromBackend>({
-    queryFn: getUser,
-    queryKey: queryKeys.users.get,
-  })
+  const { data, error, isPending, isLoading, isError } =
+    useQuery<UserFromBackend>({
+      queryFn: getUser,
+      queryKey: queryKeys.users.get,
+    })
 
-  return { user: data, error, isPending }
+  return { user: data, error, isLoading, isPending, isError }
 }

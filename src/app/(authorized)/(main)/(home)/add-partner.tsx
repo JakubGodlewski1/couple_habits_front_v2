@@ -8,15 +8,18 @@ import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import { router } from "expo-router"
 import AddPartnerForm from "@/features/addPartner/forms/AddPartnerForm"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
+import { useEffect } from "react"
 
 export default function AddPartner() {
   const { setIsHidden } = useHideTabbarContext()
-  const { user, isPending, error } = useGetUser()
+  const user = useGetUser().user!
 
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
+  //if your partner connected with you and you open the app after connection, you should be moved to home
+  useEffect(() => {
+    if (user.hasPartner) {
+      router.replace("/home")
+    }
+  }, [user.hasPartner])
 
   return (
     <SafeAreaWrapper className="mt-4">

@@ -7,18 +7,11 @@ import { useUploadPartnerAvatar } from "@/features/avatar/api/hooks/useUploadPar
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 export default function PartnerAvatarBox() {
-  const { user } = useGetUser()
-  const {
-    isPending: isAvatarPending,
-    isError: isAvatarError,
-    avatars,
-  } = useGetAvatars()
+  const user = useGetUser().user!
+  const avatars = useGetAvatars().avatars!
 
   const { uploadPartnerAvatar, isPending } = useUploadPartnerAvatar()
   const { setTutorialRef } = useTutorialRefContext()
-
-  const isIcon =
-    isAvatarPending || isAvatarError || !avatars?.partnerAvatarBase64
 
   return (
     <View className="w-full justify-center  items-center">
@@ -29,7 +22,7 @@ export default function PartnerAvatarBox() {
         activeOpacity={0.8}
         className="border-main rounded-full border-1 p-1.5 z-20 bg-white"
       >
-        {isIcon || !avatars?.partnerAvatarBase64 ? (
+        {!avatars.partnerAvatarBase64 ? (
           <Image
             source={avatarPlaceholder}
             style={{ width: 120, height: 120, borderRadius: 99, zIndex: 50 }}
@@ -45,7 +38,7 @@ export default function PartnerAvatarBox() {
       </TouchableOpacity>
       <View className="w-full  justify-center  p-4  -mt-5  rounded-main border-main  bg-white items-center">
         <Text className=" text-xl  font-main800">
-          {user?.partnerName || "..."}
+          {user.partnerName || "..."}
         </Text>
       </View>
     </View>

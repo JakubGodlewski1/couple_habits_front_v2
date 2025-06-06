@@ -1,6 +1,5 @@
 import { Pressable } from "react-native"
 import { ReactNode, useEffect } from "react"
-import { LabelPosition } from "@react-navigation/bottom-tabs/lib/typescript/module/src/types"
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import Animated, {
   interpolate,
@@ -9,6 +8,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import PartnerTabbarButton from "@/components/tabbar/PartnerTabbarButton"
+import { LabelPosition } from "@react-navigation/bottom-tabs/lib/typescript/src/types"
 
 const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
@@ -37,7 +37,7 @@ type Props = {
         color: string
         position: LabelPosition
         children: string
-      }) => React.ReactNode)
+      }) => ReactNode)
 }
 
 export default function TabbarButton({

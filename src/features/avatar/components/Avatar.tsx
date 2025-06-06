@@ -6,14 +6,10 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 type Props = { type: "user" | "partner" }
 
 export default function Avatar({ type }: Props) {
-  const { avatars, isPending, isError } = useGetAvatars()
-  const { user, isPending: isUserPending, error: userError } = useGetUser()
+  const avatars = useGetAvatars().avatars!
+  const user = useGetUser().user!
 
-  if (isPending || isError || isUserPending || userError) {
-    return <WithText text={type === "user" ? "You" : user!.partnerName} />
-  }
-
-  const { partnerAvatarBase64, userAvatarBase64 } = avatars!
+  const { partnerAvatarBase64, userAvatarBase64 } = avatars
   const avatar = type === "user" ? userAvatarBase64 : partnerAvatarBase64
 
   return avatar ? (

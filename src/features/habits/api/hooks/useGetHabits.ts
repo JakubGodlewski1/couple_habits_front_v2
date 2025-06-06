@@ -1,5 +1,4 @@
 import { useAxios } from "@/api/hooks/useAxios"
-import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import { useQuery } from "@tanstack/react-query"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
@@ -13,10 +12,10 @@ export const useGetHabits = () => {
     return await res.data
   }
 
-  const { data, isLoading, isError } = useQuery<HabitsFromBackend>({
+  const { data, isLoading, isError, isPending } = useQuery<HabitsFromBackend>({
     queryKey: queryKeys.habits.get,
     queryFn: getHabits,
   })
 
-  return { data, isError, isLoading }
+  return { data, isError, isLoading, isPending }
 }

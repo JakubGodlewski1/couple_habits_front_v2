@@ -2,7 +2,6 @@ import { Tabs } from "expo-router"
 import TabBar from "../../../components/tabbar/Tabbar"
 import { MainLayoutProviders } from "@/providers/MainLayoutProviders"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
-import IsLoading from "@/components/IsLoading"
 import PartnerRequestModal from "@/features/shared/partnerRequests/modals/PartnerRequestModal"
 import TutorialRouter from "@/features/tutorial/components/shared/TutorialRouter"
 
@@ -15,10 +14,7 @@ export default function MainLayoutWrapper() {
 }
 
 function MainLayout() {
-  const { user, isPending, error } = useGetUser()
-
-  if (isPending || error) return <IsLoading />
-
+  const user = useGetUser().user!
   return (
     <>
       {/*<HandleTutorialReset />*/}

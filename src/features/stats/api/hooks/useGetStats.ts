@@ -13,11 +13,12 @@ export const useGetStats = (
     return response.data
   }
 
-  const { data, error, isError, isPending } = useQuery<StatsFromBackend>({
-    enabled: !isDisabled,
-    queryFn: getStats,
-    queryKey: queryKeys.stats.get,
-  })
+  const { data, error, isError, isPending, isLoading } =
+    useQuery<StatsFromBackend>({
+      enabled: !isDisabled,
+      queryFn: getStats,
+      queryKey: queryKeys.stats.get,
+    })
 
-  return { stats: data, error, isError, isPending }
+  return { stats: data, error, isError, isPending, isLoading }
 }

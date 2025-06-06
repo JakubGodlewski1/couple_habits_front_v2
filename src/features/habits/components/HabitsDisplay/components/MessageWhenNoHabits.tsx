@@ -25,7 +25,7 @@ export default function MessageWhenNoHabits({
   children,
   owner,
 }: Props) {
-  const { user } = useGetUser()
+  const user = useGetUser().user!
 
   //if there are no habits, display appropriate message on the given tab
 
@@ -53,7 +53,7 @@ export default function MessageWhenNoHabits({
     return (
       <View>
         <Message label={labels.noHabits[owner]} />
-        {owner ==="user" &&  <AddHabitBtn />}
+        {owner === "user" && <AddHabitBtn />}
       </View>
     )
   }

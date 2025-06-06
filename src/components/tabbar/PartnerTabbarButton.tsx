@@ -2,8 +2,6 @@ import PartnerPageTabbarBudge from "@/components/tabbar/PartnerTabbarBudge"
 import Animated from "react-native-reanimated"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { View } from "react-native"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
@@ -18,11 +16,10 @@ const PartnerTabbarButton = ({
   animatedIconStyle,
   animatedTextStyle,
 }: Props) => {
-  const { user, isPending, error } = useGetUser()
+  const user = useGetUser().user!
+
   const { setTutorialRef } = useTutorialRefContext()
 
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
   return (
     <>
       <PartnerPageTabbarBudge isFocused={isFocused} />

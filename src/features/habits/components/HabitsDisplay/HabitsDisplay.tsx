@@ -1,7 +1,5 @@
 import { HabitStateTab } from "@/features/habits/types/habitStateTabs"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 import HabitCard from "@/features/habits/components/habitCard/HabitCard"
 import { ScrollView, View } from "react-native"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
@@ -19,16 +17,10 @@ export default function HabitsDisplay({
   currentTab: HabitStateTab
   owner: "partner" | "user"
 }) {
-  const { data: habits, isError, isLoading } = useGetHabits()
-
-  if (isLoading) return <IsLoading />
-  if (isError)
-    return (
-      <IsError message="We could not load your habits. Try again later. If the problem persists, contact us at contact@couplehabits.com" />
-    )
+  const habits = useGetHabits().data!
 
   //get filtered habits by tabs
-  const habitsByTabs = getHabitsByTabs(habits![owner])
+  const habitsByTabs = getHabitsByTabs(habits[owner])
 
   return (
     <MessageWhenNoHabits

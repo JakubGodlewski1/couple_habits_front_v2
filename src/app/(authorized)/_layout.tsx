@@ -3,58 +3,38 @@ import IsLoading from "@/components/IsLoading"
 import { Redirect, Stack } from "expo-router"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useRegisterPurchaseObj } from "@/features/subscriptions/hooks/useRegisterPurchaseObj"
-import { useClearAllCacheData } from "@/hooks/useClearAllData"
-import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
-import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
+import { useGetInitialData } from "@/hooks/useGetInitialData"
+import { useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
+import useRefetchOnAppStateChange from "@/hooks/useRefetchOnAppStateChange"
 
 //1 redirect if user is not signed in
 const AuthorizedLayout = () => {
   const { isSignedIn } = useAuth()
   if (!isSignedIn) return <Redirect href="/(unauthorized)/sign-in" />
-
-  return <ResetCache />
-}
-
-//2 reset all cache
-const ResetCache = () => {
-  const { isResetting } = useClearAllCacheData()
-  if (isResetting) return <IsLoading />
-
   return <GetInitialData />
 }
 
-//3. fetch all initial data that is needed
+//2. fetch all initial data that is needed
 const GetInitialData = () => {
-  const { isPending: isUserPending, error: userError, user } = useGetUser()
-  const {
-    isPending: isSubscriptionPending,
-    error: subscriptionError,
-    subscriptionInfo,
-  } = useGetSubscriptionInfo()
-  const { isPending: isFeatureFlagsPending, error: featureFlagsError } =
-    useGetFeatureFlags()
+  const queryClient = useQueryClient()
+  useEffect(() => {
+    queryClient.clear()
+  }, [])
 
-  const isPending =
-    isUserPending ||
-    isSubscriptionPending ||
-    isFeatureFlagsPending ||
-    !subscriptionInfo ||
-    !user
-  const error = userError || subscriptionError || featureFlagsError
+  const { isPending, isError } = useGetInitialData()
 
   if (isPending) return <IsLoading />
-  if (error)
+  if (isError)
     throw new Error("Error in authorized layout while fetching initial data")
 
-  return <RegisterPaymentsAndReturnStack user={user!} />
+  return <RegisterPaymentsAndReturnStack />
 }
 
-//register payments and show the stack
-const RegisterPaymentsAndReturnStack = ({
-  user,
-}: {
-  user: UserFromBackend
-}) => {
+//3. register payments and show the stack
+const RegisterPaymentsAndReturnStack = () => {
+  useRefetchOnAppStateChange()
+  const user = useGetUser().user!
   useRegisterPurchaseObj({ user })
 
   return (

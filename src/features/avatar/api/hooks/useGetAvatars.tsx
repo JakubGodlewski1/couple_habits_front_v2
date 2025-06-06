@@ -12,6 +12,8 @@ export const useGetAvatars = () => {
   }
 
   const {
+    isFetching,
+    isLoading,
     isPending,
     data: avatars,
     isError,
@@ -20,5 +22,5 @@ export const useGetAvatars = () => {
     queryKey: queryKeys.avatars.get,
   })
 
-  return { isPending, isError, avatars }
+  return { isPending, isError, avatars, isLoading, isFetching }
 }

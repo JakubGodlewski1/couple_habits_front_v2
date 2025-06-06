@@ -3,16 +3,11 @@ import Animated from "react-native-reanimated"
 import Text from "@/components/Text"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
 import { habitFilters } from "@/features/habits/filters/filters"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 
 const PartnerTabbarBudge = ({ isFocused }: { isFocused: boolean }) => {
-  const { data, isError, isLoading } = useGetHabits()
+  const habits = useGetHabits().data!
 
-  if (isLoading) return null
-  if (isError) return null
-
-  const uncompletedHabitsScheduledForToday = data!.partner
+  const uncompletedHabitsScheduledForToday = habits.partner
     .filter(habitFilters.scheduledForTodayIncludingWeekly)
     .filter((h) => !h.isCompleted)
 
@@ -36,12 +31,9 @@ const PartnerPageTabbarBudgeWrapper = ({
 }: {
   isFocused: boolean
 }) => {
-  const { user, isPending, error } = useGetUser()
+  const user = useGetUser().user!
 
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
-
-  if (user!.hasPartner && !isFocused)
+  if (user.hasPartner && !isFocused)
     return <PartnerTabbarBudge isFocused={isFocused} />
   else return null
 }

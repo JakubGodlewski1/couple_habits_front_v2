@@ -6,19 +6,17 @@ import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSub
 import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
 const BuyProBtn = () => {
-  const { user, isPending } = useGetUser()
+  const user = useGetUser().user!
+  const subscriptionInfo = useGetSubscriptionInfo().subscriptionInfo!
+  const featureFlags = useGetFeatureFlags().data!
+
   const { buyPro, isLoading } = useBuyPro()
-  const { subscriptionInfo } = useGetSubscriptionInfo()
-  const { data: featureFlags, isPending: isFeatureFlagsLoading } =
-    useGetFeatureFlags()
 
   if (
     isLoading ||
-    isPending ||
-    isFeatureFlagsLoading ||
-    !user?.hasPartner ||
-    subscriptionInfo?.hasProAccess ||
-    !featureFlags?.isPaywallEnabled
+    !user.hasPartner ||
+    subscriptionInfo.hasProAccess ||
+    !featureFlags.isPaywallEnabled
   )
     return
 

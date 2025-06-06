@@ -82,22 +82,19 @@ export const useTutorial = () => {
 //helpers
 const useLoadData = () => {
   const { refScreenPositions } = useTutorialRefContext()
-  const { isLoading: isLoadingHabits, data: habits } = useGetHabits()
-  const { isPending: isLoadingUser, user } = useGetUser()
+  const habits = useGetHabits().data!
+  const user = useGetUser().user!
+  const avatars = useGetAvatars().avatars!
+
   const {
     isLoading: isLoadingTutorialContext,
     seenTutorials,
     setTutorialSeen,
   } = useTutorialContext()
 
-  const { avatars, isPending: isLoadingAvatars } = useGetAvatars()
-
   const { homeContainer, points, strike } = refScreenPositions
 
   const isLoading =
-    isLoadingAvatars ||
-    isLoadingHabits ||
-    isLoadingUser ||
     isLoadingTutorialContext ||
     !homeContainer.x ||
     !homeContainer.y ||

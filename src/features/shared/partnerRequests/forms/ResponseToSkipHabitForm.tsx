@@ -1,7 +1,5 @@
 import { Alert, Image, View } from "react-native"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 import Button from "@/components/Button"
 import chill from "@/assets/illustrations/chill.png"
 import Text from "@/components/Text"
@@ -20,8 +18,8 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
   const { data } = partnerRequestData
   const { sendResponse } = useSendResponseToPartner()
 
-  const { isLoading, data: habits, isError } = useGetHabits()
-  const { user } = useGetUser()
+  const habits = useGetHabits().data!
+  const user = useGetUser().user!
   const { skipHabit, isPending: isCompleting } = useSkipHabit()
   const queryClient = useQueryClient()
 
@@ -41,8 +39,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
 
   const onAccept = async () => {
     //delete the request
-    // @ts-ignore
-    await deleteAsync()
+    await deleteAsync(undefined)
 
     //skip the habit
     skipHabit({ id: data.id })
@@ -58,8 +55,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
 
   const onCancel = async () => {
     //delete the request
-    // @ts-ignore
-    await deleteAsync()
+    await deleteAsync(undefined)
 
     //send request to partner with info that the request has been cancelled
     sendResponse(false)
@@ -70,17 +66,13 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
     )
   }
 
-  if (isLoading) return <IsLoading />
-  if (isError) return <IsError />
-
   //find the habit partner wants to skip
   const habit = habits!.partner.find((h) => h.id === data.id)
 
   if (!habit) {
     Alert.alert("We could not find the habit")
-    // @ts-ignore
     //delete the request if habit does not exist
-    deleteAsync()
+    deleteAsync(undefined)
     return null
   }
 
@@ -98,7 +90,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
         Details:
       </Text>
       <Text className="self-start">
-        - Habit's label:
+        - Habit&apos;s label:
         <Text className="font-semibold"> {habit.label}</Text>
       </Text>
       {user?.habitSkipPrice && (

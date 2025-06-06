@@ -10,26 +10,21 @@ import HomeStatsBar from "@/features/stats/components/HomeStatsBar"
 import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisplay"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
-  const { user, isPending, error } = useGetUser()
+  const user = useGetUser().user!
   const { setTutorialRef } = useTutorialRefContext()
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
 
   return (
     <SafeAreaWrapper className="gap-2">
-      <HomeStatsBar isDisabled={!user!.hasPartner} />
+      <HomeStatsBar isDisabled={!user?.hasPartner} />
       <HabitsTabs
         options={HABIT_STATE_TABS}
         onPress={setCurrentTab}
         value={currentTab}
       />
-
       <View
         ref={(node) => setTutorialRef("homeContainer", node)}
         className="flex-1"
@@ -49,10 +44,7 @@ export default function Home() {
 }
 
 const NotConnectedDisplay = () => {
-  const { user, isPending, error } = useGetUser()
-
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
+  const user = useGetUser().user
 
   return (
     <View className="gap-1 items-center grow justify-between">

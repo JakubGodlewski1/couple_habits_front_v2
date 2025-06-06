@@ -4,14 +4,12 @@ import { useQueryClient } from "@tanstack/react-query"
 import { router } from "expo-router"
 import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import { useAlert } from "@/hooks/useAlert"
-import { useGetStatsState } from "@/features/stats/api/hooks/useGetStatsState"
 import { queryKeys } from "@/config/queryKeys"
 
 export const useAppEvents = () => {
   const queryClient = useQueryClient()
   const { setIsHidden } = useHideTabbarContext()
   const { openAlert } = useAlert()
-  const { refetch } = useGetStatsState()
 
   const initAppEvents = (socketInstance: Socket) => {
     //habit
@@ -22,7 +20,7 @@ export const useAppEvents = () => {
     socketInstance.on("habit.toggle", () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      refetch()
+      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
     })
 
     //connecting with a partner

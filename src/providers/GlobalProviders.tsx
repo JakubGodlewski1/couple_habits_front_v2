@@ -7,16 +7,16 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { TutorialContextProvider } from "@/features/tutorial/contexts/tutorialContext"
 import { TutorialRefProvider } from "@/features/tutorial/contexts/tutorialRefContext"
 
-export const GlobalProviders = ({ children }: PropsWithChildren) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        gcTime: Infinity,
-        staleTime: Infinity,
-      },
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: Infinity,
+      staleTime: Infinity,
     },
-  })
+  },
+})
 
+export const GlobalProviders = ({ children }: PropsWithChildren) => {
   return (
     <ClerkProviderWithToken>
       <QueryClientProvider client={queryClient}>

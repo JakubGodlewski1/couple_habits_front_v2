@@ -1,7 +1,6 @@
 import { useAxios } from "@/api/hooks/useAxios"
 import { useQuery } from "@tanstack/react-query"
 import { queryKeys } from "@/config/queryKeys"
-import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
 export const useGetSubscriptionInfo = () => {
   const { getAxiosInstance } = useAxios()
@@ -11,7 +10,7 @@ export const useGetSubscriptionInfo = () => {
     return response.data
   }
 
-  const { data, error, isPending } = useQuery<SubscriptionInfo>({
+  const { data, error, isPending, isError } = useQuery<SubscriptionInfo>({
     queryFn: getSubscriptionInfo,
     queryKey: queryKeys.subscription.get,
     staleTime: 1000 * 60 * 60, //1h
@@ -20,5 +19,5 @@ export const useGetSubscriptionInfo = () => {
 
   //if paywall is disabled by feature flag, return pro access to for everyone
 
-  return { subscriptionInfo: data, error, isPending }
+  return { subscriptionInfo: data, error, isPending, isError }
 }

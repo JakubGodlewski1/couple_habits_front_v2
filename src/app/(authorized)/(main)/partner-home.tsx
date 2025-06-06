@@ -10,15 +10,10 @@ import Text from "@/components/Text"
 import GoToAddPartnerPageBtn from "@/features/addPartner/components/GoToAddPartnerPageBtn"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
 import PartnerAvatarBox from "@/components/PartnerAvatarBox"
-import IsLoading from "@/components/IsLoading"
-import IsError from "@/components/IsError"
 
 export default function PartnerHome() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
-  const { user, isPending, error } = useGetUser()
-
-  if (isPending) return <IsLoading />
-  if (error) return <IsError />
+  const user = useGetUser().user
 
   return (
     <SafeAreaWrapper className="gap-2">

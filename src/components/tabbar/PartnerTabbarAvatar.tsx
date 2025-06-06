@@ -12,9 +12,9 @@ export default function PartnerTabbarAvatar({
   animatedIconStyle,
   isFocused,
 }: Props) {
-  const { isPending, isError, avatars } = useGetAvatars()
+  const avatars = useGetAvatars().avatars!
 
-  const isIcon = isPending || isError || !avatars?.partnerAvatarBase64
+  const isIcon = !avatars.partnerAvatarBase64
 
   return (
     <Animated.View className={isIcon ? "mb-2" : ""} style={animatedIconStyle}>

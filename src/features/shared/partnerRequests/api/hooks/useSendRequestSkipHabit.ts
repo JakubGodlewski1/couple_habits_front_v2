@@ -5,8 +5,8 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useGetStats } from "@/features/stats/api/hooks/useGetStats"
 
 export const useSendRequestSkipHabit = () => {
-  const { user } = useGetUser()
-  const { stats } = useGetStats()
+  const user = useGetUser().user!
+  const stats = useGetStats().stats!
 
   const { create, isPending } = useMutate<CreatePartnerRequest>({
     endpoint: "/partner-requests",

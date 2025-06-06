@@ -6,7 +6,7 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 export const useAddPartnerForm = () => {
   const [connectionCode, setCode] = useState("")
   const [error, setError] = useState<string | null>(null)
-  const { user } = useGetUser()
+  const user = useGetUser().user!
 
   const { addPartner, isPending, error: mutationError } = useAddPartner()
 

@@ -21,7 +21,7 @@ export default function TutorialCard({
   onPress,
   showCloseButton,
 }: Props) {
-  const { user } = useGetUser()
+  const user = useGetUser().user!
 
   return (
     <View className="bg-black/60 p-5 rounded-xl w-[90vw] left-1/2 -translate-x-1/2 gap-6">
