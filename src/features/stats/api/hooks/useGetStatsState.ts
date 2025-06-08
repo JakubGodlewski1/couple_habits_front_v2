@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { useAxios } from "@/api/hooks/useAxios"
-import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { queryKeys } from "@/config/queryKeys"
 
-export const useGetStatsState = () => {
+export const useGetStatsState = ({ user }: { user: UserFromBackend }) => {
   const { getAxiosInstance } = useAxios()
-  const { user } = useGetUser()
 
   const getStatsState = async (): Promise<StatsStateFromBackend> => {
     const axios = await getAxiosInstance()

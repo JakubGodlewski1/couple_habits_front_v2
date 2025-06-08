@@ -24,6 +24,7 @@ export const SocketProvider = ({ children }: PropsWithChildren) => {
     const socketInstance = io(WEBSOCKET_API_URL, {
       auth: { token },
       reconnection: true,
+      retries: 15,
     })
 
     initRootEvents(socketInstance)

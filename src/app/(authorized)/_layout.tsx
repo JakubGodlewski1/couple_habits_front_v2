@@ -7,6 +7,7 @@ import { useGetInitialData } from "@/hooks/useGetInitialData"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 import useRefetchOnAppStateChange from "@/hooks/useRefetchOnAppStateChange"
+import { useGetStatsState } from "@/features/stats/api/hooks/useGetStatsState"
 
 //1 redirect if user is not signed in
 const AuthorizedLayout = () => {
@@ -36,6 +37,8 @@ const RegisterPaymentsAndReturnStack = () => {
   useRefetchOnAppStateChange()
   const user = useGetUser().user!
   useRegisterPurchaseObj({ user })
+  //fetch stats state when user account is available
+  useGetStatsState({ user })
 
   return (
     <Stack
