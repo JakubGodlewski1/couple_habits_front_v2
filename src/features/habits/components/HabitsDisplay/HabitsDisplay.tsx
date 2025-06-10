@@ -1,14 +1,9 @@
 import { HabitStateTab } from "@/features/habits/types/habitStateTabs"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
-import HabitCard from "@/features/habits/components/habitCard/HabitCard"
 import { ScrollView, View } from "react-native"
-import { HabitFromBackend } from "@/features/habits/types/habitCard"
-import Budge from "@/features/habits/components/HabitsDisplay/components/Budge"
+import TodoSection from "@/features/habits/components/HabitsDisplay/components/TodoSection"
+import AllSection from "@/features/habits/components/HabitsDisplay/components/AllSection"
 import MessageWhenNoHabits from "@/features/habits/components/HabitsDisplay/components/MessageWhenNoHabits"
-import {
-  budgesByDisplayTab,
-  getHabitsByTabs,
-} from "@/features/habits/components/HabitsDisplay/helpers/getHabitsByTabs"
 
 export default function HabitsDisplay({
   currentTab,
@@ -19,58 +14,20 @@ export default function HabitsDisplay({
 }) {
   const habits = useGetHabits().data!
 
-  //get filtered habits by tabs
-  const habitsByTabs = getHabitsByTabs(habits[owner])
-
   return (
     <MessageWhenNoHabits
       owner={owner}
-      habitsByTabs={habitsByTabs}
+      habits={habits[owner]}
       currentTab={currentTab}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HabitsByBudges
-          owner={owner}
-          habits={habitsByTabs[currentTab]}
-          currentTab={currentTab}
-        />
+        {currentTab === "todo" ? (
+          <TodoSection habits={habits[owner]} owner={owner} />
+        ) : (
+          <AllSection habits={habits[owner]} owner={owner} />
+        )}
         <View className="h-[75px]"></View>
       </ScrollView>
     </MessageWhenNoHabits>
   )
-}
-
-const HabitsByBudges = ({
-  currentTab,
-  habits,
-  owner,
-}: {
-  habits: HabitFromBackend[]
-  currentTab: HabitStateTab
-  owner: "partner" | "user"
-}) => {
-  return budgesByDisplayTab[currentTab].map(({ label, filter }) => {
-    const filteredHabits = habits.filter(filter)
-    if (filteredHabits.length === 0) return null
-
-    return (
-      <View className="gap-2 mb-4" key={label}>
-        <Budge label={label} />
-        <View className="gap-3.5">
-          {filteredHabits
-            .sort((a, b) => a.id - b.id)
-            .map((habit) => (
-              <HabitCard
-                owner={owner}
-                options={{
-                  toggleHidden: currentTab === "all",
-                }}
-                key={habit.id}
-                habit={habit}
-              />
-            ))}
-        </View>
-      </View>
-    )
-  })
 }

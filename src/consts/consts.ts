@@ -1,6 +1,5 @@
 export const HABIT_STATE_TABS = [
   { key: "todo", label: "Todo" },
-  { key: "completed", label: "Completed" },
   { key: "all", label: "All" },
 ] as const
 

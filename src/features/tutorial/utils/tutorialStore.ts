@@ -28,7 +28,7 @@ export class TutorialStore {
         return {
           connection: false,
           firstHabit: false,
-          avatar: false,
+          partnerAvatar: false,
           intro: false,
         }
       }
@@ -36,7 +36,7 @@ export class TutorialStore {
     return {
       connection: false,
       firstHabit: false,
-      avatar: false,
+      partnerAvatar: false,
       intro: false,
     }
   }

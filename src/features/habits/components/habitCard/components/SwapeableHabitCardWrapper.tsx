@@ -32,7 +32,7 @@ export default function SwapeableHabitCardWrapper({
     <GestureHandlerRootView style={{ flexGrow: 1 }}>
       <Swipeable
         ref={swipeableRef}
-        containerStyle={{ borderRadius: 8, backgroundColor: "white" }}
+        containerStyle={{ borderRadius: 4, backgroundColor: "white" }}
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
       >

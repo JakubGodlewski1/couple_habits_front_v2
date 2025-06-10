@@ -15,7 +15,7 @@ export default function Checkbox({
   className,
   color = "green",
 }: Props) {
-  const colorHash = color === "red" ? "#ff786f" : "#6EC166"
+  const colorHash = color === "red" ? "#ff786f" : "#D1D1D1"
 
   return (
     <BouncyCheckbox
@@ -31,7 +31,7 @@ export default function Checkbox({
       size={20}
       innerIconStyle={{
         borderRadius: 4,
-        borderColor: isChecked ? colorHash : "black",
+        borderColor: isChecked ? colorHash : "gray",
       }}
       iconStyle={{ borderRadius: 4 }}
     />

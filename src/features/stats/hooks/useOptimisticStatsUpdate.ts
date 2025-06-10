@@ -32,6 +32,18 @@ export const useOptimisticStatsUpdate = () => {
       .filter(habitFilters.scheduledForTodayIncludingWeekly)
       .filter((h) => !h.isCompleted)
 
+    /* update points on toggle*/
+
+    queryClient.setQueryData(["stats"], (prev: StatsFromBackend) => ({
+      ...prev,
+      points: isCompleted
+        ? prev.points! + 10
+        : prev.points! >= 10
+          ? prev.points! - 10
+          : 0,
+    }))
+
+    /*update global strike on toggle*/
     // increase global strike if:
     // - habit has been completed
     // - toggled habit is scheduled for today

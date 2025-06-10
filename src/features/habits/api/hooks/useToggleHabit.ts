@@ -62,11 +62,6 @@ export const useToggleHabit = () => {
       isCompleted,
     })
 
-    showToast({
-      type: "success",
-      message: `Habit ${isCompleted ? "completed successfully" : "completion undone"} `,
-    })
-
     const axios = await getAxiosInstance()
     return await axios.put(`/habits/${id}/toggle`, { isCompleted })
   }

@@ -5,10 +5,11 @@ import Text from "@/components/Text"
 import { View } from "react-native"
 import AddHabitBtn from "@/features/habits/components/AddHabitBtn"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import { habitFilters } from "@/features/habits/filters/filters"
 
 type Props = {
   owner: "partner" | "user"
-  habitsByTabs: Record<HabitStateTab, HabitFromBackend[]>
+  habits: HabitFromBackend[]
   currentTab: HabitStateTab
   children: ReactNode
 }
@@ -20,9 +21,9 @@ const Message = ({ label }: { label: string }) => (
 )
 
 export default function MessageWhenNoHabits({
-  habitsByTabs,
   currentTab,
   children,
+  habits,
   owner,
 }: Props) {
   const user = useGetUser().user!
@@ -49,7 +50,7 @@ export default function MessageWhenNoHabits({
   }
 
   //if there are no habits at all
-  if (habitsByTabs.all.length === 0) {
+  if (habits.length === 0) {
     return (
       <View>
         <Message label={labels.noHabits[owner]} />
@@ -58,19 +59,13 @@ export default function MessageWhenNoHabits({
     )
   }
 
-  //if user has not completed any habit yet
-  if (habitsByTabs[currentTab].length === 0) {
-    if (currentTab === "completed")
-      return <Message label={labels.noCompletedHabits[owner]} />
-
-    if (currentTab === "todo") {
-      //If there are no habits scheduled for today at all
-      if (habitsByTabs["completed"].length === 0)
-        return <Message label={labels.noHabitsForToday[owner]} />
-
-      //if user has completed all habits scheduled for today
-      return <Message label={labels.allHabitsCompleted[owner]} />
-    }
+  //if user dont have any habits scheduled for today
+  if (
+    currentTab === "todo" &&
+    habits.filter(habitFilters.scheduledForToday).length === 0 &&
+    habits.filter(habitFilters.weekly).length === 0
+  ) {
+    return <Message label={labels.noHabitsForToday[owner]} />
   }
 
   return children

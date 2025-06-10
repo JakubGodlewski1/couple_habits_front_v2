@@ -13,30 +13,42 @@ type Props = {
 const MenuContainer = ({ habit, closeHabitCard }: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const { deleteHabitWithWarning } = useDeleteHabit()
+  const [containerHeight, setContainerHeight] = useState(0)
 
   return (
-    <View className="m-1 ml-2 rounded-r-main gap-1">
+    <>
       <UpdateHabitModal
         habit={habit}
         onClose={() => setIsModalVisible(false)}
         isOpen={isModalVisible}
       />
-      <TouchableOpacity
-        onPress={() => deleteHabitWithWarning(habit.id)}
-        className="bg-primary rounded-main px-5 flex-1 items-center justify-center"
-      >
-        <Feather color="white" size={20} name="trash-2" />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          setIsModalVisible(true)
-          closeHabitCard()
+      <View
+        className="flex-row bg-white border-y-[1px] border-gray-100"
+        onLayout={(event) => {
+          const { height } = event.nativeEvent.layout
+          setContainerHeight(height)
         }}
-        className="bg-tertiary px-5 flex-1 rounded-main items-center justify-center"
       >
-        <Feather color="white" size={20} name="edit" />
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={() => {
+            setIsModalVisible(true)
+            closeHabitCard()
+          }}
+          style={{ width: containerHeight }}
+          className="bg-tertiary items-center justify-center "
+        >
+          <Feather color="white" size={20} name="edit" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => deleteHabitWithWarning(habit.id)}
+          style={{ width: containerHeight }}
+          className="bg-primary items-center justify-center"
+        >
+          <Feather color="white" size={20} name="trash-2" />
+        </TouchableOpacity>
+        {/* If you want buttons to fill the remaining space horizontally, you can wrap them in another flex view */}
+      </View>
+    </>
   )
 }
 
