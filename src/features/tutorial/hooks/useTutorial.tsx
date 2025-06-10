@@ -92,7 +92,8 @@ const useLoadData = () => {
     setTutorialSeen,
   } = useTutorialContext()
 
-  const { homeContainer, points, strike } = refScreenPositions
+  const { homeContainer, points, strike, ideasTabbar, partnerTabbar } =
+    refScreenPositions
 
   const isLoading =
     isLoadingTutorialContext ||
@@ -101,7 +102,11 @@ const useLoadData = () => {
     !points.x ||
     !points.y ||
     !strike.x ||
-    !strike.y
+    !strike.y ||
+    !ideasTabbar.x ||
+    !ideasTabbar.y ||
+    !partnerTabbar.x ||
+    !partnerTabbar.y
 
   return {
     setTutorialSeen,

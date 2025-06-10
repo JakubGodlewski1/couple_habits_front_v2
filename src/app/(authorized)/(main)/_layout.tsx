@@ -4,6 +4,8 @@ import { MainLayoutProviders } from "@/providers/MainLayoutProviders"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import PartnerRequestModal from "@/features/shared/partnerRequests/modals/PartnerRequestModal"
 import TutorialRouter from "@/features/tutorial/components/shared/TutorialRouter"
+// import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext"
+// import { TouchableOpacity } from "react-native"
 
 export default function MainLayoutWrapper() {
   return (

@@ -20,7 +20,7 @@ export default function PointsTutorialScreen({
   return (
     <View style={{ top: y! + 20 }}>
       <Image
-        style={{ left: x! + 50 }}
+        style={{ left: x! }}
         className="z-[100] -bottom-4 rotate-[60deg]"
         source={arrow}
       />

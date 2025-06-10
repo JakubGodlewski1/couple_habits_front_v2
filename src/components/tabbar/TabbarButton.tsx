@@ -1,5 +1,5 @@
-import { Pressable } from "react-native"
-import { ReactNode, useEffect } from "react"
+import { Pressable, View } from "react-native"
+import { ReactNode, useEffect, useRef } from "react"
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
 import Animated, {
   interpolate,
@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated"
 import PartnerTabbarButton from "@/components/tabbar/PartnerTabbarButton"
 import { LabelPosition } from "@react-navigation/bottom-tabs/lib/typescript/src/types"
+import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
@@ -49,6 +50,8 @@ export default function TabbarButton({
   isFocused,
 }: Props) {
   const scale = useSharedValue(0)
+  const viewRef = useRef<View>(null)
+  const { setTutorialRef } = useTutorialRefContext()
 
   useEffect(() => {
     scale.value = withSpring(isFocused ? 1 : 0, { duration: 350 })
@@ -66,6 +69,12 @@ export default function TabbarButton({
     return { transform: [{ scale: scaleValue }], top }
   })
 
+  const handleLayout = () => {
+    if (routeName === "ideas" && viewRef.current) {
+      setTutorialRef("ideasTabbar", viewRef.current)
+    }
+  }
+
   return (
     <Pressable
       testID={testID}
@@ -74,24 +83,26 @@ export default function TabbarButton({
       onPress={onPress}
       onLongPress={onLongPress}
     >
-      <>
-        {routeName === "partner-home" ? (
-          <PartnerTabbarButton
-            isFocused={isFocused}
-            animatedIconStyle={animatedIconStyle}
-            animatedTextStyle={animatedTextStyle}
-          />
-        ) : (
-          <>
-            <Animated.View style={animatedIconStyle}>
-              {icon[routeName]({ color: isFocused ? "white" : "black" })}
-            </Animated.View>
-            <Animated.Text style={animatedTextStyle} className="text-sm">
-              {typeof label === "string" && label}
-            </Animated.Text>
-          </>
-        )}
-      </>
+      {routeName === "partner-home" ? (
+        <PartnerTabbarButton
+          isFocused={isFocused}
+          animatedIconStyle={animatedIconStyle}
+          animatedTextStyle={animatedTextStyle}
+        />
+      ) : (
+        <View
+          ref={viewRef}
+          onLayout={handleLayout}
+          className="flex items-center"
+        >
+          <Animated.View style={animatedIconStyle}>
+            {icon[routeName]({ color: isFocused ? "white" : "black" })}
+          </Animated.View>
+          <Animated.Text style={animatedTextStyle} className="text-sm">
+            {typeof label === "string" && label}
+          </Animated.Text>
+        </View>
+      )}
     </Pressable>
   )
 }

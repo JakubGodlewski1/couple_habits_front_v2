@@ -4,6 +4,7 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { View } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
+import { useRef } from "react"
 
 type Props = {
   isFocused: boolean
@@ -17,17 +18,20 @@ const PartnerTabbarButton = ({
   animatedTextStyle,
 }: Props) => {
   const user = useGetUser().user!
-
   const { setTutorialRef } = useTutorialRefContext()
+  const viewRef = useRef<View>(null)
+
+  const handleLayout = () => {
+    if (viewRef.current) {
+      setTutorialRef("partnerTabbar", viewRef.current)
+    }
+  }
 
   return (
     <>
       <PartnerPageTabbarBudge isFocused={isFocused} />
-      <View
-        ref={(node) => setTutorialRef("partnerTabbar", node)}
-        className="flex items-center"
-      >
-        <Animated.View className={"mb-1.5"} style={animatedIconStyle}>
+      <View ref={viewRef} onLayout={handleLayout} className="flex items-center">
+        <Animated.View className="mb-1.5" style={animatedIconStyle}>
           <MaterialCommunityIcons
             color={isFocused ? "white" : "black"}
             name="heart-outline"
@@ -35,7 +39,7 @@ const PartnerTabbarButton = ({
           />
         </Animated.View>
         <Animated.Text style={animatedTextStyle} className="text-sm">
-          {user!.partnerName || "Partner"}
+          {user.partnerName || "Partner"}
         </Animated.Text>
       </View>
     </>

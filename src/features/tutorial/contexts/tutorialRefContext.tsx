@@ -16,6 +16,7 @@ export interface RefScreenPositions {
   points: Position
   homeContainer: Position
   partnerTabbar: Position
+  ideasTabbar: Position
   partnerAvatar: Position
 }
 
@@ -38,6 +39,7 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
       homeContainer: { x: null, y: null },
       partnerTabbar: { x: null, y: null },
       partnerAvatar: { x: null, y: null },
+      ideasTabbar: { x: null, y: null },
     })
 
   const hasUpdated = useRef<Record<TutorialRefType, boolean>>({
@@ -45,6 +47,7 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
     points: false,
     homeContainer: false,
     partnerTabbar: false,
+    ideasTabbar: false,
     partnerAvatar: false,
   })
 
@@ -54,6 +57,11 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
 
       node.measureInWindow((x, y) => {
         setRefScreenPositions((prev) => {
+          if (type === "ideasTabbar") {
+            console.log({
+              [type]: { x, y },
+            })
+          }
           return {
             ...prev,
             [type]: { x, y },

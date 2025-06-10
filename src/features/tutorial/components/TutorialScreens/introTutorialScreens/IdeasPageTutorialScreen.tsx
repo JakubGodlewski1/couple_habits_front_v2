@@ -16,7 +16,7 @@ export default function IdeasPageTutorialScreen({
   refScreenPositions,
   safeAreaTopInset,
 }: Props) {
-  const { y } = refScreenPositions.partnerTabbar
+  const { y, x } = refScreenPositions.ideasTabbar
 
   return (
     <View
@@ -30,7 +30,11 @@ export default function IdeasPageTutorialScreen({
         title="Hundreds of ideas"
         btnLabel="Got it!"
       />
-      <Image className="rotate-[200deg] left-36 bottom-2 " source={arrow} />
+      <Image
+        style={{ left: x! + 20 }}
+        className="rotate-[-120deg]  bottom-2 "
+        source={arrow}
+      />
     </View>
   )
 }
