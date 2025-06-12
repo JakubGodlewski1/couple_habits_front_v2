@@ -8,7 +8,6 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import PartnerTabbarButton from "@/components/tabbar/PartnerTabbarButton"
-import { LabelPosition } from "@react-navigation/bottom-tabs/lib/typescript/src/types"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 
 const icon: Record<string, (props: { color: string }) => ReactNode> = {
@@ -36,7 +35,7 @@ type Props = {
     | ((props: {
         focused: boolean
         color: string
-        position: LabelPosition
+        position: "beside-icon" | "below-icon"
         children: string
       }) => ReactNode)
 }

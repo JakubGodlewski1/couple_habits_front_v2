@@ -6,6 +6,7 @@ import { View } from "react-native"
 import AddHabitBtn from "@/features/habits/components/AddHabitBtn"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { habitFilters } from "@/features/habits/filters/filters"
+import { useShowCompletedHabitsContext } from "@/features/showCompletedHabits/contexts/showCompletedHabitsContext"
 
 type Props = {
   owner: "partner" | "user"
@@ -27,6 +28,8 @@ export default function MessageWhenNoHabits({
   owner,
 }: Props) {
   const user = useGetUser().user!
+
+  const { showCompletedHabits } = useShowCompletedHabitsContext()
 
   //if there are no habits, display appropriate message on the given tab
 
@@ -62,8 +65,16 @@ export default function MessageWhenNoHabits({
   //if user dont have any habits scheduled for today
   if (
     currentTab === "todo" &&
-    habits.filter(habitFilters.scheduledForToday).length === 0 &&
-    habits.filter(habitFilters.weekly).length === 0
+    habits
+      .filter(habitFilters.scheduledForToday)
+      .filter((h) =>
+        showCompletedHabits || owner === "partner" ? true : !h.isCompleted,
+      ).length === 0 &&
+    habits
+      .filter(habitFilters.weekly)
+      .filter((h) =>
+        showCompletedHabits || owner === "partner" ? true : !h.isCompleted,
+      ).length === 0
   ) {
     return <Message label={labels.noHabitsForToday[owner]} />
   }

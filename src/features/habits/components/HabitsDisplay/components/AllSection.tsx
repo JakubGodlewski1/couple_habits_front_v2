@@ -38,13 +38,16 @@ export default function AllSection({ habits, owner }: Props) {
       {hasDaily && (
         <>
           <Budge label="Daily" disableMarginTop={isFirstSection("daily")} />
-          {dailyHabits.map((h) => (
-            <HabitCard
-              key={h.id}
-              options={{ toggleHidden: true }}
-              owner={owner}
-              habit={h}
-            />
+          {dailyHabits.map((h, i) => (
+            <View key={h.id}>
+              {i === 0 && <View className="border-b border-gray-100 " />}
+              <HabitCard
+                options={{ toggleHidden: true }}
+                owner={owner}
+                habit={h}
+              />
+              <View className="border-b border-gray-100 " />
+            </View>
           ))}
         </>
       )}
@@ -53,17 +56,15 @@ export default function AllSection({ habits, owner }: Props) {
         <>
           <Budge label="Weekly" disableMarginTop={isFirstSection("weekly")} />
           {weeklyHabits.map((h, i) => (
-            <>
-              {i === 0 && (
-                <View key={h.id} className="border-b border-gray-100 " />
-              )}
+            <View key={h.id}>
+              {i === 0 && <View className="border-b border-gray-100 " />}
               <HabitCard
                 options={{ toggleHidden: true }}
                 owner={owner}
                 habit={h}
               />
               <View className="border-b border-gray-100 " />
-            </>
+            </View>
           ))}
         </>
       )}
@@ -75,17 +76,15 @@ export default function AllSection({ habits, owner }: Props) {
             disableMarginTop={isFirstSection("specific")}
           />
           {specificDaysHabits.map((h, i) => (
-            <>
-              {i === 0 && (
-                <View key={h.id} className="border-b border-gray-100 " />
-              )}
+            <View key={h.id}>
+              {i === 0 && <View className="border-b border-gray-100 " />}
               <HabitCard
                 options={{ toggleHidden: true }}
                 owner={owner}
                 habit={h}
               />
               <View className="border-b border-gray-100 " />
-            </>
+            </View>
           ))}
         </>
       )}

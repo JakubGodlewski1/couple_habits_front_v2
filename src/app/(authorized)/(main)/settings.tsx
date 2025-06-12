@@ -10,6 +10,7 @@ import DiscordBtn from "@/features/contactWithClient/components/DiscordBtn"
 import UnmountOnBlur from "@/components/UnmountOnBlur"
 import BuyProBtn from "@/features/subscriptions/components/BuyProBtn"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
+import ShowCompletedHabitsBtn from "@/features/showCompletedHabits/components/ShowCompletedHabitsBtn"
 
 export default function Settings() {
   const { subscriptionInfo } = useGetSubscriptionInfo()
@@ -31,6 +32,7 @@ export default function Settings() {
         <UpdatePartnerNameBtn />
         <SendFeedbackBtn />
         <DiscordBtn />
+        <ShowCompletedHabitsBtn />
         <SignOutBtn />
         <UnmountOnBlur>
           <DeleteAccountBtn />
