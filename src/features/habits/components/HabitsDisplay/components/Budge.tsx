@@ -8,7 +8,10 @@ type Props = {
 
 export default function Budge({ label, disableMarginTop }: Props) {
   return (
-    <View className={disableMarginTop ? "mb-4" : "my-4"} key={label}>
+    <View
+      className={` ml-1 ${disableMarginTop ? "mb-4 mt-1" : "my-4"}`}
+      key={label}
+    >
       <Text className="font-bold">{label}</Text>
     </View>
   )

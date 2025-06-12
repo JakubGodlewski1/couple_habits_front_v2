@@ -23,7 +23,7 @@ export default function LongPressTutorialScreen({
       <View className="relative mb-10">
         <TutorialHabitCard />
         <Image
-          className="w-[120px] h-[120px] self-end absolute left-1/2 -translate-x-1/2 -bottom-8 -rotate-[45deg]"
+          className="w-[90px] h-[90px] self-end absolute left-1/2 -bottom-8 -rotate-[45deg]"
           source={longPress}
         />
       </View>

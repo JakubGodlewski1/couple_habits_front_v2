@@ -31,23 +31,25 @@ export default function TutorialHabitCard({
   }, [swiped])
 
   return (
-    <View className="border-[1px] rounded-xl p-1 border-subtle">
+    <View className="mx-2">
       <GestureHandlerRootView style={{ flexGrow: 1 }}>
         <Swipeable
           ref={swipeableRef}
-          containerStyle={{ borderRadius: 8, backgroundColor: "white" }}
+          containerStyle={{
+            backgroundColor: "white",
+            borderRadius: 8,
+            overflow: "hidden",
+          }}
           renderLeftActions={() => <StrikeContainer strike={3} />}
           renderRightActions={() => <TutorialMenuContainer />}
         >
-          <View className="bg-white p-2 h-[92px] shadow-lg rounded-xl">
-            <Text type="sm" className="ml-2">
-              Go to the gym
-            </Text>
-            <Checkbox
-              onPress={() => {}}
-              className="mr-auto mt-auto"
-              isChecked={false}
-            />
+          <View className="flex-row justify-between items-center py-4 bg-white border-y border-gray-100 pl-4 shadow-xl">
+            <Checkbox onPress={() => {}} disabled isChecked={false} />
+            <View className="flex-1 ml-2 mr-2">
+              <Text type="sm" className="flex-shrink text-left">
+                Wake up before 6am
+              </Text>
+            </View>
           </View>
         </Swipeable>
       </GestureHandlerRootView>

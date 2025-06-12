@@ -27,7 +27,7 @@ export default function HabitCard({
   return (
     <PressableHabitCardWrapper isDisabled={owner === "partner"} habit={habit}>
       <SwapeableHabitCardWrapper isDisabled={owner === "partner"} habit={habit}>
-        <View className="flex-row justify-between items-start py-4 bg-white border-y border-gray-100">
+        <View className="flex-row justify-between items-center py-4 bg-white px-2  shadow-lg">
           {!isReadOnly && (
             <Checkbox
               onPress={(checked) => {

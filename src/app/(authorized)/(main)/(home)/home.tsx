@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Image, View } from "react-native"
 import SafeAreaWrapper from "../../../../components/SafeAreaWrapper"
 import HabitsTabs from "../../../../features/habits/components/habitsForm/HabitsTabs"
@@ -11,11 +11,18 @@ import HabitsDisplay from "@/features/habits/components/HabitsDisplay/HabitsDisp
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
+import { useFocusEffect } from "expo-router"
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
   const user = useGetUser().user!
   const { setTutorialRef } = useTutorialRefContext()
+
+  useFocusEffect(
+    useCallback(() => {
+      setCurrentTab("todo")
+    }, []),
+  )
 
   return (
     <SafeAreaWrapper className="gap-2">

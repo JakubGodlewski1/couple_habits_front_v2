@@ -3,12 +3,12 @@ import { Feather } from "@expo/vector-icons"
 
 export default function TutorialMenuContainer() {
   return (
-    <View className="m-1 ml-2 rounded-r-main gap-1">
-      <View className="bg-primary rounded-main px-5 flex-1 items-center justify-center">
-        <Feather color="white" size={20} name="trash-2" />
-      </View>
-      <View className="bg-tertiary px-5 flex-1 rounded-main items-center justify-center">
+    <View className="flex-row bg-white  border-gray-100 w-32">
+      <View className="bg-tertiary items-center justify-center h-full grow">
         <Feather color="white" size={20} name="edit" />
+      </View>
+      <View className="bg-primary items-center justify-center grow">
+        <Feather color="white" size={20} name="trash-2" />
       </View>
     </View>
   )

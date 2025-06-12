@@ -52,13 +52,18 @@ export default function AllSection({ habits, owner }: Props) {
       {hasWeekly && (
         <>
           <Budge label="Weekly" disableMarginTop={isFirstSection("weekly")} />
-          {weeklyHabits.map((h) => (
-            <HabitCard
-              key={h.id}
-              options={{ toggleHidden: true }}
-              owner={owner}
-              habit={h}
-            />
+          {weeklyHabits.map((h, i) => (
+            <>
+              {i === 0 && (
+                <View key={h.id} className="border-b border-gray-100 " />
+              )}
+              <HabitCard
+                options={{ toggleHidden: true }}
+                owner={owner}
+                habit={h}
+              />
+              <View className="border-b border-gray-100 " />
+            </>
           ))}
         </>
       )}
@@ -69,13 +74,18 @@ export default function AllSection({ habits, owner }: Props) {
             label="Specific days"
             disableMarginTop={isFirstSection("specific")}
           />
-          {specificDaysHabits.map((h) => (
-            <HabitCard
-              key={h.id}
-              options={{ toggleHidden: true }}
-              owner={owner}
-              habit={h}
-            />
+          {specificDaysHabits.map((h, i) => (
+            <>
+              {i === 0 && (
+                <View key={h.id} className="border-b border-gray-100 " />
+              )}
+              <HabitCard
+                options={{ toggleHidden: true }}
+                owner={owner}
+                habit={h}
+              />
+              <View className="border-b border-gray-100 " />
+            </>
           ))}
         </>
       )}

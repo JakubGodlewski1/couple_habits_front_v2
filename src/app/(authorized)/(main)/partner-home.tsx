@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Image, View } from "react-native"
 import { HabitStateTab } from "@/features/habits/types/habitStateTabs"
 import { HABIT_STATE_TABS } from "@/consts/consts"
@@ -10,10 +10,17 @@ import Text from "@/components/Text"
 import GoToAddPartnerPageBtn from "@/features/addPartner/components/GoToAddPartnerPageBtn"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
 import PartnerAvatarBox from "@/components/PartnerAvatarBox"
+import { useFocusEffect } from "expo-router"
 
 export default function PartnerHome() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
   const user = useGetUser().user
+
+  useFocusEffect(
+    useCallback(() => {
+      setCurrentTab("todo")
+    }, []),
+  )
 
   return (
     <SafeAreaWrapper className="gap-2">

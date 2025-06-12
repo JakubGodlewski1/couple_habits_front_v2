@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import Budge from "@/features/habits/components/HabitsDisplay/components/Budge"
 import { habitFilters } from "@/features/habits/filters/filters"
@@ -38,8 +38,14 @@ export default function TodoSection({ habits, owner }: Props) {
       {hasToday && (
         <>
           <Budge label="Today" disableMarginTop={isFirstSection("today")} />
-          {todayHabits.map((h) => (
-            <HabitCard key={h.id} owner={owner} habit={h} />
+          {todayHabits.map((h, i) => (
+            <>
+              {i === 0 && (
+                <View key={h.id} className="border-b border-gray-100 " />
+              )}
+              <HabitCard owner={owner} habit={h} />
+              <View className="border-b border-gray-100 " />
+            </>
           ))}
         </>
       )}
@@ -47,16 +53,16 @@ export default function TodoSection({ habits, owner }: Props) {
       {hasWeek && (
         <>
           <Budge label="This Week" disableMarginTop={isFirstSection("week")} />
-          {thisWeekHabits.map((h) => (
-            <HabitCard key={h.id} owner={owner} habit={h} />
+          {thisWeekHabits.map((h, i) => (
+            <>
+              {i === 0 && (
+                <View key={h.id} className="border-b border-gray-100 " />
+              )}
+              <HabitCard owner={owner} habit={h} />
+              <View className="border-b border-gray-100 " />
+            </>
           ))}
         </>
-      )}
-
-      {!hasToday && !hasWeek && (
-        <Text className="text-center text-gray-400 mt-4">
-          You have no habits to complete
-        </Text>
       )}
     </View>
   )
