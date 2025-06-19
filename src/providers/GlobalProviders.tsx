@@ -6,6 +6,7 @@ import { ClerkProviderWithToken } from "@/features/auth/components/ClerkProvider
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { TutorialContextProvider } from "@/features/tutorial/contexts/tutorialContext"
 import { TutorialRefProvider } from "@/features/tutorial/contexts/tutorialRefContext"
+import { PostHogProvider } from "posthog-react-native"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,17 +19,33 @@ const queryClient = new QueryClient({
 
 export const GlobalProviders = ({ children }: PropsWithChildren) => {
   return (
-    <ClerkProviderWithToken>
-      <QueryClientProvider client={queryClient}>
-        <TutorialContextProvider>
-          <TutorialRefProvider>
-            <HideTabbarProvider>
-              <GestureHandlerRootView>{children}</GestureHandlerRootView>
-              <Toast />
-            </HideTabbarProvider>
-          </TutorialRefProvider>
-        </TutorialContextProvider>
-      </QueryClientProvider>
-    </ClerkProviderWithToken>
+    <PostHogProvider
+      apiKey="phc_AxEADyUSD6C2HmXhxB5QppzvBFVJ00gmBzfepjesgS4"
+      options={{
+        host: "https://ph.couplehabits.com",
+        enableSessionReplay: true,
+        sessionReplayConfig: {
+          maskAllTextInputs: false,
+          maskAllImages: true,
+          captureLog: true,
+          captureNetworkTelemetry: true,
+          androidDebouncerDelayMs: 500,
+          iOSdebouncerDelayMs: 1000,
+        },
+      }}
+    >
+      <ClerkProviderWithToken>
+        <QueryClientProvider client={queryClient}>
+          <TutorialContextProvider>
+            <TutorialRefProvider>
+              <HideTabbarProvider>
+                <GestureHandlerRootView>{children}</GestureHandlerRootView>
+                <Toast />
+              </HideTabbarProvider>
+            </TutorialRefProvider>
+          </TutorialContextProvider>
+        </QueryClientProvider>
+      </ClerkProviderWithToken>
+    </PostHogProvider>
   )
 }

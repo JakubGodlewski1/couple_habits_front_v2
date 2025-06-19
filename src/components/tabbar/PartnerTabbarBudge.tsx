@@ -5,11 +5,16 @@ import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
 import { habitFilters } from "@/features/habits/filters/filters"
 
 const PartnerTabbarBudge = ({ isFocused }: { isFocused: boolean }) => {
-  const habits = useGetHabits().data!
+  const { data: habits } = useGetHabits()
 
-  const uncompletedHabitsScheduledForToday = habits.partner
+  const uncompletedHabitsScheduledForToday = (habits?.partner || [])
     .filter(habitFilters.scheduledForTodayIncludingWeekly)
-    .filter((h) => !h.isCompleted)
+    .filter(
+      (h) =>
+        !(h.goalType === "atLeast"
+          ? h.targetCount <= h.completedCount
+          : h.completedCount <= h.targetCount),
+    )
 
   if (uncompletedHabitsScheduledForToday.length === 0) return null
 

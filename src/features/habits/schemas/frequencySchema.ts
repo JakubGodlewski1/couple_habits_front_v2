@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 // Define the RepeatValue and SpecificDaysValue constraints
-const repeatValueSchema = z.enum(["daily", "weekly"])
+const repeatValueSchema = z.enum(["daily", "weekly", "monthly"])
 const specificDaysValueSchema = z.enum([
   "monday",
   "tuesday",

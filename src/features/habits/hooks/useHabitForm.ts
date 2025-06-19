@@ -28,6 +28,8 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
 
   const isLoading = isCreating || isUpdating
 
+  console.log(JSON.stringify(initialData, null, 2))
+
   const {
     handleSubmit,
     formState: { errors },
@@ -37,9 +39,11 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     trigger,
     clearErrors,
   } = useForm<HabitFormType>({
-    defaultValues: {
-      label: initialData?.label || "",
-      frequency: initialData?.frequency || { type: "repeat", value: "daily" },
+    defaultValues: initialData || {
+      targetCount: 1,
+      label: "",
+      frequency: { type: "repeat", value: "daily" },
+      goalType: "atLeast",
     },
     resolver: zodResolver(habitFormSchema),
     mode: "all",

@@ -1,12 +1,16 @@
 import { DayOfTheWeek } from "@/types/daysOfWeek"
 
-type RepeatValue = "daily" | "weekly"
+type RepeatValue = "daily" | "weekly" | "monthly"
 type FrequencyType = "repeat" | "specificDays"
 type SpecificDaysValue = DayOfTheWeek[]
+
+export type GoalType = "atLeast" | "atMost"
 
 type HabitFormType = {
   label: string
   frequency: Frequency
+  goalType: GoalType
+  targetCount: number
 }
 
 type Frequency =

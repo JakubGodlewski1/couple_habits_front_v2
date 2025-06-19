@@ -1,11 +1,14 @@
-import { Frequency } from "@/features/habits/types/habitForm"
+import { Frequency, GoalType } from "@/features/habits/types/habitForm"
 
 export type HabitCard = {
   id: number
   strike: number
   frequency: Frequency
   label: string
-  isCompleted: boolean
+  targetCount: number
+  completedCount: number
+  goalType: GoalType
+  createdAt: string
 }
 
 export type HabitFromBackend = HabitCard

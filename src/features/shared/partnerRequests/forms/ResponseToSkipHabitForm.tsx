@@ -18,10 +18,12 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
   const { data } = partnerRequestData
   const { sendResponse } = useSendResponseToPartner()
 
-  const habits = useGetHabits().data!
+  const habits = useGetHabits()
   const user = useGetUser().user!
   const { skipHabit, isPending: isCompleting } = useSkipHabit()
   const queryClient = useQueryClient()
+
+  if (!habits) return null
 
   //delete request
   const { deleteAsync, isPending } = useMutate({
@@ -67,7 +69,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
   }
 
   //find the habit partner wants to skip
-  const habit = habits!.partner.find((h) => h.id === data.id)
+  const habit = habits.data?.partner.find((h) => h.id === data.id)
 
   if (!habit) {
     Alert.alert("We could not find the habit")

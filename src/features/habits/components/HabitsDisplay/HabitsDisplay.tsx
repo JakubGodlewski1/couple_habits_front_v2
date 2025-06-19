@@ -4,6 +4,8 @@ import { ScrollView, View } from "react-native"
 import TodoSection from "@/features/habits/components/HabitsDisplay/components/TodoSection"
 import AllSection from "@/features/habits/components/HabitsDisplay/components/AllSection"
 import MessageWhenNoHabits from "@/features/habits/components/HabitsDisplay/components/MessageWhenNoHabits"
+import IsLoading from "@/components/IsLoading"
+import IsError from "@/components/IsError"
 
 export default function HabitsDisplay({
   currentTab,
@@ -12,19 +14,22 @@ export default function HabitsDisplay({
   currentTab: HabitStateTab
   owner: "partner" | "user"
 }) {
-  const habits = useGetHabits().data!
+  const { data: habits, isLoading, isError } = useGetHabits()
+
+  if (isLoading) return <IsLoading />
+  if (isError) return <IsError />
 
   return (
     <MessageWhenNoHabits
       owner={owner}
-      habits={habits[owner]}
+      habits={habits![owner]}
       currentTab={currentTab}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         {currentTab === "todo" ? (
-          <TodoSection habits={habits[owner]} owner={owner} />
+          <TodoSection habits={habits![owner]} owner={owner} />
         ) : (
-          <AllSection habits={habits[owner]} owner={owner} />
+          <AllSection habits={habits![owner]} owner={owner} />
         )}
         <View className="h-[75px]"></View>
       </ScrollView>

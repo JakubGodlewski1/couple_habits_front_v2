@@ -32,19 +32,19 @@ export default function HabitCard({
             <Checkbox
               onPress={(checked) => {
                 toggleHabit({
-                  isCompleted: checked,
+                  action: checked ? "add" : "subtract",
                   id: habit.id,
                 })
               }}
               disabled={isPending}
-              isChecked={habit.isCompleted}
+              isChecked={habit.completedCount === 1}
             />
           )}
 
           <View className="flex-1 ml-2 mr-2">
             <Text
               type="sm"
-              className={`flex-shrink text-left ${habit.isCompleted && !toggleHidden ? "line-through" : ""}`}
+              className={`flex-shrink text-left ${habit.completedCount === 1 && !toggleHidden ? "line-through" : ""}`}
             >
               {habit.label}
             </Text>

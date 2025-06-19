@@ -9,8 +9,16 @@ const options: { key: RepeatValue; label: string }[] = [
 type Props = {
   value: RepeatValue
   onChange: (value: RepeatValue) => void
+  isDisabled?: boolean
 }
 
-export default function RepeatDropdown({ onChange, value }: Props) {
-  return <Dropdown value={value} onChange={onChange} options={options} />
+export default function RepeatDropdown({ onChange, value, isDisabled }: Props) {
+  return (
+    <Dropdown
+      isDisabled={isDisabled}
+      value={value}
+      onChange={onChange}
+      options={options}
+    />
+  )
 }

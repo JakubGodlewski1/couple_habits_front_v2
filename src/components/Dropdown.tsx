@@ -4,6 +4,7 @@ import Text from "./Text"
 import { Entypo } from "@expo/vector-icons"
 
 type Props<T extends string> = {
+  isDisabled?: boolean
   value: T
   onChange: (key: T) => void
   options: {
@@ -13,6 +14,7 @@ type Props<T extends string> = {
 }
 
 export default function Dropdown<T extends string>({
+  isDisabled,
   options,
   onChange,
   value,
@@ -27,6 +29,7 @@ export default function Dropdown<T extends string>({
   return (
     <View className="relative z-10">
       <TouchableOpacity
+        disabled={isDisabled}
         activeOpacity={0.8}
         onPress={() => {
           Keyboard.dismiss()
@@ -45,6 +48,7 @@ export default function Dropdown<T extends string>({
         <View className="z-10 bg-white mt-1 p-2 absolute top-14 w-full border-main rounded-main">
           {options.map((o) => (
             <TouchableOpacity
+              disabled={isDisabled}
               className={`flex-row justify-between items-center rounded-lg py-2 px-3 ${selected.key === o.key && "bg-[#FF5545]"}`}
               key={o.key}
               onPress={() => {

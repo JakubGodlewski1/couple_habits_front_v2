@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Image, View } from "react-native"
 import SafeAreaWrapper from "../../../../components/SafeAreaWrapper"
 import HabitsTabs from "../../../../features/habits/components/habitsForm/HabitsTabs"
@@ -12,11 +12,18 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import coupleHighFive from "@/assets/illustrations/couple-high-five.png"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
 import { useFocusEffect } from "expo-router"
+import { usePostHog } from "posthog-react-native"
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
   const user = useGetUser().user!
   const { setTutorialRef } = useTutorialRefContext()
+
+  const posthog = usePostHog()
+
+  useEffect(() => {
+    posthog.capture("MyComponent loaded", { foo: "bar" })
+  }, [])
 
   useFocusEffect(
     useCallback(() => {

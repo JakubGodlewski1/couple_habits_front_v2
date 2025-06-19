@@ -57,11 +57,6 @@ export function TutorialRefProvider({ children }: { children: ReactNode }) {
 
       node.measureInWindow((x, y) => {
         setRefScreenPositions((prev) => {
-          if (type === "ideasTabbar") {
-            console.log({
-              [type]: { x, y },
-            })
-          }
           return {
             ...prev,
             [type]: { x, y },

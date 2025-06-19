@@ -9,20 +9,19 @@ import { getAxiosErrorMessage } from "@/utils/getAxiosErrorMessage"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 import l from "lodash"
-import { useOptimisticStatsUpdate } from "@/features/stats/hooks/useOptimisticStatsUpdate"
 
 export const useToggleHabit = () => {
   const { getAxiosInstance } = useAxios()
-  const { optimisticStatsUpdate } = useOptimisticStatsUpdate()
+  // const { optimisticStatsUpdate } = useOptimisticStatsUpdate()
 
   const queryClient = useQueryClient()
   const isFetching = useIsFetching({ queryKey: queryKeys.habits.get }) > 0
 
   const optimisticHabitUpdate = ({
     id,
-    isCompleted,
+    action,
   }: {
-    isCompleted: boolean
+    action: "add" | "subtract"
     id: number
   }) => {
     queryClient.setQueryData(
@@ -31,10 +30,8 @@ export const useToggleHabit = () => {
         if (!habits.user || !habits.user.length) return habits
 
         const habitToUpdate = l.cloneDeep(habits.user.find((h) => h.id === id)!)
-        habitToUpdate.isCompleted = isCompleted
-        habitToUpdate.strike = isCompleted
-          ? habitToUpdate.strike + 1
-          : habitToUpdate.strike - 1
+        habitToUpdate.completedCount += action === "add" ? 1 : -1
+        habitToUpdate.strike = action === "add" ? 1 : -1
 
         return {
           partner: habits.partner,
@@ -46,24 +43,24 @@ export const useToggleHabit = () => {
 
   const toggleHabitMutation = async ({
     id,
-    isCompleted,
+    action,
   }: {
-    isCompleted: boolean
+    action: "add" | "subtract"
     id: number
   }) => {
     //optimistic updates
     optimisticHabitUpdate({
-      isCompleted,
+      action,
       id,
     })
 
-    optimisticStatsUpdate({
-      habitId: id,
-      isCompleted,
-    })
+    // optimisticStatsUpdate({
+    //   habitId: id,
+    //   action,
+    // })
 
     const axios = await getAxiosInstance()
-    return await axios.put(`/habits/${id}/toggle`, { isCompleted })
+    return await axios.put(`/habits/${id}/toggle`, { action })
   }
 
   const { mutate: toggleHabit, isPending } = useMutation({

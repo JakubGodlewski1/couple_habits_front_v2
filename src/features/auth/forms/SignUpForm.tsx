@@ -9,8 +9,11 @@ import LinkToAnotherAuth from "@/features/auth/components/LinkToAnotherAuth"
 import Text from "@/components/Text"
 import { useSignUp } from "@/features/auth/hooks/useSignUp"
 import { Controller } from "react-hook-form"
+import { usePostHog } from "posthog-react-native"
 
 export default function SignUpForm() {
+  const postHog = usePostHog()
+
   const {
     OAuth,
     isSecondFaze,
@@ -82,7 +85,10 @@ export default function SignUpForm() {
           <Button
             disabled={isLoading}
             testID="sign-up-btn"
-            onPress={onSubmitFirstFaze}
+            onPress={() => {
+              postHog.capture("signup", { method: "email-first-phase" })
+              onSubmitFirstFaze()
+            }}
             title="Sign up"
           />
           <DividerOr />
@@ -107,7 +113,10 @@ export default function SignUpForm() {
           <Button
             disabled={isLoading}
             title="Verify Email"
-            onPress={onSubmitSecondFaze}
+            onPress={() => {
+              postHog.capture("signup", { method: "email-second-phase" })
+              onSubmitSecondFaze()
+            }}
           />
         </ScrollView>
       )}

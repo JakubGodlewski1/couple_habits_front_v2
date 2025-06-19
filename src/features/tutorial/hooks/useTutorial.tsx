@@ -82,7 +82,7 @@ export const useTutorial = () => {
 //helpers
 const useLoadData = () => {
   const { refScreenPositions } = useTutorialRefContext()
-  const habits = useGetHabits().data!
+  const { data: habits, isLoading: habitsAreLoading } = useGetHabits()
   const user = useGetUser().user!
   const avatars = useGetAvatars().avatars!
 
@@ -96,6 +96,7 @@ const useLoadData = () => {
     refScreenPositions
 
   const isLoading =
+    habitsAreLoading ||
     isLoadingTutorialContext ||
     !homeContainer.x ||
     !homeContainer.y ||
