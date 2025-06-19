@@ -68,12 +68,23 @@ export default function MessageWhenNoHabits({
     habits
       .filter(habitFilters.scheduledForToday)
       .filter((h) =>
-        showCompletedHabits || owner === "partner" ? true : !h.isCompleted,
+        showCompletedHabits || owner === "partner"
+          ? true
+          : !habitFilters.isCompleted(h),
       ).length === 0 &&
     habits
       .filter(habitFilters.weekly)
       .filter((h) =>
-        showCompletedHabits || owner === "partner" ? true : !h.isCompleted,
+        showCompletedHabits || owner === "partner"
+          ? true
+          : !habitFilters.isCompleted(h),
+      ).length === 0 &&
+    habits
+      .filter(habitFilters.monthly)
+      .filter((h) =>
+        showCompletedHabits || owner === "partner"
+          ? true
+          : !habitFilters.isCompleted(h),
       ).length === 0
   ) {
     return <Message label={labels.noHabitsForToday[owner]} />

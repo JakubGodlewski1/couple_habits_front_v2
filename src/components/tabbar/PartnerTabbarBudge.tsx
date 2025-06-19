@@ -8,13 +8,8 @@ const PartnerTabbarBudge = ({ isFocused }: { isFocused: boolean }) => {
   const { data: habits } = useGetHabits()
 
   const uncompletedHabitsScheduledForToday = (habits?.partner || [])
-    .filter(habitFilters.scheduledForTodayIncludingWeekly)
-    .filter(
-      (h) =>
-        !(h.goalType === "atLeast"
-          ? h.targetCount <= h.completedCount
-          : h.completedCount <= h.targetCount),
-    )
+    .filter(habitFilters.scheduledForTodayIncludingWeeklyAndMonthly)
+    .filter(habitFilters.isIncompleted)
 
   if (uncompletedHabitsScheduledForToday.length === 0) return null
 

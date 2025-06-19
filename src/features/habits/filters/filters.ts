@@ -1,7 +1,7 @@
 import { HabitFromBackend } from "../types/habitCard"
 import { CreateHabit } from "@/features/habits/types/habit"
 import { HabitFormType } from "@/features/habits/types/habitForm"
-import { isSunday } from "date-fns"
+import { isLastDayOfMonth, isSunday } from "date-fns"
 import { DAYS_OF_THE_WEEK_FROM_INT } from "@/consts/consts"
 
 const daily = ({ frequency }: HabitFromBackend | CreateHabit | HabitFormType) =>
@@ -12,12 +12,36 @@ const weekly = ({
 }: HabitFromBackend | CreateHabit | HabitFormType) =>
   frequency.type === "repeat" && frequency.value === "weekly"
 
+const monthly = ({
+  frequency,
+}: HabitFromBackend | CreateHabit | HabitFormType) =>
+  frequency.type === "repeat" && frequency.value === "monthly"
+
 const specificDays = ({
   frequency,
 }: HabitFromBackend | CreateHabit | HabitFormType) =>
   frequency.type === "specificDays"
 
 const scheduledForThisWeek = weekly
+const scheduledForThisMonth = monthly
+
+const isCompleted = ({
+  completedCount,
+  targetCount,
+  goalType,
+}: HabitFromBackend) =>
+  goalType === "atLeast"
+    ? completedCount >= targetCount
+    : completedCount <= targetCount
+
+const isIncompleted = ({
+  completedCount,
+  targetCount,
+  goalType,
+}: HabitFromBackend) =>
+  !(goalType === "atLeast"
+    ? completedCount >= targetCount
+    : completedCount <= targetCount)
 
 const scheduledForToday = ({
   frequency,
@@ -34,7 +58,7 @@ const scheduledForToday = ({
   return frequency.type === "repeat" && frequency.value === "daily"
 }
 
-const scheduledForTodayIncludingWeekly = ({
+const scheduledForTodayIncludingWeeklyAndMonthly = ({
   frequency,
 }: HabitFromBackend | CreateHabit | HabitFormType) =>
   scheduledForToday({ frequency } as
@@ -43,7 +67,10 @@ const scheduledForTodayIncludingWeekly = ({
     | HabitFormType) ||
   (frequency.type === "repeat" &&
     frequency.value === "weekly" &&
-    isSunday(new Date()))
+    isSunday(new Date())) ||
+  (frequency.type === "repeat" &&
+    frequency.value === "monthly" &&
+    isLastDayOfMonth(new Date()))
 
 type HabitFilterFunction<
   T extends HabitFromBackend | CreateHabit | HabitFormType,
@@ -52,24 +79,35 @@ type HabitFilterFunction<
 export const habitFilters: {
   daily: HabitFilterFunction<HabitFromBackend | CreateHabit | HabitFormType>
   weekly: HabitFilterFunction<HabitFromBackend | CreateHabit | HabitFormType>
+  monthly: HabitFilterFunction<HabitFromBackend | CreateHabit | HabitFormType>
   specificDays: HabitFilterFunction<
     HabitFromBackend | CreateHabit | HabitFormType
   >
   scheduledForThisWeek: HabitFilterFunction<
     HabitFromBackend | CreateHabit | HabitFormType
   >
+  scheduledForThisMonth: HabitFilterFunction<
+    HabitFromBackend | CreateHabit | HabitFormType
+  >
 
   scheduledForToday: HabitFilterFunction<
     HabitFromBackend | CreateHabit | HabitFormType
   >
-  scheduledForTodayIncludingWeekly: HabitFilterFunction<
+  scheduledForTodayIncludingWeeklyAndMonthly: HabitFilterFunction<
     HabitFromBackend | CreateHabit | HabitFormType
   >
+
+  isCompleted: HabitFilterFunction<HabitFromBackend>
+  isIncompleted: HabitFilterFunction<HabitFromBackend>
 } = {
+  monthly,
+  isCompleted,
+  isIncompleted,
+  scheduledForThisMonth,
   daily,
   weekly,
   specificDays,
   scheduledForThisWeek,
-  scheduledForTodayIncludingWeekly,
+  scheduledForTodayIncludingWeeklyAndMonthly,
   scheduledForToday,
 }

@@ -67,7 +67,6 @@ export default function HabitForm({
           />
           {frequency.type === "repeat" ? (
             <RepeatDropdown
-              isDisabled={true}
               onChange={onChange.dropdown}
               value={frequency.value}
             />

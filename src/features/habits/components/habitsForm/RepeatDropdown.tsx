@@ -4,6 +4,7 @@ import { RepeatValue } from "@/features/habits/types/habitForm"
 const options: { key: RepeatValue; label: string }[] = [
   { key: "daily", label: "Daily" },
   { key: "weekly", label: "Weekly" },
+  { key: "monthly", label: "Monthly" },
 ]
 
 type Props = {

@@ -6,7 +6,7 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 
 export const useGetHabits = () => {
   const { getAxiosInstance } = useAxios()
-  const { hasPartner } = useGetUser().user!
+  const { user } = useGetUser()
 
   const getHabits = async () => {
     const axios = await getAxiosInstance()
@@ -17,7 +17,7 @@ export const useGetHabits = () => {
   const { data, isLoading, isError, isPending } = useQuery<HabitsFromBackend>({
     queryKey: queryKeys.habits.get,
     queryFn: getHabits,
-    enabled: hasPartner,
+    enabled: user?.hasPartner,
   })
 
   const fallback = {
@@ -25,7 +25,7 @@ export const useGetHabits = () => {
     partner: [],
   }
 
-  const dataToReturn = hasPartner ? data : fallback
+  const dataToReturn = user?.hasPartner ? data : fallback
 
   return { data: dataToReturn, isError, isLoading, isPending }
 }

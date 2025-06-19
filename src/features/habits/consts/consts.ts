@@ -10,13 +10,3 @@ export const FREQUENCY_OPTIONS: { key: FrequencyType; label: string }[] = [
     key: "specificDays",
   },
 ]
-
-export const SHORT_DAY_NAMES_MAP = {
-  monday: "md",
-  tuesday: "tu",
-  wednesday: "wd",
-  thursday: "th",
-  friday: "fr",
-  saturday: "sa",
-  sunday: "su",
-} as const

@@ -28,8 +28,6 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
 
   const isLoading = isCreating || isUpdating
 
-  console.log(JSON.stringify(initialData, null, 2))
-
   const {
     handleSubmit,
     formState: { errors },

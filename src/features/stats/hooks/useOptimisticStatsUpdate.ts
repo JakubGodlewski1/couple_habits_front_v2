@@ -24,13 +24,13 @@ export const useOptimisticStatsUpdate = () => {
     if (!habits) return
 
     const isHabitScheduledForToday =
-      habitFilters.scheduledForTodayIncludingWeekly(habit)
+      habitFilters.scheduledForTodayIncludingWeeklyAndMonthly(habit)
     const uncompletedHabitsScheduledForToday = [
       ...habits.user,
       ...habits.partner,
     ]
-      .filter(habitFilters.scheduledForTodayIncludingWeekly)
-      .filter((h) => !h.isCompleted)
+      .filter(habitFilters.scheduledForTodayIncludingWeeklyAndMonthly)
+      .filter(habitFilters.isCompleted)
 
     /* update points on toggle*/
 
