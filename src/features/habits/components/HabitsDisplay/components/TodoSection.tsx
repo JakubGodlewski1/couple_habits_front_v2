@@ -4,6 +4,7 @@ import Budge from "@/features/habits/components/HabitsDisplay/components/Budge"
 import { habitFilters } from "@/features/habits/filters/filters"
 import HabitCard from "@/features/habits/components/habitCard/HabitCard"
 import { useShowCompletedHabitsContext } from "@/features/showCompletedHabits/contexts/showCompletedHabitsContext"
+import { v4 as uuidv4 } from "uuid"
 
 type Props = {
   habits: HabitFromBackend[]
@@ -62,7 +63,7 @@ export default function TodoSection({ habits, owner }: Props) {
     habits: HabitFromBackend[]
     isFirst: boolean
   }) => (
-    <>
+    <View key={uuidv4()}>
       <Budge label={label} disableMarginTop={isFirst} />
       {habits.map((h, i) => (
         <View key={h.id}>
@@ -71,7 +72,7 @@ export default function TodoSection({ habits, owner }: Props) {
           <View className="border-b border-gray-100" />
         </View>
       ))}
-    </>
+    </View>
   )
 
   return (

@@ -56,28 +56,26 @@ export default function HabitForm({
           onChangeText={onChange.label}
         />
       </View>
-      {!habitId && (
-        <View>
-          <Text className="mb-2">How often</Text>
-          <Tabs
-            className="mb-2"
-            options={FREQUENCY_OPTIONS}
-            onPress={onChange.tabs}
-            value={frequency.type}
+      <View>
+        <Text className="mb-2">How often</Text>
+        <Tabs
+          className="mb-2"
+          options={FREQUENCY_OPTIONS}
+          onPress={onChange.tabs}
+          value={frequency.type}
+        />
+        {frequency.type === "repeat" ? (
+          <RepeatDropdown
+            onChange={onChange.dropdown}
+            value={frequency.value}
           />
-          {frequency.type === "repeat" ? (
-            <RepeatDropdown
-              onChange={onChange.dropdown}
-              value={frequency.value}
-            />
-          ) : (
-            <SpecificDaysMultiTabs
-              onChange={onChange.specificDaysValue}
-              value={frequency.value}
-            />
-          )}
-        </View>
-      )}
+        ) : (
+          <SpecificDaysMultiTabs
+            onChange={onChange.specificDaysValue}
+            value={frequency.value}
+          />
+        )}
+      </View>
       <View className="flex-row gap-4 mt-auto">
         <Button
           classNames={{
