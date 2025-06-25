@@ -15,12 +15,18 @@ export const useAppEvents = () => {
     //habit
     socketInstance.on("habit.alter", () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
+      queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     })
 
     socketInstance.on("habit.toggle", () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     })
 
     //connecting with a partner

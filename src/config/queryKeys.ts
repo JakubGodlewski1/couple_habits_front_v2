@@ -10,8 +10,8 @@ export const queryKeys = {
   stats: {
     get: ["stats"],
   },
-  statsState: {
-    get: ["stats-state"],
+  statsStrikeCompletion: {
+    get: ["stats-strike-completion"],
   },
   avatars: {
     get: ["avatars"],

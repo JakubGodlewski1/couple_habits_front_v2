@@ -2,7 +2,6 @@ import { useAxios } from "@/api/hooks/useAxios"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { showToast } from "@/utils/showToast"
-import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import l from "lodash"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
@@ -64,7 +63,9 @@ export const useUpdateHabit = (
       if (onSettled) onSettled()
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     },
     onError: (err) => {
       showToast({

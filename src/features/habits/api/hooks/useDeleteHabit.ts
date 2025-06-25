@@ -2,7 +2,6 @@ import { useAxios } from "@/api/hooks/useAxios"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { withWarning } from "@/utils/withWarning"
 import { showToast } from "@/utils/showToast"
-import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 
@@ -49,7 +48,9 @@ export const useDeleteHabit = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     },
   })
 

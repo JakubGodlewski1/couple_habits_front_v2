@@ -9,10 +9,11 @@ import { getAxiosErrorMessage } from "@/utils/getAxiosErrorMessage"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 import l from "lodash"
+import { useOptimisticStatsUpdate } from "@/features/stats/hooks/useOptimisticStatsUpdate"
 
 export const useToggleHabit = () => {
   const { getAxiosInstance } = useAxios()
-  // const { optimisticStatsUpdate } = useOptimisticStatsUpdate()
+  const { optimisticStatsUpdate } = useOptimisticStatsUpdate()
 
   const queryClient = useQueryClient()
   const isFetching = useIsFetching({ queryKey: queryKeys.habits.get }) > 0
@@ -54,10 +55,10 @@ export const useToggleHabit = () => {
       id,
     })
 
-    // optimisticStatsUpdate({
-    //   habitId: id,
-    //   action,
-    // })
+    optimisticStatsUpdate({
+      habitId: id,
+      isCompleted: action === "add",
+    })
 
     const axios = await getAxiosInstance()
     return await axios.put(`/habits/${id}/toggle`, { action })
@@ -69,7 +70,9 @@ export const useToggleHabit = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     },
     onError: (err) => {
       showToast({

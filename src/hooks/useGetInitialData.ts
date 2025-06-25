@@ -4,10 +4,12 @@ import { useGetAvatars } from "@/features/avatar/api/hooks/useGetAvatars"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
 import { useGetPartnerRequest } from "@/features/shared/partnerRequests/api/hooks/useGetPartnerRequest"
 import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
+import { useGetStatsStrikeCompletedAt } from "@/features/stats/api/hooks/useGetStatsStrikeCompletedAt"
 
 export const useGetInitialData = () => {
   const userQuery = useGetUser()
   const statsQuery = useGetStats()
+  const statsStrikeCompletedAtQuery = useGetStatsStrikeCompletedAt()
   const avatarsQuery = useGetAvatars()
   const subscriptionInfoQuery = useGetSubscriptionInfo()
   const getPartnerRequestQuery = useGetPartnerRequest()
@@ -19,7 +21,8 @@ export const useGetInitialData = () => {
     avatarsQuery.isError ||
     subscriptionInfoQuery.isError ||
     getPartnerRequestQuery.isError ||
-    featureFlagsQuery.isError
+    featureFlagsQuery.isError ||
+    statsStrikeCompletedAtQuery.error
 
   const noData =
     !userQuery.user ||
@@ -35,7 +38,8 @@ export const useGetInitialData = () => {
     avatarsQuery.isPending ||
     subscriptionInfoQuery.isPending ||
     getPartnerRequestQuery.isPending ||
-    featureFlagsQuery.isPending
+    featureFlagsQuery.isPending ||
+    statsStrikeCompletedAtQuery.isPending
 
   const errors = {
     user: userQuery.isError,
@@ -44,6 +48,7 @@ export const useGetInitialData = () => {
     subscriptionInfo: subscriptionInfoQuery.isError,
     partnerRequest: getPartnerRequestQuery.isError,
     featureFlags: featureFlagsQuery.isError,
+    statsStrikeCompletedAt: statsStrikeCompletedAtQuery.error,
   }
 
   return {

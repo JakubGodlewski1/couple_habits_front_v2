@@ -2,7 +2,7 @@
 import { habitFilters } from "@/features/habits/filters/filters"
 import { useQueryClient } from "@tanstack/react-query"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
-import { isToday } from "date-fns"
+import { queryKeys } from "@/config/queryKeys"
 
 export const useOptimisticStatsUpdate = () => {
   const queryClient = useQueryClient()
@@ -14,9 +14,12 @@ export const useOptimisticStatsUpdate = () => {
     habitId: number
     isCompleted: boolean
   }) => {
-    const habits = queryClient.getQueryData<HabitsFromBackend>(["habits"])
-    const { globalStrikeUpdatedAt } =
-      queryClient.getQueryData<StatsStateFromBackend>(["stats-state"])!
+    const habits = queryClient.getQueryData<HabitsFromBackend>(
+      queryKeys.habits.get,
+    )
+    const { isCompleted: isGlobalStrikeCompleted } = queryClient.getQueryData<{
+      isCompleted: boolean
+    }>(queryKeys.statsStrikeCompletion.get)!
     const habit = [...(habits?.user || []), ...(habits?.partner || [])].find(
       (h) => h.id === habitId,
     )!
@@ -30,11 +33,11 @@ export const useOptimisticStatsUpdate = () => {
       ...habits.partner,
     ]
       .filter(habitFilters.scheduledForTodayIncludingWeeklyAndMonthly)
-      .filter(habitFilters.isCompleted)
+      .filter(habitFilters.isIncompleted)
 
     /* update points on toggle*/
 
-    queryClient.setQueryData(["stats"], (prev: StatsFromBackend) => ({
+    queryClient.setQueryData(queryKeys.stats.get, (prev: StatsFromBackend) => ({
       ...prev,
       points: isCompleted
         ? prev.points! + 10
@@ -50,19 +53,35 @@ export const useOptimisticStatsUpdate = () => {
     // - (!globalStrikeUpdatedAt || globalStrikeUpdatedAt !== today)
     // - uncompleted habits scheduled for today after toggle = 0
 
+    console.log(
+      JSON.stringify(
+        {
+          isCompleted,
+          isHabitScheduledForToday,
+          isGlobalStrikeCompleted,
+          uncompletedHabitsScheduledForToday,
+        },
+        null,
+        2,
+      ),
+    )
+
     if (
       isCompleted &&
       isHabitScheduledForToday &&
-      (!globalStrikeUpdatedAt || !isToday(globalStrikeUpdatedAt)) &&
+      !isGlobalStrikeCompleted &&
       uncompletedHabitsScheduledForToday.length === 0
     ) {
-      queryClient.setQueryData(["stats"], (prev: StatsFromBackend) => ({
-        ...prev,
-        strike: prev.strike ? prev.strike + 1 : 1,
-      }))
+      queryClient.setQueryData(
+        queryKeys.stats.get,
+        (prev: StatsFromBackend) => ({
+          ...prev,
+          strike: prev.strike ? prev.strike + 1 : 1,
+        }),
+      )
 
-      queryClient.setQueryData(["stats-state"], () => ({
-        globalStrikeUpdatedAt: new Date(),
+      queryClient.setQueryData(queryKeys.statsStrikeCompletion.get, () => ({
+        isCompleted: true,
       }))
     }
 
@@ -74,17 +93,19 @@ export const useOptimisticStatsUpdate = () => {
     if (
       !isCompleted &&
       isHabitScheduledForToday &&
-      globalStrikeUpdatedAt &&
-      isToday(globalStrikeUpdatedAt) &&
+      isGlobalStrikeCompleted &&
       uncompletedHabitsScheduledForToday.length === 1
     ) {
-      queryClient.setQueryData(["stats"], (prev: StatsFromBackend) => ({
-        ...prev,
-        strike: prev.strike ? prev.strike - 1 : 0,
-      }))
+      queryClient.setQueryData(
+        queryKeys.stats.get,
+        (prev: StatsFromBackend) => ({
+          ...prev,
+          strike: prev.strike ? prev.strike - 1 : 0,
+        }),
+      )
 
-      queryClient.setQueryData(["stats-state"], () => ({
-        globalStrikeUpdatedAt: null,
+      queryClient.setQueryData(queryKeys.statsStrikeCompletion.get, () => ({
+        isCompleted: false,
       }))
     }
   }

@@ -4,7 +4,6 @@ import { showToast } from "@/utils/showToast"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
-import { Alert } from "react-native"
 
 export const useCreateHabit = (
   { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
@@ -56,7 +55,9 @@ export const useCreateHabit = (
       if (onSettled) onSettled()
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     },
     onError: (err) => {
       showToast({
