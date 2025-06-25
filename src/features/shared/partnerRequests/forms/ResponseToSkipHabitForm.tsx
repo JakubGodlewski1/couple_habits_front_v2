@@ -31,9 +31,9 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
     onSuccess: () => {
       //revalidate requests to hide the modal. Also add optimistic update to hide the modal faster
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.partnerRequests.get],
+        queryKey: queryKeys.partnerRequests.get,
       })
-      queryClient.setQueryData([queryKeys.partnerRequests.get], () => ({
+      queryClient.setQueryData(queryKeys.partnerRequests.get, () => ({
         option: null,
       }))
     },

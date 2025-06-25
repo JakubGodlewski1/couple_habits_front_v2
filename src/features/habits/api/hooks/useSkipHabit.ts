@@ -27,7 +27,8 @@ export const useSkipHabit = () => {
         const habitToUpdate = l.cloneDeep(
           habits.partner.find((h) => h.id === id)!,
         )
-        habitToUpdate.isCompleted = true
+        habitToUpdate.completedCount =
+          habitToUpdate.goalType === "atLeast" ? habitToUpdate.targetCount : 0
 
         return {
           partner: habits.partner.map((h) => (h.id === id ? habitToUpdate : h)),
@@ -67,7 +68,9 @@ export const useSkipHabit = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.habits.get })
       queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
-      queryClient.invalidateQueries({ queryKey: queryKeys.statsState.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
     },
     onError: (err) => {
       showToast({

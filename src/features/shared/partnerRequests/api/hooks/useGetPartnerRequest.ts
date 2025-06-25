@@ -13,7 +13,7 @@ export const useGetPartnerRequest = () => {
   }
 
   const { isPending, data, isError } = useQuery({
-    queryKey: [queryKeys.partnerRequests.get],
+    queryKey: queryKeys.partnerRequests.get,
     queryFn: getPartnerRequest,
   })
 
