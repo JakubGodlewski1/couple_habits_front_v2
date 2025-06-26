@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated"
 import PartnerTabbarButton from "@/components/tabbar/PartnerTabbarButton"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
+import { vibrate } from "@/utils/vibrate"
 
 const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
@@ -79,7 +80,10 @@ export default function TabbarButton({
       testID={testID}
       className="flex-col justify-center items-center gap-2 flex-1"
       accessibilityState={isFocused ? { selected: true } : {}}
-      onPress={onPress}
+      onPress={() => {
+        vibrate()
+        onPress()
+      }}
       onLongPress={onLongPress}
     >
       {routeName === "partner-home" ? (

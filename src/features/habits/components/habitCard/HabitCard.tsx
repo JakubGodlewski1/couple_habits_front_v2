@@ -6,6 +6,7 @@ import Text from "@/components/Text"
 import { useToggleHabit } from "@/features/habits/api/hooks/useToggleHabit"
 import PressableHabitCardWrapper from "@/features/habits/components/habitCard/components/PressableHabitCardWrapper"
 import SpecificDaysIndicator from "@/features/habits/components/habitCard/components/SpecificDaysIndicator"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   owner: "partner" | "user"
@@ -31,6 +32,7 @@ export default function HabitCard({
           {!isReadOnly && (
             <Checkbox
               onPress={(checked) => {
+                vibrate()
                 toggleHabit({
                   action: checked ? "add" : "subtract",
                   id: habit.id,

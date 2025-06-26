@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { queryKeys } from "@/config/queryKeys"
 import { useSkipHabit } from "@/features/habits/api/hooks/useSkipHabit"
 import { useSendResponseToPartner } from "@/features/shared/partnerRequests/api/hooks/useSendResponseToPartner"
+import { useEffect, useRef } from "react"
 
 type Props = {
   partnerRequestData: SkipHabitOption
@@ -16,20 +17,16 @@ type Props = {
 
 export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
   const { data } = partnerRequestData
-  const { sendResponse } = useSendResponseToPartner()
 
-  const habits = useGetHabits()
+  const { sendResponse } = useSendResponseToPartner()
+  const { data: habits } = useGetHabits()
   const user = useGetUser().user!
   const { skipHabit, isPending: isCompleting } = useSkipHabit()
   const queryClient = useQueryClient()
 
-  if (!habits) return null
-
-  //delete request
   const { deleteAsync, isPending } = useMutate({
     endpoint: "/partner-requests",
     onSuccess: () => {
-      //revalidate requests to hide the modal. Also add optimistic update to hide the modal faster
       queryClient.invalidateQueries({
         queryKey: queryKeys.partnerRequests.get,
       })
@@ -39,43 +36,34 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
     },
   })
 
+  const alreadyHandledMissingHabit = useRef(false)
+
+  const habit = habits?.partner.find((h) => h.id === data.id)
+
+  useEffect(() => {
+    if (habits && !habit && !alreadyHandledMissingHabit.current) {
+      deleteAsync(undefined)
+    }
+  }, [habits, habit, deleteAsync])
+
+  // ✅ early return after hooks are called
+  if (!habits || !habit) return null
+
   const onAccept = async () => {
-    //delete the request
     await deleteAsync(undefined)
-
-    //skip the habit
     skipHabit({ id: data.id })
-
-    //send request to partner with info that the request has been accepted
     sendResponse(true)
-
-    //display info about the choice
     Alert.alert(
       `Great, your decision has been sent to ${user?.partnerName || "your partner"}!`,
     )
   }
 
   const onCancel = async () => {
-    //delete the request
     await deleteAsync(undefined)
-
-    //send request to partner with info that the request has been cancelled
     sendResponse(false)
-
-    //display info about the choice
     Alert.alert(
       `Great, your decision has been sent to ${user?.partnerName || "your partner"}!`,
     )
-  }
-
-  //find the habit partner wants to skip
-  const habit = habits.data?.partner.find((h) => h.id === data.id)
-
-  if (!habit) {
-    Alert.alert("We could not find the habit")
-    //delete the request if habit does not exist
-    deleteAsync(undefined)
-    return null
   }
 
   return (
@@ -106,17 +94,13 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
         <Button
           disabled={isCompleting || isPending}
           type="subtle"
-          classNames={{
-            wrapper: "flex-grow",
-          }}
+          classNames={{ wrapper: "flex-grow" }}
           onPress={onCancel}
           title="No, I don't agree"
         />
         <Button
           disabled={isCompleting || isPending}
-          classNames={{
-            wrapper: "flex-grow",
-          }}
+          classNames={{ wrapper: "flex-grow" }}
           onPress={onAccept}
           title="Yea, sure!"
         />

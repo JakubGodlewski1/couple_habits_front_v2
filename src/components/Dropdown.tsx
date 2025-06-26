@@ -2,6 +2,7 @@ import { Keyboard, TouchableOpacity, View } from "react-native"
 import { useState } from "react"
 import Text from "./Text"
 import { Entypo } from "@expo/vector-icons"
+import { vibrate } from "@/utils/vibrate"
 
 type Props<T extends string> = {
   isDisabled?: boolean
@@ -32,6 +33,7 @@ export default function Dropdown<T extends string>({
         disabled={isDisabled}
         activeOpacity={0.8}
         onPress={() => {
+          vibrate()
           Keyboard.dismiss()
           setIsOpen((p) => !p)
         }}
@@ -52,6 +54,7 @@ export default function Dropdown<T extends string>({
               className={`flex-row justify-between items-center rounded-lg py-2 px-3 ${selected.key === o.key && "bg-[#FF5545]"}`}
               key={o.key}
               onPress={() => {
+                vibrate()
                 onChange(o.key)
                 setIsOpen(false)
               }}

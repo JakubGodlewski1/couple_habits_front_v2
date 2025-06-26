@@ -1,4 +1,4 @@
-import { Animated, Pressable } from "react-native"
+import { Alert, Animated, Pressable } from "react-native"
 import { ReactNode, useRef } from "react"
 import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import { useSendRequestSkipHabit } from "@/features/shared/partnerRequests/api/hooks/useSendRequestSkipHabit"
@@ -36,6 +36,14 @@ export default function PressableHabitCardWrapper({
   }
 
   const onLongPress = () => {
+    //validate that the habit is not completed
+    if (
+      habit.goalType === "atLeast"
+        ? habit.completedCount >= habit.targetCount
+        : habit.completedCount <= habit.targetCount
+    )
+      return Alert.alert("Habit is already completed")
+
     skipHabitWithWarning(habit.id)
   }
 

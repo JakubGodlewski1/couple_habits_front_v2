@@ -4,6 +4,7 @@ import Modal from "@/components/Modal"
 import { useState } from "react"
 import { TouchableOpacity } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
+import { vibrate } from "@/utils/vibrate"
 
 export default function AddHabitBtn(
   { iconType }: { iconType?: boolean } = { iconType: false },
@@ -39,7 +40,10 @@ const ButtonWithText = ({ openModal }: { openModal: () => void }) => {
 const IconButton = ({ openModal }: { openModal: () => void }) => {
   return (
     <TouchableOpacity
-      onPress={openModal}
+      onPress={() => {
+        vibrate()
+        openModal()
+      }}
       className="absolute -top-20 right-0 bg-primary p-4 rounded-full shadow-lg"
     >
       <AntDesign name="plus" size={28} color="#fff" />

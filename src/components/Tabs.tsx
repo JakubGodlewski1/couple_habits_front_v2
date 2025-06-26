@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+import { vibrate } from "@/utils/vibrate"
 
 type Option<T extends string> = {
   key: T
@@ -71,7 +72,10 @@ export default function Tabs<T extends string>({
       {options.map((option) => (
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => onPress(option.key)}
+          onPress={() => {
+            vibrate()
+            onPress(option.key)
+          }}
           className={`flex-1 justify-center rounded-main py-2`}
           key={option.key}
         >

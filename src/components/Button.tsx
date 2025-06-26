@@ -1,6 +1,7 @@
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import { ReactNode } from "react"
 import Text from "./Text"
+import { vibrate } from "@/utils/vibrate"
 
 type BtnType =
   | "primary"
@@ -86,7 +87,10 @@ export default function Button({
     <TouchableOpacity
       testID={testID}
       disabled={disabled}
-      onPress={onPress}
+      onPress={() => {
+        vibrate()
+        onPress()
+      }}
       style={{ opacity: disabled ? 0.6 : 1 }}
       className={`items-center justify-center gap-2 rounded-main ${size === "sm" ? "p-3" : "p-4"} 
       ${iconPosition === "right" ? "flex-row" : "flex-row-reverse"}

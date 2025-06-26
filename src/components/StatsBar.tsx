@@ -17,7 +17,7 @@ export default function StatsBar({ strike, points }: Props) {
           Strike:
           <Text className="font-main800">
             {" "}
-            {strike !== undefined ? strike + " days" : "0 days"}
+            {strike + (strike === 1 ? " day" : " days")}
           </Text>
         </Text>
       </View>

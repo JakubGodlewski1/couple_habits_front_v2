@@ -1,5 +1,6 @@
 import { TouchableOpacity, View } from "react-native"
 import Text from "./Text"
+import { vibrate } from "@/utils/vibrate"
 
 type Option<T extends string> = {
   key: T
@@ -27,7 +28,10 @@ export default function MultiSelect<T extends string>({
       {options.map((option) => (
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => onChange(option.key)}
+          onPress={() => {
+            vibrate()
+            onChange(option.key)
+          }}
           className={`grow justify-center rounded-lg py-2 ${value.includes(option.key) ? `bg-primary ${classNames?.bgSelected}` : ""}`}
           key={option.key}
         >

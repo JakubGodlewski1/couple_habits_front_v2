@@ -1,4 +1,5 @@
 import BouncyCheckbox from "react-native-bouncy-checkbox"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   disabled?: boolean
@@ -25,6 +26,7 @@ export default function Checkbox({
       fillColor={colorHash}
       isChecked={isChecked}
       onPress={() => {
+        vibrate()
         if (disabled) return
         onPress(!isChecked)
       }}
