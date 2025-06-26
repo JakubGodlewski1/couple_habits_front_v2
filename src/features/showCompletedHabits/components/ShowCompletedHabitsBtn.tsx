@@ -18,7 +18,7 @@ export default function ShowCompletedHabitsBtn() {
       <View>
         <Checkbox
           color="green"
-          onPress={() => setShowCompletedHabits((p) => !p)}
+          onPress={() => setShowCompletedHabits(!showCompletedHabits)}
           isChecked={!showCompletedHabits}
         />
       </View>

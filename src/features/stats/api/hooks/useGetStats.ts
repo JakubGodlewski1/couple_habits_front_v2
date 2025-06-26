@@ -24,7 +24,7 @@ export const useGetStats = (
       queryKey: queryKeys.stats.get,
     })
 
-  const fallBack = { points: 0, habits: 0 }
+  const fallBack = { points: 0, strike: 0 }
   const stats = data || fallBack
 
   return {

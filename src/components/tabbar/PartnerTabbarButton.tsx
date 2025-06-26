@@ -39,7 +39,7 @@ const PartnerTabbarButton = ({
           />
         </Animated.View>
         <Animated.Text style={animatedTextStyle} className="text-sm">
-          {user.partnerName || "Partner"}
+          {user?.partnerName || "Partner"}
         </Animated.Text>
       </View>
     </>

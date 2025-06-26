@@ -42,7 +42,7 @@ export default function PartnerAvatarBox() {
       </TouchableOpacity>
       <View className="w-full  justify-center  p-4  -mt-5  rounded-main border-main  bg-white items-center">
         <Text className=" text-xl  font-main800">
-          {user.partnerName || "..."}
+          {user?.partnerName || "..."}
         </Text>
       </View>
     </View>

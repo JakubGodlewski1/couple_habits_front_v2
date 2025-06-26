@@ -1,7 +1,7 @@
 {
   "name": "couple_habits",
   "main": "expo-router/entry",
-  "version": "2.0.0",
+  "version": "2.1.5",
   "scripts": {
     "prod": "NODE_ENV=production expo start --minify --no-dev",
     "dev": "NODE_ENV=development expo start",
@@ -73,7 +73,9 @@
     "tailwindcss": "^3.4.17",
     "uuid": "^11.1.0",
     "vitest": "^3.1.4",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "expo-crypto": "~14.1.5",
+    "expo-modules-core": "~2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

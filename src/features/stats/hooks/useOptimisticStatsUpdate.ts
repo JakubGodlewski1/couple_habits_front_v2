@@ -53,19 +53,6 @@ export const useOptimisticStatsUpdate = () => {
     // - (!globalStrikeUpdatedAt || globalStrikeUpdatedAt !== today)
     // - uncompleted habits scheduled for today after toggle = 0
 
-    console.log(
-      JSON.stringify(
-        {
-          isCompleted,
-          isHabitScheduledForToday,
-          isGlobalStrikeCompleted,
-          uncompletedHabitsScheduledForToday,
-        },
-        null,
-        2,
-      ),
-    )
-
     if (
       isCompleted &&
       isHabitScheduledForToday &&
