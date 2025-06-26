@@ -67,7 +67,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
   }
 
   return (
-    <View className="p-2 items-center grow">
+    <View className="p-2 items-center grow ">
       <Image
         resizeMode="contain"
         className="w-screen h-[30vh]"
@@ -90,7 +90,7 @@ export default function ResponseToSkipHabitForm({ partnerRequestData }: Props) {
         </Text>
       )}
 
-      <View className="flex-row w-full gap-2 mt-auto mb-20">
+      <View className="flex-row w-full gap-2 mt-auto">
         <Button
           disabled={isCompleting || isPending}
           type="subtle"

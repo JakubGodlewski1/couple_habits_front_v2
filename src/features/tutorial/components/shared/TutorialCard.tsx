@@ -3,6 +3,7 @@ import Text from "@/components/Text"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import Button from "@/components/Button"
 import { AntDesign } from "@expo/vector-icons"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   onClose: () => void
@@ -28,7 +29,10 @@ export default function TutorialCard({
       {showCloseButton && (
         <TouchableOpacity
           className="ml-auto absolute right-0 top-0 p-3  z-[100]"
-          onPress={onClose}
+          onPress={() => {
+            vibrate()
+            onClose()
+          }}
         >
           <AntDesign name="close" size={20} color="white" />
         </TouchableOpacity>

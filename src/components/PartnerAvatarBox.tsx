@@ -5,6 +5,7 @@ import avatarPlaceholder from "@/assets/icons/avatar_placeholder.png"
 import Text from "@/components/Text"
 import { useUploadPartnerAvatar } from "@/features/avatar/api/hooks/useUploadPartnerAvatar"
 import { useTutorialRefContext } from "@/features/tutorial/contexts/tutorialRefContext"
+import { vibrate } from "@/utils/vibrate"
 
 export default function PartnerAvatarBox() {
   const user = useGetUser().user!
@@ -18,7 +19,10 @@ export default function PartnerAvatarBox() {
       <TouchableOpacity
         ref={(node) => setTutorialRef("partnerAvatar", node)}
         disabled={isPending}
-        onPress={uploadPartnerAvatar}
+        onPress={() => {
+          vibrate()
+          uploadPartnerAvatar()
+        }}
         activeOpacity={0.8}
         className="border-main rounded-full border-1 p-1.5 z-20 bg-white"
       >

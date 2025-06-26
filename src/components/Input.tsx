@@ -8,6 +8,7 @@ import {
 import { Entypo } from "@expo/vector-icons"
 import { useState } from "react"
 import Text from "./Text"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   placeholder?: string
@@ -64,7 +65,12 @@ export default function Input({
         {keyboardType === "visible-password" && (
           <>
             {
-              <TouchableOpacity onPress={() => setPasswordVisible((p) => !p)}>
+              <TouchableOpacity
+                onPress={() => {
+                  vibrate()
+                  setPasswordVisible((p) => !p)
+                }}
+              >
                 {passwordVisible ? (
                   <Entypo size={24} name="eye-with-line" />
                 ) : (

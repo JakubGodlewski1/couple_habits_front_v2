@@ -1,6 +1,7 @@
 import { ScrollView, TouchableOpacity, View } from "react-native"
 import Text from "@/components/Text"
 import l from "lodash"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   categories: IdeaCategory[]
@@ -52,7 +53,10 @@ const CategoryPill = ({
       style={{
         transform: [{ scale: isSelected ? 1 : 0.95 }],
       }}
-      onPress={() => onCategoryChange(categoryLabel)}
+      onPress={() => {
+        vibrate()
+        onCategoryChange(categoryLabel)
+      }}
       className={`${isSelected ? "bg-primary mx-1.5" : "bg-primary/75"} rounded-lg py-1.5 px-5`}
     >
       <Text className={`text-white`}>{l.capitalize(categoryLabel)}</Text>

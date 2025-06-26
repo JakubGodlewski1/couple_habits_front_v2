@@ -10,6 +10,7 @@ import Checkbox from "@/components/Checkbox"
 import Button from "@/components/Button"
 import { useSendFeedbackForm } from "@/features/feedback/api/hooks/useSendFeedbackForm"
 import { FEEDBACK_DROPDOWN_OPTIONS } from "@/features/feedback/consts/feedbackDropdownOptions"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   closeModal: () => void
@@ -92,7 +93,10 @@ export default function SendFeedbackForm({
           render={({ field }) => (
             <TouchableOpacity
               activeOpacity={5}
-              onPress={() => field.onChange(!field.value)}
+              onPress={() => {
+                vibrate()
+                field.onChange(!field.value)
+              }}
               className="flex-row"
             >
               <View className="flex flex-row max-w-[80%]">

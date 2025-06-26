@@ -4,6 +4,7 @@ import { HabitFromBackend } from "@/features/habits/types/habitCard"
 import UpdateHabitModal from "@/features/habits/modals/UpdateHabitModal"
 import { useState } from "react"
 import { useDeleteHabit } from "@/features/habits/api/hooks/useDeleteHabit"
+import { vibrate } from "@/utils/vibrate"
 
 type Props = {
   closeHabitCard: () => void
@@ -31,6 +32,7 @@ const MenuContainer = ({ habit, closeHabitCard }: Props) => {
       >
         <TouchableOpacity
           onPress={() => {
+            vibrate()
             setIsModalVisible(true)
             closeHabitCard()
           }}
@@ -40,7 +42,10 @@ const MenuContainer = ({ habit, closeHabitCard }: Props) => {
           <Feather color="white" size={20} name="edit" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => deleteHabitWithWarning(habit.id)}
+          onPress={() => {
+            vibrate()
+            deleteHabitWithWarning(habit.id)
+          }}
           style={{ width: containerHeight }}
           className="bg-primary items-center justify-center"
         >

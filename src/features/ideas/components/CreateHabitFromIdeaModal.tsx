@@ -14,6 +14,8 @@ export default function CreateHabitFromIdeaModal({
   isModalOpen,
 }: Props) {
   const defaultHabit: HabitFormType = {
+    goalType: "atLeast",
+    targetCount: 1,
     label,
     frequency: { type: "repeat", value: "daily" },
   }

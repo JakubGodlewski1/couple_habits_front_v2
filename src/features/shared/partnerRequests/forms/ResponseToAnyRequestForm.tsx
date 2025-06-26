@@ -33,18 +33,18 @@ export default function ResponseToAnyRequestForm({
   })
 
   return (
-    <View className="p-2 items-center grow">
+    <View className="p-2 items-center grow ">
       <Image
         resizeMode="contain"
         className="w-screen h-[30vh]"
         source={partnerRequestData.data.accepted ? accept : cancel}
       />
-      <Text className="text-center mx-4 mb-4" type="h2">
+      <Text className="text-center mx-4 mb-4 mt-20" type="h2">
         {(user?.partnerName || "Your partner") +
           (partnerRequestData.data.accepted ? " agreed" : " did not agree") +
           " to skip the habit"}
       </Text>
-      <View className="flex-row w-full gap-2 mt-auto mb-20">
+      <View className="flex-row w-full gap-2 mt-auto">
         <Button
           disabled={isPending}
           classNames={{
