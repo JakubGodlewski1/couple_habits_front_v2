@@ -5,23 +5,35 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useRegisterPurchaseObj } from "@/features/subscriptions/hooks/useRegisterPurchaseObj"
 import { useGetInitialData } from "@/hooks/useGetInitialData"
 import { useQueryClient } from "@tanstack/react-query"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useRefetchOnAppStateChange from "@/hooks/useRefetchOnAppStateChange"
 
-//1 redirect if user is not signed in
 const AuthorizedLayout = () => {
-  const { isSignedIn } = useAuth()
+  const { isSignedIn, isLoaded } = useAuth()
+
+  if (!isLoaded) return <IsLoading />
   if (!isSignedIn) return <Redirect href="/(unauthorized)/sign-in" />
+
+  return <ClearCache />
+}
+
+// 2. Clear entire cache before refetching all data
+const ClearCache = () => {
+  const queryClient = useQueryClient()
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    queryClient.clear()
+    setReady(true)
+  }, [])
+
+  if (!ready) return <IsLoading />
+
   return <GetInitialData />
 }
 
-//2. fetch all initial data that is needed
+// 3. Fetch all initial data
 const GetInitialData = () => {
-  const queryClient = useQueryClient()
-  useEffect(() => {
-    queryClient.clear()
-  }, [])
-
   const { isPending, isError } = useGetInitialData()
 
   if (isPending) return <IsLoading />
@@ -31,7 +43,7 @@ const GetInitialData = () => {
   return <RegisterPaymentsAndReturnStack />
 }
 
-//3. register payments and show the stack
+// 4. Register payments and show the stack
 const RegisterPaymentsAndReturnStack = () => {
   useRefetchOnAppStateChange()
   const user = useGetUser().user!

@@ -6,7 +6,7 @@ export default function RootPage() {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push("/hero")
+      router.replace("/hero")
     }, 0)
   }, [])
 }
