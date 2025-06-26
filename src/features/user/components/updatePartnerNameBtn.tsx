@@ -20,7 +20,7 @@ export default function UpdatePartnerNameBtn() {
         <FontAwesome6 name="face-kiss-beam" size={24} color="black" />
       </Button>
       <Modal onClose={() => setIsOpen(false)} isOpen={isOpen}>
-        <UpdatePartnerNameForm onSettled={() => setIsOpen(false)} />
+        <UpdatePartnerNameForm onCancel={() => setIsOpen(false)} />
       </Modal>
     </>
   )

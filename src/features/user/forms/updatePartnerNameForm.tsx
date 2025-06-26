@@ -4,19 +4,20 @@ import Button from "@/components/Button"
 import Text from "@/components/Text"
 import SafeAreaWrapper from "@/components/SafeAreaWrapper"
 import { useUpdatePartnerNameForm } from "@/features/user/hooks/useUpdatePartnerNameForm"
+import { View } from "react-native"
 
 export default function UpdatePartnerNameForm({
-  onSettled,
+  onCancel,
 }: {
-  onSettled?: () => void
+  onCancel: () => void
 }) {
   const { control, onSubmit, isPending, errors } = useUpdatePartnerNameForm({
-    onSettled,
+    onSettled: onCancel,
   })
 
   return (
     <SafeAreaWrapper>
-      <Text type="h3">Update partner&apos;s name</Text>
+      <Text type="h1">Update partner&apos;s name</Text>
       <Controller
         control={control}
         render={({ field: { value, onChange } }) => (
@@ -30,14 +31,24 @@ export default function UpdatePartnerNameForm({
         )}
         name="partnerName"
       />
-      <Button
-        disabled={isPending}
-        classNames={{
-          wrapper: "mt-2",
-        }}
-        onPress={onSubmit}
-        title="Update"
-      />
+      <View className="flex-row gap-4 mt-auto">
+        <Button
+          classNames={{
+            wrapper: "flex-1",
+          }}
+          type="subtle"
+          onPress={onCancel}
+          title="Cancel"
+        />
+        <Button
+          disabled={isPending}
+          classNames={{
+            wrapper: "flex-1",
+          }}
+          onPress={onSubmit}
+          title="Update"
+        />
+      </View>
     </SafeAreaWrapper>
   )
 }
