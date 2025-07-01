@@ -8,6 +8,8 @@ import { TutorialContextProvider } from "@/features/tutorial/contexts/tutorialCo
 import { TutorialRefProvider } from "@/features/tutorial/contexts/tutorialRefContext"
 import { PostHogProvider } from "posthog-react-native"
 
+const EXPO_PUBLIC_POSTHOG_API = process.env.EXPO_PUBLIC_POSTHOG_API
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,7 +22,7 @@ const queryClient = new QueryClient({
 export const GlobalProviders = ({ children }: PropsWithChildren) => {
   return (
     <PostHogProvider
-      apiKey="phc_AxEADyUSD6C2HmXhxB5QppzvBFVJ00gmBzfepjesgS4"
+      apiKey={EXPO_PUBLIC_POSTHOG_API}
       options={{
         host: "https://ph.couplehabits.com",
         enableSessionReplay: true,

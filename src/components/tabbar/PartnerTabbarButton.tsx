@@ -17,7 +17,7 @@ const PartnerTabbarButton = ({
   animatedIconStyle,
   animatedTextStyle,
 }: Props) => {
-  const user = useGetUser().user!
+  const user = useGetUser().user
   const { setTutorialRef } = useTutorialRefContext()
   const viewRef = useRef<View>(null)
 

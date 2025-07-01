@@ -16,7 +16,7 @@ import { usePostHog } from "posthog-react-native"
 
 export default function Home() {
   const [currentTab, setCurrentTab] = useState<HabitStateTab>("todo")
-  const user = useGetUser().user!
+  const user = useGetUser().user
   const { setTutorialRef } = useTutorialRefContext()
 
   const posthog = usePostHog()
@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <SafeAreaWrapper className="gap-2">
-      <HomeStatsBar isDisabled={!user?.hasPartner} />
+      <HomeStatsBar isDisabled={user?.hasPartner} />
       <HabitsTabs
         options={HABIT_STATE_TABS}
         onPress={setCurrentTab}
@@ -70,7 +70,8 @@ const NotConnectedDisplay = () => {
           source={coupleHighFive}
         />
         <Text type="h3" className="text-center">
-          Connect with {user!.partnerName} {"\n"} to add habits
+          Connect with {user?.partnerName || "your partner"} {"\n"} to add
+          habits
         </Text>
       </View>
       <GoToAddPartnerPageBtn />
