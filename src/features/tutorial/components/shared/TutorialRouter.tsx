@@ -3,12 +3,14 @@ import ConnectionTutorialScreen from "@/features/tutorial/components/TutorialScr
 import FirstHabitTutorialScreen from "@/features/tutorial/components/TutorialScreens/FirstHabitTutorialScreen"
 import IntroTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens"
 import PartnerAvatarTutorialScreen from "@/features/tutorial/components/TutorialScreens/PartnerAvatarTutorialScreen"
+import InviteToDiscordTutorialScreen from "@/features/tutorial/components/TutorialScreens/InviteToDiscordTutorialScreen"
 
 const tutorialComponents: Record<TutorialType, any> = {
   connection: ConnectionTutorialScreen,
   firstHabit: FirstHabitTutorialScreen,
   intro: IntroTutorialScreen,
   partnerAvatar: PartnerAvatarTutorialScreen,
+  discordInvite: InviteToDiscordTutorialScreen,
 } as const
 
 export default function TutorialRouter() {

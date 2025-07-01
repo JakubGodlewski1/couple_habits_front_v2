@@ -35,6 +35,7 @@ export const useTutorial = () => {
     seenTutorials.connection,
     seenTutorials.intro,
     seenTutorials.partnerAvatar,
+    seenTutorials.discordInvite,
     pathname,
     refScreenPositions.partnerAvatar.x,
     refScreenPositions.partnerAvatar.y,
@@ -57,7 +58,9 @@ export const useTutorial = () => {
     }
     //"intro" screen
     else if (!seenTutorials.intro && habits.length === 1) {
-      setVisibleTutorial("intro")
+      setTimeout(() => {
+        setVisibleTutorial("intro")
+      }, 500)
     }
     //"partner avatar" tutorial screen
     else if (
@@ -68,6 +71,14 @@ export const useTutorial = () => {
       pathname.includes("/partner-home")
     ) {
       setVisibleTutorial("partnerAvatar")
+    } else if (
+      !seenTutorials.discordInvite &&
+      habits.length > 0 &&
+      habits.some((h) => h.completedCount > 0)
+    ) {
+      setTimeout(() => {
+        setVisibleTutorial("discordInvite")
+      }, 1000)
     } else setVisibleTutorial(null)
   }
 

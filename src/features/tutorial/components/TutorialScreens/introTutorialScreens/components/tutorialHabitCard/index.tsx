@@ -18,13 +18,16 @@ export default function TutorialHabitCard({
 
   useEffect(() => {
     if (swipeableRef.current && swiped) {
-      const timeout = setTimeout(() => {
-        if (swiped === "left") {
-          swipeableRef.current!.openRight()
-        } else {
-          swipeableRef.current!.openLeft()
-        }
-      }, 300)
+      const timeout = setTimeout(
+        () => {
+          if (swiped === "left") {
+            swipeableRef.current!.openRight()
+          } else {
+            swipeableRef.current!.openLeft()
+          }
+        },
+        swiped == "left" ? 1100 : 600,
+      )
 
       return () => clearTimeout(timeout)
     }

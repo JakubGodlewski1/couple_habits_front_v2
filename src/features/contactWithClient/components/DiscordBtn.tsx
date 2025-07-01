@@ -4,7 +4,7 @@ import discord from "@/assets/icons/disord.png"
 import { showToast } from "@/utils/showToast"
 import { useState } from "react"
 
-const DiscordBtn = () => {
+const DiscordBtn = ({ title = "Discord" }: { title?: string }) => {
   const discordInvite = "https://discord.gg/ThcRMgRZuW"
   const [isLoading, setIsLoading] = useState(false)
 
@@ -34,7 +34,7 @@ const DiscordBtn = () => {
       iconPosition="right"
       type="white"
       onPress={openDiscord}
-      title="Discord"
+      title={title}
     >
       <Image className="w-8 h-7" source={discord} />
     </Button>
