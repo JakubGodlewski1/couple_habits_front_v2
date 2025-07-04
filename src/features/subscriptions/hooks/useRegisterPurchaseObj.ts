@@ -16,7 +16,7 @@ export const useRegisterPurchaseObj = ({
 }) => {
   useEffect(() => {
     if (!gameAccountId) return
-    Purchases.setLogLevel(LOG_LEVEL.VERBOSE)
+    Purchases.setLogLevel(LOG_LEVEL.INFO)
 
     const apiKey = Platform.OS === "ios" ? IOS_RC_KEY : ANDROID_RC_KEY
     Purchases.configure({ apiKey, appUserID: gameAccountId.toString() })

@@ -3,7 +3,6 @@ import Button from "@/components/Button"
 import { AntDesign, Ionicons } from "@expo/vector-icons"
 import { useDeleteAccount } from "@/features/user/api/hooks/useDeleteAccount"
 import { useState } from "react"
-import { useSignOut } from "@/features/auth/hooks/useSignOut"
 
 export default function DeleteAccountBtn() {
   const { deleteAccountWithWarning, isPending } = useDeleteAccount()

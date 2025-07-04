@@ -14,7 +14,7 @@ export default function SpecificDaysMultiTabsSecured({
   onChange,
   value,
 }: Props<(typeof DAYS_OF_THE_WEEK)[number]>) {
-  const { hasPartner } = useGetUser().user!
+  const user = useGetUser().user
   const { hasProAccess } = useGetSubscriptionInfo().subscriptionInfo!
   const { buyPro, isLoading } = useBuyPro({
     paywallIdentifier: "freemium1/pro-feature",
@@ -24,7 +24,7 @@ export default function SpecificDaysMultiTabsSecured({
 
   return (
     <SpecificDaysMultiTabs
-      onChange={hasProAccess || !hasPartner ? onChange : buyPro}
+      onChange={hasProAccess || !user?.hasPartner ? onChange : buyPro}
       value={value}
     />
   )

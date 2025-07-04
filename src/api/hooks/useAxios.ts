@@ -7,7 +7,7 @@ export const useAxios = () => {
   const { getToken } = useAuth()
 
   const getAxiosInstance = async (): Promise<AxiosInstance> => {
-    const token = await getToken()
+    const token = await getToken({ skipCache: true })
 
     const getUserTimeZone = () => Temporal.Now.timeZoneId()
 

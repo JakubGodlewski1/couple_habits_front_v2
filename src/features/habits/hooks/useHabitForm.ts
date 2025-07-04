@@ -26,7 +26,7 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   const { createHabit, isPending: isCreating } = useCreateHabit({ onSettled })
   const { updateHabit, isPending: isUpdating } = useUpdateHabit({ onSettled })
 
-  const isLoading = isCreating || isUpdating
+  const isPending = isCreating || isUpdating
 
   const {
     handleSubmit,
@@ -98,7 +98,7 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   const [label, frequency] = watch(["label", "frequency"])
 
   return {
-    isLoading,
+    isPending,
     values: {
       label,
       frequency,

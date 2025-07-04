@@ -8,8 +8,9 @@ import RepeatDropdown from "../components/habitsForm/RepeatDropdown"
 import { FREQUENCY_OPTIONS } from "../consts/consts"
 import { useHabitForm } from "@/features/habits/hooks/useHabitForm"
 import { HabitFormType } from "@/features/habits/types/habitForm"
-import SpecificDaysMultiTabs from "@/features/habits/components/habitsForm/SpecificDaysMultiTabs"
 import { useHideTabbarContext } from "@/contexts/HideTabbar"
+import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
+import CreateHabitBtnSecured from "@/features/habits/components/habitsForm/CreateHabitBtnSecured"
 
 type Props = {
   initialData?: HabitFormType
@@ -31,7 +32,7 @@ export default function HabitForm({
   }
 
   const {
-    isLoading,
+    isPending,
     errors,
     handleSubmit,
     values: { label, frequency },
@@ -70,7 +71,7 @@ export default function HabitForm({
             value={frequency.value}
           />
         ) : (
-          <SpecificDaysMultiTabs
+          <SpecificDaysMultiTabsSecured
             onChange={onChange.specificDaysValue}
             value={frequency.value}
           />
@@ -85,13 +86,10 @@ export default function HabitForm({
           onPress={onCancel}
           title="Cancel"
         />
-        <Button
-          disabled={isLoading}
-          classNames={{
-            wrapper: "flex-1",
-          }}
-          onPress={handleSubmit}
-          title={habitId ? "Update" : "Create"}
+        <CreateHabitBtnSecured
+          isPending={isPending}
+          handleSubmit={handleSubmit}
+          habitId={habitId}
         />
       </View>
     </ScrollView>

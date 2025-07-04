@@ -14,7 +14,7 @@ export default function ChangePartnerAvatarBtn() {
       onPress={uploadPartnerAvatar}
       title="Change partner's profile picture"
     >
-      <MaterialCommunityIcons size={24} name="face-man-shimmer-outline" />
+      <MaterialCommunityIcons size={26} name="face-man-shimmer-outline" />
     </Button>
   )
 }
