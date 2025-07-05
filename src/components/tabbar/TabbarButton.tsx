@@ -15,7 +15,7 @@ const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
     <Ionicons {...props} size={28} name="settings-outline" />
   ),
-  ideas: (props) => (
+  rewards: (props) => (
     <MaterialCommunityIcons
       size={28}
       {...props}
@@ -70,11 +70,12 @@ export default function TabbarButton({
   })
 
   const handleLayout = () => {
-    if (routeName === "ideas" && viewRef.current) {
+    if (routeName === "rewards" && viewRef.current) {
       setTutorialRef("ideasTabbar", viewRef.current)
     }
   }
 
+  console.log({ routeName })
   return (
     <Pressable
       testID={testID}

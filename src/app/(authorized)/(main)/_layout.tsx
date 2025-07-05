@@ -35,9 +35,9 @@ function MainLayout() {
           }}
         />
         <Tabs.Screen
-          name="ideas"
+          name="rewards"
           options={{
-            title: "Ideas",
+            title: "Rewards",
           }}
         />
         <Tabs.Screen

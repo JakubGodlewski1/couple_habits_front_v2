@@ -38,6 +38,7 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     clearErrors,
   } = useForm<HabitFormType>({
     defaultValues: initialData || {
+      isShared: false,
       targetCount: 1,
       label: "",
       frequency: { type: "repeat", value: "daily" },
@@ -49,6 +50,7 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   })
 
   const onChange = {
+    isShared: (value: boolean) => setValue("isShared", value),
     label: (value: string) => {
       clearErrors(["label"])
       setValue("label", value)
@@ -95,13 +97,14 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     }
   }
 
-  const [label, frequency] = watch(["label", "frequency"])
+  const [label, frequency, isShared] = watch(["label", "frequency", "isShared"])
 
   return {
     isPending,
     values: {
       label,
       frequency,
+      isShared,
     },
     handleSubmit: handleSubmit(onSubmit),
     errors,

@@ -9,6 +9,9 @@ export type HabitCard = {
   completedCount: number
   goalType: GoalType
   createdAt: string
+  shared: {
+    isCompleted: boolean
+  } | null
 }
 
 export type HabitFromBackend = HabitCard

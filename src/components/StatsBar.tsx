@@ -23,7 +23,7 @@ export default function StatsBar({ strike, points }: Props) {
       </View>
       <View ref={(node) => setTutorialRef("points", node)}>
         <Text>
-          Points:<Text className="font-main800"> {points ?? "0 days"}</Text>
+          Points:<Text className="font-main800"> {points ?? "0"}</Text>
         </Text>
       </View>
     </View>

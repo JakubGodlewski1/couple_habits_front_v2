@@ -8,6 +8,7 @@ export type GoalType = "atLeast" | "atMost"
 
 type HabitFormType = {
   label: string
+  isShared?: boolean
   frequency: Frequency
   goalType: GoalType
   targetCount: number

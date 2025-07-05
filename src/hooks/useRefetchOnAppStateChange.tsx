@@ -1,22 +1,15 @@
-import { useEffect, useRef } from "react"
-import { AppState, AppStateStatus } from "react-native"
+import { useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
+import { useAppForegroundTracker } from "@/hooks/useAppForegroundTracker"
 
 export default function useRefetchOnAppStateChange() {
   const queryClient = useQueryClient()
+  const { loadedFromBackground, resetLoadedFromBackground } =
+    useAppForegroundTracker()
 
-  const appStateRef = useRef<AppStateStatus>(AppState.currentState)
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (
-        appStateRef.current.match(/inactive|background/) &&
-        nextAppState === "active"
-      )
-        queryClient.refetchQueries()
-
-      appStateRef.current = nextAppState
-    })
-
-    return () => subscription.remove()
-  }, [])
+    if (!loadedFromBackground) return
+    queryClient.refetchQueries()
+    resetLoadedFromBackground()
+  }, [loadedFromBackground])
 }

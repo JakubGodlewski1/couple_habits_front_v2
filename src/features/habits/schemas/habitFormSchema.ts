@@ -5,6 +5,7 @@ import { frequencySchema } from "@/features/habits/schemas/frequencySchema"
 export const habitFormSchema = z
   .object({
     frequency: frequencySchema,
+    isShared: z.boolean().optional().nullable(),
     label: z
       .string()
       .min(2, "Label is too short.")

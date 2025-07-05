@@ -11,6 +11,7 @@ import { HabitFormType } from "@/features/habits/types/habitForm"
 import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
 import CreateHabitBtnSecured from "@/features/habits/components/habitsForm/CreateHabitBtnSecured"
+import CreateSharedHabitCheckbox from "@/features/habits/components/habitsForm/createSharedHabitCheckbox"
 
 type Props = {
   initialData?: HabitFormType
@@ -35,7 +36,7 @@ export default function HabitForm({
     isPending,
     errors,
     handleSubmit,
-    values: { label, frequency },
+    values: { label, frequency, isShared },
     onChange,
   } = useHabitForm({ habitId, initialData, onSettled: onCancel })
 
@@ -57,6 +58,13 @@ export default function HabitForm({
           onChangeText={onChange.label}
         />
       </View>
+      {!habitId && (
+        <CreateSharedHabitCheckbox
+          onPress={onChange.isShared}
+          isChecked={!!isShared}
+        />
+      )}
+
       <View>
         <Text className="mb-2">How often</Text>
         <Tabs

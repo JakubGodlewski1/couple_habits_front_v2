@@ -9,7 +9,14 @@ type Props = {
 }
 
 export default function UpdateHabitModal({ onClose, isOpen, habit }: Props) {
-  const { id, strike: _s, completedCount: _cC, createdAt: _cA, ...rest } = habit
+  const {
+    id,
+    strike: _st,
+    completedCount: _cC,
+    createdAt: _cA,
+    shared: _sh,
+    ...rest
+  } = habit
 
   return (
     <Modal onClose={onClose} isOpen={isOpen}>

@@ -32,7 +32,15 @@ export const useToggleHabit = () => {
 
         const habitToUpdate = l.cloneDeep(habits.user.find((h) => h.id === id)!)
         habitToUpdate.completedCount += action === "add" ? 1 : -1
-        habitToUpdate.strike = action === "add" ? 1 : -1
+        if (habitToUpdate.shared?.isCompleted) {
+          if (action === "add") {
+            habitToUpdate.strike += 1
+          } else if (action === "subtract") {
+            habitToUpdate.strike -= 1
+          }
+        } else if (!habitToUpdate.shared) {
+          habitToUpdate.strike += action === "add" ? 1 : -1
+        }
 
         return {
           partner: habits.partner,
