@@ -75,7 +75,6 @@ export default function TabbarButton({
     }
   }
 
-  console.log({ routeName })
   return (
     <Pressable
       testID={testID}

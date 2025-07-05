@@ -22,6 +22,7 @@ type Props = {
   multiline?: boolean
   onFocus?: () => void
   onBlur?: () => void
+  onSubmitEditing?: () => void
 }
 
 export default function Input({
@@ -36,6 +37,7 @@ export default function Input({
   label,
   onFocus,
   onBlur,
+  onSubmitEditing,
 }: Props) {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
 
@@ -46,6 +48,7 @@ export default function Input({
         className={`flex-row bg-white border-[1px] border-subtle rounded-main items-center pr-4 overflow-hidden`}
       >
         <TextInput
+          onSubmitEditing={onSubmitEditing}
           onFocus={onFocus}
           onBlur={onBlur}
           className={`p-4 grow font-main700 ${multiline ? "h-48" : ""}`}
