@@ -42,4 +42,11 @@ export const queryKeys = {
   featureFlags: {
     get: ["feature-flags"],
   },
+  rewards: {
+    get: ["rewards"],
+    create: ["create-reward"],
+    update: ["update-reward"],
+    buyOrUse: ["buy-or-use-reward"],
+    delete: ["delete-reward"],
+  },
 }
