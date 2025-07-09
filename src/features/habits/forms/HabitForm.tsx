@@ -12,6 +12,8 @@ import { useHideTabbarContext } from "@/contexts/HideTabbar"
 import SpecificDaysMultiTabsSecured from "@/features/habits/components/habitsForm/SpecificDaysMultiTabsSecured"
 import CreateHabitBtnSecured from "@/features/habits/components/habitsForm/CreateHabitBtnSecured"
 import CreateSharedHabitCheckbox from "@/features/habits/components/habitsForm/createSharedHabitCheckbox"
+import OpenIdeasModalBtn from "@/features/ideas/components/OpenIdeasModalBtn"
+import SetReminder from "@/features/habits/components/habitsForm/SetReminder"
 
 type Props = {
   initialData?: HabitFormType
@@ -50,13 +52,17 @@ export default function HabitForm({
         {habitId ? "Update" : "Create"} a habit
       </Text>
       <View className="gap-4">
-        <Input
-          errorMessage={errors.label?.message}
-          placeholder="Wake up before 6am"
-          label="Habit name"
-          value={label}
-          onChangeText={onChange.label}
-        />
+        <View className="flex-row gap-2 items-end">
+          <Input
+            className="flex-1"
+            errorMessage={errors.label?.message}
+            placeholder="Wake up before 6am"
+            label="Habit name"
+            value={label}
+            onChangeText={onChange.label}
+          />
+          <OpenIdeasModalBtn setSelectedLabel={onChange.label} />
+        </View>
       </View>
       {!habitId && (
         <CreateSharedHabitCheckbox
@@ -85,6 +91,7 @@ export default function HabitForm({
           />
         )}
       </View>
+      <SetReminder />
       <View className="flex-row gap-4 mt-auto">
         <Button
           classNames={{

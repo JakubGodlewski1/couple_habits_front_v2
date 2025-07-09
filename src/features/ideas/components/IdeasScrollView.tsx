@@ -4,18 +4,28 @@ import IdeaCard from "@/features/ideas/components/IdeaCard"
 
 type Props = {
   selectedIdeas: string[]
+  setSelectedLabel: (label: string) => void
+  onClose: () => void
 }
 
 const IdeasScrollView = forwardRef<ScrollView, Props>(
-  ({ selectedIdeas }, ref) => {
+  ({ selectedIdeas, setSelectedLabel, onClose }, ref) => {
     return (
       <ScrollView ref={ref} showsVerticalScrollIndicator={false}>
         {selectedIdeas.map((_, i) => {
           if (i * 2 + 1 >= selectedIdeas.length) return null
           return (
             <View key={i} className="flex-row mb-2 gap-2">
-              <IdeaCard label={selectedIdeas[i * 2]} />
-              <IdeaCard label={selectedIdeas[i * 2 + 1]} />
+              <IdeaCard
+                onClose={onClose}
+                setSelectedLabel={setSelectedLabel}
+                label={selectedIdeas[i * 2]}
+              />
+              <IdeaCard
+                onClose={onClose}
+                setSelectedLabel={setSelectedLabel}
+                label={selectedIdeas[i * 2 + 1]}
+              />
             </View>
           )
         })}

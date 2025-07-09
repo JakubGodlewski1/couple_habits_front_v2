@@ -4,7 +4,7 @@ import { useGetRewards } from "@/features/rewards/api/hooks/useGetRewards"
 import IsLoading from "@/components/IsLoading"
 import IsError from "@/components/IsError"
 import RewardCard from "@/features/rewards/components/RewardCard"
-import AddRewardBtn from "@/features/rewards/components/addRewardBtn"
+import AddRewardBtn from "@/features/rewards/components/AddRewardBtn"
 
 type Props = {
   selectedTab: RewardsMainTabsKey

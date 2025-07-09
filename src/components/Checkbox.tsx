@@ -1,5 +1,8 @@
 import BouncyCheckbox from "react-native-bouncy-checkbox"
 import { vibrate } from "@/utils/vibrate"
+import { ReactNode } from "react"
+import { TouchableOpacity } from "react-native"
+import Text from "@/components/Text"
 
 type Props = {
   disabled?: boolean
@@ -7,6 +10,7 @@ type Props = {
   isChecked: boolean
   className?: string
   color?: "green" | "red"
+  children?: ReactNode
 }
 
 export default function Checkbox({
@@ -14,28 +18,42 @@ export default function Checkbox({
   onPress,
   isChecked,
   className,
+  children,
   color = "green",
 }: Props) {
   const colorHash = color === "red" ? "#ff786f" : "#D1D1D1"
 
   return (
-    <BouncyCheckbox
-      useBuiltInState={false}
-      disabled={disabled}
-      className={`p-2.5 -m-2.5 max-w-12 ${className}`}
-      fillColor={colorHash}
-      isChecked={isChecked}
-      onPress={() => {
-        vibrate()
-        if (disabled) return
-        onPress(!isChecked)
-      }}
-      size={20}
-      innerIconStyle={{
-        borderRadius: 4,
-        borderColor: isChecked ? colorHash : "gray",
-      }}
-      iconStyle={{ borderRadius: 4 }}
-    />
+    <>
+      <BouncyCheckbox
+        useBuiltInState={false}
+        disabled={disabled}
+        className={`p-2.5 -m-2.5 max-w-12 ${className}`}
+        fillColor={colorHash}
+        isChecked={isChecked}
+        onPress={() => {
+          vibrate()
+          if (disabled) return
+          onPress(!isChecked)
+        }}
+        size={20}
+        innerIconStyle={{
+          borderRadius: 4,
+          borderColor: isChecked ? colorHash : "gray",
+        }}
+        iconStyle={{ borderRadius: 4 }}
+      />
+      {children && (
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => {
+            vibrate()
+            onPress(!isChecked)
+          }}
+        >
+          <Text type="sm">{children}</Text>
+        </TouchableOpacity>
+      )}
+    </>
   )
 }
