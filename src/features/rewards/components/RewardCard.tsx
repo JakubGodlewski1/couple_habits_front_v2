@@ -9,10 +9,10 @@ import { useState } from "react"
 
 type Props = {
   reward: RewardFromBackend
-  moveToPurchasedTab: () => void
+  setTab: (tab: RewardsMainTabsKey) => void
 }
 
-export default function RewardCard({ reward, moveToPurchasedTab }: Props) {
+export default function RewardCard({ reward, setTab }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { imageUrl, label, price, id, tab } = reward
 
@@ -22,9 +22,13 @@ export default function RewardCard({ reward, moveToPurchasedTab }: Props) {
       ? "used"
       : "purchased"
 
+  const updateDisabled = state !== "created"
+
   return (
     <>
       <TouchableOpacity
+        disabled={updateDisabled}
+        onPress={() => setIsModalOpen(true)}
         activeOpacity={0.8}
         className="shadow-sm bg-white rounded-xl"
       >
@@ -42,7 +46,7 @@ export default function RewardCard({ reward, moveToPurchasedTab }: Props) {
             {price} points
           </Text>
           <StateButton
-            moveToPurchasedTab={moveToPurchasedTab}
+            moveToPurchasedTab={() => setTab("purchased")}
             price={price}
             id={id}
             state={state}
@@ -51,6 +55,7 @@ export default function RewardCard({ reward, moveToPurchasedTab }: Props) {
       </TouchableOpacity>
       <Modal onClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
         <RewardForm
+          moveToStoreTab={() => setTab("store")}
           defaultValues={{ price, label, imageUrl, tab }}
           id={id}
           onCloseModal={() => setIsModalOpen(false)}

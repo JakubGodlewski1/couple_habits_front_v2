@@ -8,43 +8,47 @@ import AddRewardBtn from "@/features/rewards/components/addRewardBtn"
 
 type Props = {
   selectedTab: RewardsMainTabsKey
-  moveToPurchasedTab: () => void
+  setTab: (tab: RewardsMainTabsKey) => void
 }
 
-export default function RewardsDisplay({
-  selectedTab,
-  moveToPurchasedTab,
-}: Props) {
+export default function RewardsDisplay({ selectedTab, setTab }: Props) {
   const { isPending, data, error } = useGetRewards()
 
   if (isPending) return <IsLoading />
   if (error) return <IsError />
 
-  const { store, purchased } = data!
+  const { store, purchased: purchasedAndUsed } = data!
 
-  if (store.length === 0 && purchased.length === 0)
-    return <NoRewards type="no created" />
+  const purchased = purchasedAndUsed.filter((reward) => !reward.isUsed)
+  const used = purchasedAndUsed.filter((reward) => reward.isUsed)
+
+  // Empty state views
+  if (store.length === 0 && purchasedAndUsed.length === 0)
+    return <NoRewards setTab={setTab} type="no created" />
   if (selectedTab === "purchased" && purchased.length === 0)
-    return <NoRewards type="no purchased" />
+    return <NoRewards setTab={setTab} type="no purchased" />
+  if (selectedTab === "used" && used.length === 0)
+    return <NoRewards setTab={setTab} type="no used" />
 
   const cardsToShow =
-    selectedTab === "purchased"
-      ? [...purchased].sort((a, b) => Number(a.isUsed) - Number(b.isUsed))
-      : store
+    selectedTab === "store"
+      ? store
+      : selectedTab === "purchased"
+        ? purchased
+        : used
 
   return (
     <View>
-      {selectedTab === "store" && <AddRewardBtn type="standard" />}
+      {selectedTab === "store" && (
+        <AddRewardBtn setTab={setTab} type="standard" />
+      )}
       <View className="flex-row flex-wrap px-1 mt-1">
         {cardsToShow.map((reward, i) => (
           <View
             key={reward.id}
-            className={`w-1/2 mb-4 ${i === 0 ? "pr-2" : "pl-2"}`}
+            className={`w-1/2 mb-4 ${i % 2 === 0 ? "pr-2" : "pl-2"}`}
           >
-            <RewardCard
-              moveToPurchasedTab={moveToPurchasedTab}
-              reward={reward}
-            />
+            <RewardCard setTab={setTab} reward={reward} />
           </View>
         ))}
       </View>
@@ -52,16 +56,27 @@ export default function RewardsDisplay({
   )
 }
 
-//show when user has not created any rewards yet
-const NoRewards = ({ type }: { type: "no purchased" | "no created" }) => {
+const NoRewards = ({
+  type,
+  setTab,
+}: {
+  type: "no purchased" | "no created" | "no used"
+  setTab: (tab: RewardsMainTabsKey) => void
+}) => {
+  const messages = {
+    "no created":
+      "You have not created any rewards yet. Add one to see it here.",
+    "no purchased": "Your purchased rewards will show up here.",
+    "no used":
+      "You have not used any rewards yet. Used rewards will appear here.",
+  }
+
   return (
     <View className="px-4 items-center gap-4 my-auto pb-32">
       <Text type="h3" className="text-center mt-10 mx-4">
-        {type === "no purchased"
-          ? "You have not purchased any rewards yet. Buy one to see it here."
-          : "You have not created any rewards yet. Add one to see it here."}
+        {messages[type]}
       </Text>
-      {type === "no created" && <AddRewardBtn />}
+      {type === "no created" && <AddRewardBtn setTab={setTab} />}
     </View>
   )
 }

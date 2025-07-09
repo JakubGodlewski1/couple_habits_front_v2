@@ -1,4 +1,4 @@
-type RewardsMainTabsKey = "store" | "purchased"
+type RewardsMainTabsKey = "store" | "purchased" | "used"
 
 type RewardsPriceTabsKey = "cheap" | "expensive" | "luxury"
 

@@ -5,9 +5,12 @@ import RewardForm from "@/features/rewards/forms/RewardForm"
 import { TouchableOpacity } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 
-export default function AddRewardBtn(
-  { type = "initial" }: { type?: "initial" | "standard" } = { type: "initial" },
-) {
+type Props = {
+  setTab: (tab: RewardsMainTabsKey) => void
+  type?: "initial" | "standard"
+}
+
+export default function AddRewardBtn({ type = "initial", setTab }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
@@ -30,7 +33,10 @@ export default function AddRewardBtn(
       )}
 
       <Modal onClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
-        <RewardForm onCloseModal={() => setIsModalOpen(false)} />
+        <RewardForm
+          moveToStoreTab={() => setTab("store")}
+          onCloseModal={() => setIsModalOpen(false)}
+        />
       </Modal>
     </>
   )

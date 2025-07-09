@@ -103,7 +103,7 @@ export default function Button({
       >
         {isLoading || !title ? <ActivityIndicator /> : title}
       </Text>
-      <View className="-mt-0.5">{children && children}</View>
+      {children && <View className="-mt-0.5">{children}</View>}
     </TouchableOpacity>
   )
 }

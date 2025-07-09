@@ -7,7 +7,7 @@ export const createRewardValidation = z
         required_error: "Reward name is required",
         invalid_type_error: "Reward name  must be a string",
       })
-      .min(2, "Reward name min. length is 2")
+      .min(2, "Reward name is too short")
       .max(50, "Reward name max. length is 50"),
     price: z
       .number({

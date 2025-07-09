@@ -18,10 +18,7 @@ export default function Rewards() {
         value={selectedTab}
       />
       <View className="grow bg-white p-2 rounded-main border-main ">
-        <RewardsDisplay
-          moveToPurchasedTab={() => setSelectedTab("purchased")}
-          selectedTab={selectedTab}
-        />
+        <RewardsDisplay setTab={setSelectedTab} selectedTab={selectedTab} />
       </View>
     </SafeAreaWrapper>
   )

@@ -1,4 +1,4 @@
-import { Image, ScrollView, View } from "react-native"
+import { Alert, Image, ScrollView, TouchableOpacity, View } from "react-native"
 import Input from "../../../components/Input"
 import Button from "../../../components/Button"
 import Text from "../../../components/Text"
@@ -6,8 +6,10 @@ import RewardsPriceTabs from "@/features/rewards/components/RewardsPriceTabs"
 import SelectRewardImageBtn from "@/features/rewards/components/SelectRewardImageBtn"
 import { useRewardForm } from "@/features/rewards/hooks/useRewardForm"
 import { Controller } from "react-hook-form"
+import { AntDesign } from "@expo/vector-icons"
 
 type Props = {
+  moveToStoreTab: () => void
   onCloseModal: () => void
   id?: number
   defaultValues?: {
@@ -18,7 +20,12 @@ type Props = {
   }
 }
 
-export default function RewardForm({ onCloseModal, defaultValues, id }: Props) {
+export default function RewardForm({
+  onCloseModal,
+  defaultValues,
+  id,
+  moveToStoreTab,
+}: Props) {
   const {
     control,
     imageUrl,
@@ -27,6 +34,8 @@ export default function RewardForm({ onCloseModal, defaultValues, id }: Props) {
     handleSubmit,
     isSubmitting,
     price,
+    isImageMissing,
+    deleteRewardWithConfirmation,
   } = useRewardForm({ onCloseModal, defaultValues, id })
 
   return (
@@ -35,25 +44,34 @@ export default function RewardForm({ onCloseModal, defaultValues, id }: Props) {
       scrollEnabled={false}
       contentContainerClassName="gap-3 grow"
     >
-      <Text className=" mt-4 mb-[12px]" type="h1">
-        Create a reward
-      </Text>
+      <View className="flex-row justify-between">
+        <Text className=" mt-4 mb-[12px]" type="h1">
+          {id ? "Update the" : "Create a"} reward
+        </Text>
+        <TouchableOpacity onPress={onCloseModal} className="p-4 pr-0">
+          <AntDesign name="close" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
       <View className="gap-3 flex-row items-end">
         <Controller
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <Input
-              className="grow"
-              placeholder="Go to the cinema  🎬"
-              label="Reward name"
-              value={value}
-              onChangeText={onChange}
-            />
+          render={({ field: { value, onChange }, formState: { errors } }) => (
+            <>
+              <Input
+                errorMessage={errors.label?.message}
+                className="grow"
+                placeholder="Go to the cinema  🎬"
+                label="Reward name"
+                value={value}
+                onChangeText={onChange}
+              />
+              <View className={errors.label?.message ? "mb-[32]" : ""}>
+                <SelectRewardImageBtn setUri={setImageUrl} />
+              </View>
+            </>
           )}
           name="label"
         />
-
-        <SelectRewardImageBtn setUri={setImageUrl} />
       </View>
       <View>
         <Text className="mb-2">Price</Text>
@@ -86,21 +104,39 @@ export default function RewardForm({ onCloseModal, defaultValues, id }: Props) {
       </View>
 
       <View className="flex-row gap-4 mt-auto">
-        <Button
-          classNames={{
-            wrapper: "flex-1",
-          }}
-          type="subtle"
-          onPress={onCancel}
-          title="Cancel"
-        />
+        {id ? (
+          <Button
+            type="error"
+            classNames={{ wrapper: "grow" }}
+            onPress={() => deleteRewardWithConfirmation(id)}
+            title="Delete"
+          />
+        ) : (
+          <Button
+            classNames={{
+              wrapper: "grow",
+            }}
+            type="subtle"
+            onPress={onCancel}
+            title="Cancel"
+          />
+        )}
+
         <Button
           disabled={isSubmitting}
           classNames={{
-            wrapper: "flex-1",
+            wrapper: "grow",
           }}
-          onPress={handleSubmit}
-          title="Create"
+          onPress={() => {
+            if (isImageMissing) {
+              Alert.alert("Image is missing", "Please select an image")
+              return
+            } else {
+              moveToStoreTab()
+              handleSubmit()
+            }
+          }}
+          title={id ? "Update" : "Create"}
         />
       </View>
     </ScrollView>
