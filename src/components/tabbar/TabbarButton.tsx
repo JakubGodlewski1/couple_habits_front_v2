@@ -1,6 +1,6 @@
 import { Pressable, View } from "react-native"
 import { ReactNode, useEffect, useRef } from "react"
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { Ionicons } from "@expo/vector-icons"
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -15,13 +15,7 @@ const icon: Record<string, (props: { color: string }) => ReactNode> = {
   settings: (props) => (
     <Ionicons {...props} size={28} name="settings-outline" />
   ),
-  rewards: (props) => (
-    <MaterialCommunityIcons
-      size={28}
-      {...props}
-      name="head-lightbulb-outline"
-    />
-  ),
+  rewards: (props) => <Ionicons size={28} {...props} name="trophy-outline" />,
   "(home)": (props) => <Ionicons {...props} size={28} name="home-outline" />,
 } as const
 

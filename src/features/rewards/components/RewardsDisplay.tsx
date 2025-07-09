@@ -1,4 +1,4 @@
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import Text from "@/components/Text"
 import { useGetRewards } from "@/features/rewards/api/hooks/useGetRewards"
 import IsLoading from "@/components/IsLoading"
@@ -38,7 +38,10 @@ export default function RewardsDisplay({ selectedTab, setTab }: Props) {
         : used
 
   return (
-    <View>
+    <ScrollView
+      contentContainerClassName="pb-96"
+      showsVerticalScrollIndicator={false}
+    >
       {selectedTab === "store" && (
         <AddRewardBtn setTab={setTab} type="standard" />
       )}
@@ -52,7 +55,7 @@ export default function RewardsDisplay({ selectedTab, setTab }: Props) {
           </View>
         ))}
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
