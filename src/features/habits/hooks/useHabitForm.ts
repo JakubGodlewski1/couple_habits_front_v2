@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import {
   FrequencyType,
+  GoalType,
   HabitFormType,
   RepeatValue,
   SpecificDaysValue,
@@ -45,7 +46,13 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     reValidateMode: "onChange",
   })
 
-  const [label, frequency, isShared] = watch(["label", "frequency", "isShared"])
+  const [label, frequency, isShared, goalType, targetCount] = watch([
+    "label",
+    "frequency",
+    "isShared",
+    "goalType",
+    "targetCount",
+  ])
 
   //reminders
   const { cancel, schedule, scheduledReminders } = useNotifications()
@@ -112,6 +119,12 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
   const isPending = isCreating || isUpdating
 
   const onChange = {
+    tagetCount: (taget: number) => {
+      setValue("targetCount", taget)
+    },
+    goal: (goalType: GoalType) => {
+      setValue("goalType", goalType)
+    },
     isShared: (value: boolean) => setValue("isShared", value),
     label: (value: string) => {
       clearErrors(["label"])
@@ -168,6 +181,8 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     },
     isPending,
     values: {
+      goalType,
+      targetCount,
       label,
       frequency,
       isShared,
