@@ -6,9 +6,12 @@ import l from "lodash"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 
-export const useUpdateHabit = (
-  { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
-) => {
+type Props = {
+  onSettled?: () => void
+  onSuccess?: () => void
+}
+
+export const useUpdateHabit = ({ onSettled, onSuccess }: Props) => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
 
@@ -66,6 +69,11 @@ export const useUpdateHabit = (
       queryClient.invalidateQueries({
         queryKey: queryKeys.statsStrikeCompletion.get,
       })
+    },
+    onSuccess: () => {
+      if (onSuccess) {
+        onSuccess()
+      }
     },
     onError: (err) => {
       showToast({

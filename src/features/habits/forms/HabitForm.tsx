@@ -35,6 +35,7 @@ export default function HabitForm({
   }
 
   const {
+    reminders,
     isPending,
     errors,
     handleSubmit,
@@ -61,7 +62,9 @@ export default function HabitForm({
             value={label}
             onChangeText={onChange.label}
           />
-          <OpenIdeasModalBtn setSelectedLabel={onChange.label} />
+          <View className={errors.label?.message ? "mb-9" : ""}>
+            <OpenIdeasModalBtn setSelectedLabel={onChange.label} />
+          </View>
         </View>
       </View>
       {!habitId && (
@@ -91,7 +94,7 @@ export default function HabitForm({
           />
         )}
       </View>
-      <SetReminder />
+      <SetReminder {...reminders} />
       <View className="flex-row gap-4 mt-auto">
         <Button
           classNames={{

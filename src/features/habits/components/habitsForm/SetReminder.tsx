@@ -1,22 +1,62 @@
-import { View } from "react-native"
+import { View, Alert } from "react-native"
 import Checkbox from "@/components/Checkbox"
 import SelectTime from "@/features/habits/components/habitsForm/SelectTime"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useNotifications } from "@/features/shared/notifications/hooks/useNotifications"
 
-export default function SetReminder() {
-  const [time, setTime] = useState(new Date(Date.now()))
-  const [isReminderOn, setIsReminderOn] = useState(false)
+type Props = {
+  setIsReminderOn: (isOn: boolean) => void
+  isReminderOn: boolean
+  time: Date
+  setTime: (date: Date) => void
+}
+
+export default function SetReminder({
+  isReminderOn,
+  setIsReminderOn,
+  setTime,
+  time,
+}: Props) {
   const [isVisible, setIsVisible] = useState(false)
+  const { requestPermissions } = useNotifications()
 
-  useEffect(() => {
-    if (isReminderOn) setIsVisible(true)
-    else setIsVisible(false)
-  }, [isReminderOn])
+  const enableReminder = async () => {
+    const { status } = await requestPermissions()
+    if (status === "granted") {
+      setIsReminderOn(true)
+      return true
+    } else {
+      Alert.alert(
+        "Enable Notifications",
+        "To use reminders, enable notifications in Settings.",
+        [{ text: "OK" }],
+      )
+      setIsReminderOn(false)
+      return false
+    }
+  }
+
+  const handleToggleReminder = async () => {
+    if (isReminderOn) {
+      setIsReminderOn(false)
+      setIsVisible(false)
+    } else {
+      await enableReminder()
+    }
+  }
+
+  const handleTimeChange = async (date: Date) => {
+    const wasGranted = await enableReminder()
+    console.log({ wasGranted })
+    if (wasGranted) {
+      setTime(date)
+    }
+  }
 
   return (
     <View className="flex-row gap-4 justify-between">
       <View className="flex flex-row items-center">
-        <Checkbox onPress={setIsReminderOn} isChecked={isReminderOn}>
+        <Checkbox onPress={handleToggleReminder} isChecked={isReminderOn}>
           Set reminder
         </Checkbox>
       </View>
@@ -24,7 +64,7 @@ export default function SetReminder() {
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         time={time}
-        setTime={setTime}
+        setTime={handleTimeChange}
       />
     </View>
   )

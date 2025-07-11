@@ -5,9 +5,13 @@ import { queryKeys } from "@/config/queryKeys"
 import { HabitFormType } from "@/features/habits/types/habitForm"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
 
-export const useCreateHabit = (
-  { onSettled }: { onSettled?: () => void } = { onSettled: () => {} },
-) => {
+export const useCreateHabit = ({
+  onSettled,
+  onSuccess,
+}: {
+  onSettled?: () => void
+  onSuccess?: (data: { id: number }) => void
+}) => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
 
@@ -45,7 +49,10 @@ export const useCreateHabit = (
   const { mutate: createHabit, isPending } = useMutation({
     mutationKey: queryKeys.habits.create,
     mutationFn: createHabitMutation,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (onSuccess) {
+        onSuccess(data.data)
+      }
       showToast({
         type: "success",
         message: "Habit added successfully",

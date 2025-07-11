@@ -17,7 +17,6 @@ export default function SelectTime({
   isVisible,
   setIsVisible,
 }: Props) {
-  // Format time to "HH:mm", e.g., "08:30"
   const formattedTime = format(time, "HH:mm")
 
   return (
@@ -32,7 +31,6 @@ export default function SelectTime({
       >
         <Text>{formattedTime}</Text>
       </TouchableOpacity>
-
       <DateTimePickerModal
         mode="time"
         date={time}

@@ -13,6 +13,9 @@ import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { Alert } from "react-native"
 import { useCreateHabit } from "@/features/habits/api/hooks/useCreateHabit"
 import { useUpdateHabit } from "@/features/habits/api/hooks/useUpdateHabit"
+import { useEffect, useState } from "react"
+import { useNotifications } from "@/features/shared/notifications/hooks/useNotifications"
+import { DAYS_OF_THE_WEEK_TO_INT } from "@/consts/consts"
 
 type Props = {
   initialData?: HabitFormType
@@ -21,13 +24,6 @@ type Props = {
 }
 
 export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
-  const user = useGetUser().user!
-
-  const { createHabit, isPending: isCreating } = useCreateHabit({ onSettled })
-  const { updateHabit, isPending: isUpdating } = useUpdateHabit({ onSettled })
-
-  const isPending = isCreating || isUpdating
-
   const {
     handleSubmit,
     formState: { errors },
@@ -48,6 +44,72 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     mode: "all",
     reValidateMode: "onChange",
   })
+
+  const [label, frequency, isShared] = watch(["label", "frequency", "isShared"])
+
+  //reminders
+  const { cancel, schedule, scheduledReminders } = useNotifications()
+  const [time, setTime] = useState(new Date(Date.now()))
+  const [isReminderOn, setIsReminderOn] = useState(false)
+
+  useEffect(() => {
+    if (!habitId) return
+
+    const reminder = scheduledReminders.find((r) => r.id === habitId.toString())
+    if (!reminder) return
+
+    setIsReminderOn(true)
+    const now = new Date()
+    setTime(
+      new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        reminder.hour,
+        reminder.minute,
+        0,
+        0,
+      ),
+    )
+  }, [scheduledReminders.length, habitId])
+
+  const setupReminder = async (id: number) => {
+    const freq =
+      frequency.type === "repeat"
+        ? frequency.value
+        : frequency.value.map((d) => DAYS_OF_THE_WEEK_TO_INT[d])
+
+    await schedule({
+      id,
+      title: `Couple habits - ${label}`,
+      body: `Your habit "${label}" is waiting for You! Have you done it yet?`,
+      frequency: freq,
+      hour: time.getHours(),
+      minute: time.getMinutes(),
+    })
+  }
+
+  const onSuccessCreate = ({ id }: { id: number }) => {
+    if (isReminderOn) setupReminder(id)
+  }
+
+  const onSuccessUpdate = async () => {
+    await cancel(habitId!)
+    if (isReminderOn) setupReminder(habitId!)
+  }
+
+  const { createHabit, isPending: isCreating } = useCreateHabit({
+    onSettled,
+    onSuccess: onSuccessCreate,
+  })
+  const { updateHabit, isPending: isUpdating } = useUpdateHabit({
+    onSettled,
+    onSuccess: onSuccessUpdate,
+  })
+
+  const user = useGetUser().user!
+
+  const isPending = isCreating || isUpdating
 
   const onChange = {
     isShared: (value: boolean) => setValue("isShared", value),
@@ -97,9 +159,13 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
     }
   }
 
-  const [label, frequency, isShared] = watch(["label", "frequency", "isShared"])
-
   return {
+    reminders: {
+      time,
+      isReminderOn,
+      setTime,
+      setIsReminderOn,
+    },
     isPending,
     values: {
       label,

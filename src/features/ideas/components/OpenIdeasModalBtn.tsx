@@ -15,7 +15,7 @@ export default function OpenIdeasModalBtn({ setSelectedLabel }: Props) {
     <>
       <TouchableOpacity
         onPress={() => setIsModalOpen(true)}
-        className="bg-white border-[1px] border-subtle rounded-main items-center p-2.5 "
+        className="bg-white border-[1px] border-subtle rounded-main items-center p-2.5"
       >
         <Ionicons name="bulb-outline" size={28} color="#4B5563" />
       </TouchableOpacity>
