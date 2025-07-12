@@ -17,7 +17,7 @@ export default function SpecificDaysMultiTabsSecured({
   const user = useGetUser().user
   const { hasProAccess } = useGetSubscriptionInfo().subscriptionInfo!
   const { buyPro, isLoading } = useBuyPro({
-    paywallIdentifier: "freemium1/pro-feature",
+    paywallIdentifier: "freemium1/premium-feature",
   })
 
   if (isLoading) return <IsLoadingProAccount />

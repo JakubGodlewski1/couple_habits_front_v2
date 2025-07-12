@@ -12,9 +12,9 @@ type Props = {
 }
 
 export default function RewardsDisplay({ selectedTab, setTab }: Props) {
-  const { isPending, data, error } = useGetRewards()
+  const { isLoading, data, error } = useGetRewards()
 
-  if (isPending) return <IsLoading />
+  if (isLoading) return <IsLoading />
   if (error) return <IsError />
 
   let { store } = data!

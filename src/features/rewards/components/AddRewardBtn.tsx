@@ -6,6 +6,7 @@ import { Alert, TouchableOpacity } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
+import { useSecureMaxRewardsForFreemium } from "@/features/rewards/hooks/useSecureMaxRewardsForFreemium"
 
 type Props = {
   setTab: (tab: RewardsMainTabsKey) => void
@@ -16,6 +17,7 @@ export default function AddRewardBtn({ type = "initial", setTab }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const user = useGetUser().user!
   const { data } = useGetHabits()
+  const { callIfAllowed, isLoading } = useSecureMaxRewardsForFreemium()
 
   const onOpen = () => {
     if (!user.hasPartner) {
@@ -35,15 +37,17 @@ export default function AddRewardBtn({ type = "initial", setTab }: Props) {
     <>
       {type === "initial" ? (
         <Button
+          disabled={isLoading}
           classNames={{
             wrapper: "mx-auto mt-5 py-3",
           }}
-          onPress={onOpen}
+          onPress={() => callIfAllowed(onOpen)}
           title="Add your first reward"
         />
       ) : (
         <TouchableOpacity
-          onPress={onOpen}
+          disabled={isLoading}
+          onPress={() => callIfAllowed(onOpen)}
           className="border-[1px] bg-white border-primary rounded-lg p-1 items-center mb-2 grow"
         >
           <AntDesign name="plus" size={24} color="#ff786f" />

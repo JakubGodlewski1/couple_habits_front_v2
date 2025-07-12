@@ -10,8 +10,9 @@ export const useBuyPro = (
   }: {
     paywallIdentifier?:
       | "freemium1/main"
-      | "freemium1/pro-feature"
-      | "freemium1/habit-limit-exceeded"
+      | "freemium1/premium-feature"
+      | "freemium1/habit-limit"
+      | "freemium1/rewards-limit"
   } = { paywallIdentifier: "freemium1/main" },
 ) => {
   const queryClient = useQueryClient()

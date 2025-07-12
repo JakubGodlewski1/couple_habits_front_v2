@@ -13,11 +13,14 @@ export const useGetRewards = () => {
     return await res.data
   }
 
-  const { isPending, data, error } = useQuery<RewardsFromBackend>({
+  const { isLoading, data, error, isPending } = useQuery<RewardsFromBackend>({
     queryKey: queryKeys.rewards.get,
     queryFn: getRewardsFn,
     enabled: !!(user && user.hasPartner),
   })
 
-  return { isPending, data, error }
+  const fallBack = { store: [], purchased: [] } as RewardsFromBackend
+  const statsStrikeCompletedAt = data || fallBack
+
+  return { isLoading, data: statsStrikeCompletedAt, error, isPending }
 }

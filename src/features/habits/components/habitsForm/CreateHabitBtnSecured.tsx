@@ -14,7 +14,7 @@ const CreateHabitBtnSecured = ({ habitId, isPending, handleSubmit }: Props) => {
 
   const { hasProAccess } = useGetSubscriptionInfo().subscriptionInfo!
   const { buyPro, isLoading: isLoadingProAccount } = useBuyPro({
-    paywallIdentifier: "freemium1/habit-limit-exceeded",
+    paywallIdentifier: "freemium1/habit-limit",
   })
 
   const isLoading = isLoadingProAccount || isPending || areHabitsPending
