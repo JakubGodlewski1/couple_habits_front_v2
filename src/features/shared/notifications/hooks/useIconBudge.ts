@@ -10,8 +10,13 @@ export const useIconBudge = () => {
     if (!habits) return
 
     const uncompletedCount =
-      habits.user.filter(habitFilters.isIncompleted).length +
-      habits.partner.filter(habitFilters.isIncompleted).length
+      habits.user
+        .filter(habitFilters.isIncompleted)
+        .filter(habitFilters.scheduledForTodayIncludingWeeklyAndMonthly)
+        .length +
+      habits.partner
+        .filter(habitFilters.isIncompleted)
+        .filter(habitFilters.scheduledForTodayIncludingWeeklyAndMonthly).length
 
     // Set or clear badge
     Notifications.setBadgeCountAsync(uncompletedCount).catch((err) =>

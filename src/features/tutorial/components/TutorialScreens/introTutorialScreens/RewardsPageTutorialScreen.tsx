@@ -10,13 +10,13 @@ type Props = {
   goNext: () => void
 }
 
-export default function IdeasPageTutorialScreen({
+export default function RewardsPageTutorialScreen({
   goNext,
   onClose,
   refScreenPositions,
   safeAreaTopInset,
 }: Props) {
-  const { y, x } = refScreenPositions.ideasTabbar
+  const { y, x } = refScreenPositions.rewardsTabbar
 
   return (
     <View
@@ -26,8 +26,8 @@ export default function IdeasPageTutorialScreen({
       <TutorialCard
         onClose={onClose}
         onPress={goNext}
-        text="Running low on ideas? No worries — there’s plenty for you to explore!"
-        title="Hundreds of ideas"
+        text="Earn points and spend them on rewards you create!"
+        title="Your Reward Store"
         btnLabel="Got it!"
       />
       <Image

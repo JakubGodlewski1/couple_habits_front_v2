@@ -18,6 +18,7 @@ export class TutorialStore {
       try {
         const parsed = JSON.parse(value)
         return {
+          discordInvite: false,
           connection: false,
           firstHabit: false,
           avatar: false,
@@ -26,6 +27,7 @@ export class TutorialStore {
         }
       } catch {
         return {
+          discordInvite: false,
           connection: false,
           firstHabit: false,
           partnerAvatar: false,
@@ -34,6 +36,7 @@ export class TutorialStore {
       }
     }
     return {
+      discordInvite: false,
       connection: false,
       firstHabit: false,
       partnerAvatar: false,

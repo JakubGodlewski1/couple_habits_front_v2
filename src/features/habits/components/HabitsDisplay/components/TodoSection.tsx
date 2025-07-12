@@ -28,8 +28,11 @@ export default function TodoSection({ habits, owner }: Props) {
   ): HabitFromBackend[] =>
     habits
       .filter(filterFn)
-      .filter((h) =>
-        showCompletedHabits || owner === "partner" ? true : !isCompleted(h),
+      .filter(
+        (h) =>
+          showCompletedHabits ||
+          (owner === "partner" ? true : !isCompleted(h)) ||
+          (h.shared && !h.shared.isCompleted),
       )
       .sort(sortHabits)
 

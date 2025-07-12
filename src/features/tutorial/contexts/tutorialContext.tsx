@@ -18,6 +18,7 @@ type Context = {
 
 export const TutorialContext = createContext<Context>({
   seenTutorials: {
+    discordInvite: false,
     connection: false,
     firstHabit: false,
     partnerAvatar: false,
@@ -29,6 +30,7 @@ export const TutorialContext = createContext<Context>({
 
 export const TutorialContextProvider = ({ children }: PropsWithChildren) => {
   const [seenTutorials, setSeenTutorials] = useState<TutorialSeenMap>({
+    discordInvite: false,
     connection: false,
     firstHabit: false,
     partnerAvatar: false,

@@ -36,7 +36,7 @@ export default function HabitCard({
     playClickSound()
     vibrate()
     if (checked) {
-      if (showCompletedHabits) {
+      if (showCompletedHabits || (habit.shared && !habit.shared.isCompleted)) {
         toggleHabit({
           action: "add",
           id: habit.id,

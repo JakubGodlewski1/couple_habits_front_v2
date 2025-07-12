@@ -65,7 +65,7 @@ export default function TabbarButton({
 
   const handleLayout = () => {
     if (routeName === "rewards" && viewRef.current) {
-      setTutorialRef("ideasTabbar", viewRef.current)
+      setTutorialRef("rewardsTabbar", viewRef.current)
     }
   }
 

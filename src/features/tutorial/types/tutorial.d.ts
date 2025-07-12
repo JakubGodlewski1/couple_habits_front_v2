@@ -14,4 +14,4 @@ type IntroScreenType =
   | "swipeRight"
   | "longPress"
   | "partnerPage"
-  | "ideasPage"
+  | "rewardsPage"

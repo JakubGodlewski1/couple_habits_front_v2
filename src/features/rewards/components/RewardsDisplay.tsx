@@ -17,10 +17,18 @@ export default function RewardsDisplay({ selectedTab, setTab }: Props) {
   if (isPending) return <IsLoading />
   if (error) return <IsError />
 
-  const { store, purchased: purchasedAndUsed } = data!
+  let { store } = data!
+  const { purchased: purchasedAndUsed } = data!
 
-  const purchased = purchasedAndUsed.filter((reward) => !reward.isUsed)
-  const used = purchasedAndUsed.filter((reward) => reward.isUsed)
+  store = store.sort((a, b) => a.id - b.id)
+
+  const purchased = purchasedAndUsed
+    .filter((reward) => !reward.isUsed)
+    .sort((a, b) => a.id - b.id)
+
+  const used = purchasedAndUsed
+    .filter((reward) => reward.isUsed)
+    .sort((a, b) => a.id - b.id)
 
   // Empty state views
   if (store.length === 0 && purchasedAndUsed.length === 0)

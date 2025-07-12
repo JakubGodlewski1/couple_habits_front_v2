@@ -8,7 +8,7 @@ import SwipeLeftTutorialScreen from "@/features/tutorial/components/TutorialScre
 import { useTutorialContext } from "@/features/tutorial/contexts/tutorialContext"
 import LongPressTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/LongPressTutorialScreen"
 import PartnerPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/PartnerPageTutorialScreen"
-import IdeasPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/IdeasPageTutorialScreen"
+import RewardsPageTutorialScreen from "@/features/tutorial/components/TutorialScreens/introTutorialScreens/RewardsPageTutorialScreen"
 import TutorialBackgroundWrapper from "@/features/tutorial/components/shared/TutorialBackgroundWrapper"
 
 type Props = {
@@ -31,7 +31,7 @@ const screens: Record<
   swipeRight: SwipeRightTutorialScreen,
   longPress: LongPressTutorialScreen,
   partnerPage: PartnerPageTutorialScreen,
-  ideasPage: IdeasPageTutorialScreen,
+  rewardsPage: RewardsPageTutorialScreen,
   // Add more mappings here
 }
 
@@ -42,7 +42,7 @@ const screenOrder: IntroScreenType[] = [
   "strike",
   "points",
   "partnerPage",
-  "ideasPage",
+  "rewardsPage",
 ]
 
 export default function IntroTutorialScreen({
