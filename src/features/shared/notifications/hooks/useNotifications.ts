@@ -50,8 +50,6 @@ export function useNotifications() {
 
       const scheduled = await Notifications.getAllScheduledNotificationsAsync()
 
-      console.log(JSON.stringify(scheduled, null, 2))
-
       const result: { id: string; hour: number; minute: number }[] = []
 
       for (const [habitId, notificationIds] of Object.entries(stored)) {
@@ -83,8 +81,6 @@ export function useNotifications() {
         }
 
         if (Platform.OS === "ios") {
-          console.log(JSON.stringify(trigger, null, 2))
-
           if (trigger && "dateComponents" in trigger) {
             const dc = trigger.dateComponents as {
               hour?: number

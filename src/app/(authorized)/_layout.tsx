@@ -1,5 +1,4 @@
 import { useAuth } from "@clerk/clerk-expo"
-import IsLoading from "@/components/IsLoading"
 import { Redirect, Stack } from "expo-router"
 import { useGetUser } from "@/features/user/api/hooks/useGetUser"
 import { useRegisterPurchaseObj } from "@/features/subscriptions/hooks/useRegisterPurchaseObj"
@@ -7,11 +6,12 @@ import { useGetInitialData } from "@/hooks/useGetInitialData"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import useRefetchOnAppStateChange from "@/hooks/useRefetchOnAppStateChange"
+import IsLoadingLogo from "@/components/IsLoadingLogo"
 
 const AuthorizedLayout = () => {
   const { isSignedIn, isLoaded } = useAuth()
 
-  if (!isLoaded) return <IsLoading />
+  if (!isLoaded) return <IsLoadingLogo />
   if (!isSignedIn) return <Redirect href="/(unauthorized)/sign-in" />
 
   return <ClearCache />
@@ -27,7 +27,7 @@ const ClearCache = () => {
     setReady(true)
   }, [])
 
-  if (!ready) return <IsLoading />
+  if (!ready) return <IsLoadingLogo />
 
   return <GetInitialData />
 }
@@ -36,7 +36,7 @@ const ClearCache = () => {
 const GetInitialData = () => {
   const { isPending, isError } = useGetInitialData()
 
-  if (isPending) return <IsLoading />
+  if (isPending) return <IsLoadingLogo />
   if (isError)
     throw new Error("Error in authorized layout while fetching initial data")
 

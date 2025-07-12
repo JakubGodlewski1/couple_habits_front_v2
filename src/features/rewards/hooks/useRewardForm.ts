@@ -8,6 +8,8 @@ import { useUpdateReward } from "@/features/rewards/api/hooks/useUpdateReward"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createRewardValidation } from "@/features/rewards/validation/rewards.validation"
 import { useDeleteReward } from "@/features/rewards/api/hooks/useDeleteRewaard"
+import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import { Alert } from "react-native"
 
 const floorToCustom10 = (n: number) => {
   const rem = n % 10
@@ -28,6 +30,7 @@ type Props = {
 export const useRewardForm = ({ onCloseModal, defaultValues, id }: Props) => {
   const { setIsHidden } = useHideTabbarContext()
   const { data } = useGetHabits()
+  const user = useGetUser().user
 
   const { control, watch, setValue, handleSubmit } = useForm<RewardsForm>({
     defaultValues: defaultValues || { tab: "cheap" },
@@ -48,6 +51,14 @@ export const useRewardForm = ({ onCloseModal, defaultValues, id }: Props) => {
   const [imageUrl, price, tab] = watch(["imageUrl", "price", "tab"])
 
   const onSubmit = (data: RewardsForm) => {
+    //validate that user is connected with partner
+    if (!user || !user.hasPartner) {
+      return Alert.alert(
+        `You are not connected with ${user?.partnerName || "your partner"}`,
+        "Please connect first",
+      )
+    }
+
     if (id && defaultValues) {
       update({ data, id })
     } else {

@@ -15,6 +15,7 @@ export default function RootLayout() {
     <GlobalProviders>
       <Stack
         screenOptions={{
+          animation: "none",
           gestureEnabled: false,
           headerShown: false,
         }}

@@ -13,7 +13,7 @@ export default function RewardsTopBar() {
       <View className="grow flex-row items-center  bg-white rounded-main border-main p-4 justify-center">
         <Text>
           Points:
-          <Text className="font-main800"> {stats?.points || "loading..."}</Text>
+          <Text className="font-main800"> {stats?.points ?? "loading..."}</Text>
         </Text>
       </View>
     </View>

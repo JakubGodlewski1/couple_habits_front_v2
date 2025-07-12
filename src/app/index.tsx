@@ -1,12 +1,10 @@
-import { useEffect } from "react"
-import { router } from "expo-router"
+import { Redirect } from "expo-router"
+import { useAuth } from "@clerk/clerk-expo"
+import IsLoadingLogo from "@/components/IsLoadingLogo"
 
 export default function RootPage() {
-  //redirect from root page to hero section
-
-  useEffect(() => {
-    setTimeout(() => {
-      router.replace("/hero")
-    }, 0)
-  }, [])
+  const { isSignedIn, isLoaded } = useAuth()
+  if (!isLoaded) return <IsLoadingLogo />
+  if (!isSignedIn) return <Redirect href="/hero" />
+  return <Redirect href="/(authorized)" />
 }

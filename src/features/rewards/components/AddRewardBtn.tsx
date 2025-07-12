@@ -2,8 +2,10 @@ import Button from "@/components/Button"
 import Modal from "@/components/Modal"
 import { useState } from "react"
 import RewardForm from "@/features/rewards/forms/RewardForm"
-import { TouchableOpacity } from "react-native"
+import { Alert, TouchableOpacity } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
+import { useGetUser } from "@/features/user/api/hooks/useGetUser"
+import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
 
 type Props = {
   setTab: (tab: RewardsMainTabsKey) => void
@@ -12,6 +14,22 @@ type Props = {
 
 export default function AddRewardBtn({ type = "initial", setTab }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const user = useGetUser().user!
+  const { data } = useGetHabits()
+
+  const onOpen = () => {
+    if (!user.hasPartner) {
+      Alert.alert(
+        `Connect with ${user.partnerName} first`,
+        `You have to connect with ${user.partnerName} before creating your first habit.`,
+      )
+    } else if (data?.user.length === 0 || data?.partner.length === 0) {
+      Alert.alert(
+        `Create a few habits with ${user.partnerName} first`,
+        `We calculate reward prices based on the number of habits you and ${user.partnerName} have`,
+      )
+    } else setIsModalOpen(true)
+  }
 
   return (
     <>
@@ -20,12 +38,12 @@ export default function AddRewardBtn({ type = "initial", setTab }: Props) {
           classNames={{
             wrapper: "mx-auto mt-5 py-3",
           }}
-          onPress={() => setIsModalOpen(true)}
+          onPress={onOpen}
           title="Add your first reward"
         />
       ) : (
         <TouchableOpacity
-          onPress={() => setIsModalOpen(true)}
+          onPress={onOpen}
           className="border-[1px] bg-white border-primary rounded-lg p-1 items-center mb-2 grow"
         >
           <AntDesign name="plus" size={24} color="#ff786f" />
