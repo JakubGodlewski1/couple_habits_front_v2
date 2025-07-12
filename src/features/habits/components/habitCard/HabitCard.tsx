@@ -97,7 +97,7 @@ export default function HabitCard({
               {habit.label}
             </Text>
           </View>
-          {habit.shared && !toggleHidden && (
+          {habit.shared && !toggleHidden && owner === "user" && (
             <View
               className={`${habit.shared.isCompleted ? "bg-success" : "bg-primary"} h-4 w-4 mt-auto rounded-full -mb-1`}
             />

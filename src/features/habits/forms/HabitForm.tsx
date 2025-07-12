@@ -14,8 +14,6 @@ import CreateHabitBtnSecured from "@/features/habits/components/habitsForm/Creat
 import CreateSharedHabitCheckbox from "@/features/habits/components/habitsForm/createSharedHabitCheckbox"
 import OpenIdeasModalBtn from "@/features/ideas/components/OpenIdeasModalBtn"
 import SetReminder from "@/features/habits/components/habitsForm/SetReminder"
-import HabitGoalDropdown from "@/features/habits/components/habitsForm/HabitGoalDropdown"
-import SelectHabitTargetCount from "@/features/habits/components/habitsForm/SelectHabitTargetCount"
 
 type Props = {
   initialData?: HabitFormType
@@ -41,7 +39,7 @@ export default function HabitForm({
     isPending,
     errors,
     handleSubmit,
-    values: { label, frequency, isShared, goalType, targetCount },
+    values: { label, frequency, isShared },
     onChange,
   } = useHabitForm({ habitId, initialData, onSettled: onCancel })
 
@@ -49,7 +47,7 @@ export default function HabitForm({
     <ScrollView
       keyboardShouldPersistTaps="never"
       scrollEnabled={false}
-      contentContainerClassName="gap-7 grow"
+      contentContainerClassName="gap-5 grow"
     >
       <Text className="mb-1.5" type="h1">
         {habitId ? "Update" : "Create"} a habit
@@ -96,18 +94,18 @@ export default function HabitForm({
         )}
       </View>
 
-      <View>
-        <Text className="mb-2">Goal</Text>
-        <View className="flex-row gap-2">
-          <View className="grow">
-            <HabitGoalDropdown value={goalType} onChange={onChange.goal} />
-          </View>
-          <SelectHabitTargetCount
-            setAmount={onChange.tagetCount}
-            amount={targetCount}
-          />
-        </View>
-      </View>
+      {/*<View>*/}
+      {/*  <Text className="mb-2">Goal</Text>*/}
+      {/*  <View className="flex-row gap-2">*/}
+      {/*    <View className="grow">*/}
+      {/*      <HabitGoalDropdown value={goalType} onChange={onChange.goal} />*/}
+      {/*    </View>*/}
+      {/*    <SelectHabitTargetCount*/}
+      {/*      setAmount={onChange.tagetCount}*/}
+      {/*      amount={targetCount}*/}
+      {/*    />*/}
+      {/*  </View>*/}
+      {/*</View>*/}
 
       <SetReminder {...reminders} />
       <View className="flex-row gap-4 mt-auto">

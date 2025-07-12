@@ -11,6 +11,7 @@ type Props = {
   className?: string
   color?: "green" | "red"
   children?: ReactNode
+  innerValue?: number | string | null
 }
 
 export default function Checkbox({
@@ -20,6 +21,7 @@ export default function Checkbox({
   className,
   children,
   color = "green",
+  innerValue,
 }: Props) {
   const colorHash = color === "red" ? "#ff786f" : "#D1D1D1"
 
@@ -42,6 +44,11 @@ export default function Checkbox({
           borderColor: isChecked ? colorHash : "gray",
         }}
         iconStyle={{ borderRadius: 4 }}
+        iconComponent={
+          innerValue ? (
+            <Text className="mb-1.5 text-[20px]">{innerValue}</Text>
+          ) : undefined
+        }
       />
       {children && (
         <TouchableOpacity

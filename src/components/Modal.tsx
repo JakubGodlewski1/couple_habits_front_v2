@@ -1,4 +1,4 @@
-import { Modal as ReactModal, View } from "react-native"
+import { Modal as ReactModal, Platform, View } from "react-native"
 import { ReactNode } from "react"
 import SafeAreaWrapper from "@/components/SafeAreaWrapper"
 
@@ -12,11 +12,11 @@ export default function Modal({ onClose, isOpen, children }: Props) {
   return (
     <ReactModal
       onRequestClose={onClose}
-      presentationStyle="pageSheet"
+      presentationStyle={Platform.OS === "android" ? "fullScreen" : "pageSheet"}
       animationType="slide"
       visible={isOpen}
     >
-      <SafeAreaWrapper>
+      <SafeAreaWrapper className="">
         <View className="flex-grow px-2">{children}</View>
       </SafeAreaWrapper>
     </ReactModal>

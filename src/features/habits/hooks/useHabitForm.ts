@@ -102,7 +102,7 @@ export const useHabitForm = ({ initialData, habitId, onSettled }: Props) => {
 
   const onSuccessUpdate = async () => {
     await cancel(habitId!)
-    if (isReminderOn) setupReminder(habitId!)
+    if (isReminderOn) await setupReminder(habitId!)
   }
 
   const { createHabit, isPending: isCreating } = useCreateHabit({

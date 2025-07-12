@@ -4,10 +4,12 @@ import { withWarning } from "@/utils/withWarning"
 import { showToast } from "@/utils/showToast"
 import { queryKeys } from "@/config/queryKeys"
 import { HabitsFromBackend } from "@/features/habits/types/habit"
+import { useNotifications } from "@/features/shared/notifications/hooks/useNotifications"
 
 export const useDeleteHabit = () => {
   const { getAxiosInstance } = useAxios()
   const queryClient = useQueryClient()
+  const { cancel } = useNotifications()
 
   const habitOptimisticUpdate = ({ id }: { id: number }) => {
     queryClient.setQueryData(
@@ -39,6 +41,7 @@ export const useDeleteHabit = () => {
   } = useMutation({
     mutationFn: deleteHabitMutation,
     mutationKey: queryKeys.habits.delete,
+    onSuccess: (_data, id) => cancel(id),
     onError: (error) => {
       showToast({
         type: "error",
