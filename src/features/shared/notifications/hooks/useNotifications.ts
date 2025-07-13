@@ -159,11 +159,11 @@ export function useNotifications() {
         await createNotification({ hour, minute, repeats: true, type: "daily" })
       } else if (frequency === "weekly") {
         await createNotification({
-          weekday: 7,
+          weekday: 1,
           hour,
           minute,
           repeats: true,
-          type: "weekly",
+          type: Platform.OS === "android" ? "weekly" : "calendar",
         }) // Sunday
       } else if (frequency === "monthly") {
         const now = new Date()
@@ -206,7 +206,7 @@ export function useNotifications() {
               hour,
               minute,
               repeats: true,
-              type: "weekly",
+              type: Platform.OS === "android" ? "weekly" : "calendar",
             })
           } catch (err) {
             console.log({ err })

@@ -2,6 +2,7 @@ import Button from "@/components/Button"
 import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSubscriptionInfo"
 import { useBuyPro } from "@/features/subscriptions/hooks/useBuyPro"
 import { useGetHabits } from "@/features/habits/api/hooks/useGetHabits"
+import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 
 type Props = {
   isPending: boolean
@@ -11,16 +12,28 @@ type Props = {
 
 const CreateHabitBtnSecured = ({ habitId, isPending, handleSubmit }: Props) => {
   const { isPending: areHabitsPending, data: habits } = useGetHabits()
+  const { isPending: isFeatureFlagsLoading, data: featureFlags } =
+    useGetFeatureFlags()
 
   const { hasProAccess } = useGetSubscriptionInfo().subscriptionInfo!
   const { buyPro, isLoading: isLoadingProAccount } = useBuyPro({
     paywallIdentifier: "freemium1/habit-limit",
   })
 
-  const isLoading = isLoadingProAccount || isPending || areHabitsPending
+  const isLoading =
+    isLoadingProAccount ||
+    isPending ||
+    areHabitsPending ||
+    isFeatureFlagsLoading
 
   const onSubmit = () => {
-    if (hasProAccess || habits!.user.length < 2) handleSubmit()
+    if (
+      hasProAccess ||
+      habits!.user.length < 2 ||
+      !!habitId ||
+      (featureFlags && !featureFlags.isPaywallEnabled)
+    )
+      handleSubmit()
     else buyPro()
   }
 
