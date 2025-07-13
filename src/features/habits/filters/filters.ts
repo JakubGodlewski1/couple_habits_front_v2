@@ -26,22 +26,25 @@ const scheduledForThisWeek = weekly
 const scheduledForThisMonth = monthly
 
 const isCompleted = ({
+  shared,
   completedCount,
   targetCount,
   goalType,
 }: HabitFromBackend) =>
-  goalType === "atLeast"
+  (goalType === "atLeast"
     ? completedCount >= targetCount
-    : completedCount <= targetCount
+    : completedCount <= targetCount) &&
+  (!shared || shared.isCompleted)
 
 const isIncompleted = ({
   completedCount,
+  shared,
   targetCount,
   goalType,
 }: HabitFromBackend) =>
   !(goalType === "atLeast"
     ? completedCount >= targetCount
-    : completedCount <= targetCount)
+    : completedCount <= targetCount) || !!(shared && !shared.isCompleted)
 
 const scheduledForToday = ({
   frequency,

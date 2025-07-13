@@ -29,11 +29,11 @@
         "buildType":"apk"
       },
       "env":{
-        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_cHJlcGFyZWQtc2tpbmstNjAuY2xlcmsuYWNjb3VudHMuZGV2JA",
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_live_Y2xlcmsuY291cGxlaGFiaXRzLmNvbSQ",
         "EXPO_PUBLIC_REVENUE_CAT_IOS":"appl_ZZiGDcQmvWpRoXwiSuArKrVAKRo",
         "EXPO_PUBLIC_REVENUE_CAT_ANDROID":"goog_HrnNZhYVkTHkOCRJmVxuaCdzTyA",
-        "EXPO_PUBLIC_NODE_ENV":"development",
-        "EXPO_PUBLIC_API_ENDPOINT":"https://56ec-2a02-a313-43a1-fc00-9c7d-4e6-1cab-bb91.ngrok-free.app",
+        "EXPO_PUBLIC_NODE_ENV":"production",
+        "EXPO_PUBLIC_API_ENDPOINT":"https://api.couplehabits.com",
         "EXPO_PUBLIC_PEXELS_API_KEY1":"qZL5acmhVpqX8E70HQ9fE4rX8Yk2wyORiCLICFpPGRjpiPHPkgc120kr",
         "EXPO_PUBLIC_PEXELS_API_KEY2":"itZYlFgBNrM7NNY0R7S1jmIekhnXK9ZOwG1orxgU1eLn9Cm7Fx1n1PyJ"
       }

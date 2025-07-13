@@ -28,10 +28,7 @@ export default function MessageWhenNoHabits({
   owner,
 }: Props) {
   const user = useGetUser().user!
-
   const { showCompletedHabits } = useShowCompletedHabitsContext()
-
-  //if there are no habits, display appropriate message on the given tab
 
   const labels = {
     noHabits: {
@@ -43,16 +40,15 @@ export default function MessageWhenNoHabits({
       partner: `${user?.partnerName || "Your partner"} has not completed any habits today yet.`,
     },
     noHabitsForToday: {
-      user: "You don't have any habits scheduled for today",
+      user: "You don't have any habits scheduled for today.",
       partner: `${user?.partnerName || "Your partner"} doesn't have any habits scheduled for today.`,
     },
     allHabitsCompleted: {
-      user: "You have completed all habits scheduled for today",
+      user: "You have completed all habits scheduled for today.",
       partner: `${user?.partnerName || "Your partner"} has completed all habits scheduled for today.`,
     },
   }
 
-  //if there are no habits at all
   if (habits.length === 0) {
     return (
       <View>
@@ -62,32 +58,36 @@ export default function MessageWhenNoHabits({
     )
   }
 
-  //if user dont have any habits scheduled for today
-  if (
-    currentTab === "todo" &&
-    habits
-      .filter(habitFilters.scheduledForToday)
-      .filter((h) =>
-        showCompletedHabits || owner === "partner"
-          ? true
-          : !habitFilters.isCompleted(h),
-      ).length === 0 &&
-    habits
-      .filter(habitFilters.weekly)
-      .filter((h) =>
-        showCompletedHabits || owner === "partner"
-          ? true
-          : !habitFilters.isCompleted(h),
-      ).length === 0 &&
-    habits
-      .filter(habitFilters.monthly)
-      .filter((h) =>
-        showCompletedHabits || owner === "partner"
-          ? true
-          : !habitFilters.isCompleted(h),
-      ).length === 0
-  ) {
-    return <Message label={labels.noHabitsForToday[owner]} />
+  const scheduledHabits = habits.filter(
+    (h) =>
+      habitFilters.scheduledForToday(h) ||
+      habitFilters.weekly(h) ||
+      habitFilters.monthly(h),
+  )
+
+  const completedHabits = scheduledHabits.filter(habitFilters.isCompleted)
+  const uncompletedHabits = scheduledHabits.filter(
+    (h) => !habitFilters.isCompleted(h),
+  )
+
+  // If showCompletedHabits is true AND currentTab is "todo", skip all fallback messages
+  if (showCompletedHabits && currentTab === "todo") {
+    return children
+  }
+
+  // Show fallback messages only when not showing completed habits
+  if (currentTab === "todo") {
+    if (scheduledHabits.length === 0) {
+      return <Message label={labels.noHabitsForToday[owner]} />
+    }
+
+    if (uncompletedHabits.length === 0) {
+      return <Message label={labels.allHabitsCompleted[owner]} />
+    }
+
+    if (completedHabits.length > 0 && uncompletedHabits.length === 0) {
+      return <Message label={labels.noCompletedHabits[owner]} />
+    }
   }
 
   return children

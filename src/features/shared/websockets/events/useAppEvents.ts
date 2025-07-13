@@ -52,6 +52,15 @@ export const useAppEvents = () => {
       await queryClient.refetchQueries()
     })
 
+    //rewards
+    socketInstance.on("reward.alter", async () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.rewards.get })
+      queryClient.invalidateQueries({ queryKey: queryKeys.stats.get })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.statsStrikeCompletion.get,
+      })
+    })
+
     //custom
     socketInstance.on("custom", (data) => {
       if (data?.message) {

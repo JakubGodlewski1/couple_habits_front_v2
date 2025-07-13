@@ -5,7 +5,6 @@ import { useGetSubscriptionInfo } from "@/features/subscriptions/hooks/useGetSub
 import { useGetPartnerRequest } from "@/features/shared/partnerRequests/api/hooks/useGetPartnerRequest"
 import { useGetFeatureFlags } from "@/features/featureFlags/api/hooks/useGetFeatureFlags"
 import { useGetStatsStrikeCompletedAt } from "@/features/stats/api/hooks/useGetStatsStrikeCompletedAt"
-import { useGetRewards } from "@/features/rewards/api/hooks/useGetRewards"
 
 export const useGetInitialData = () => {
   const userQuery = useGetUser()
@@ -15,7 +14,6 @@ export const useGetInitialData = () => {
   const subscriptionInfoQuery = useGetSubscriptionInfo()
   const getPartnerRequestQuery = useGetPartnerRequest()
   const featureFlagsQuery = useGetFeatureFlags()
-  const rewardsQuery = useGetRewards()
 
   const isError =
     userQuery.isError ||
@@ -24,8 +22,7 @@ export const useGetInitialData = () => {
     subscriptionInfoQuery.isError ||
     getPartnerRequestQuery.isError ||
     featureFlagsQuery.isError ||
-    statsStrikeCompletedAtQuery.error ||
-    rewardsQuery.error
+    statsStrikeCompletedAtQuery.error
 
   const noData =
     !userQuery.user ||
@@ -33,8 +30,7 @@ export const useGetInitialData = () => {
     !avatarsQuery.avatars ||
     !subscriptionInfoQuery.subscriptionInfo ||
     !getPartnerRequestQuery.data ||
-    !featureFlagsQuery.data ||
-    rewardsQuery.data
+    !featureFlagsQuery.data
 
   const isPending =
     userQuery.isPending ||
@@ -43,8 +39,7 @@ export const useGetInitialData = () => {
     subscriptionInfoQuery.isPending ||
     getPartnerRequestQuery.isPending ||
     featureFlagsQuery.isPending ||
-    statsStrikeCompletedAtQuery.isPending ||
-    rewardsQuery.isPending
+    statsStrikeCompletedAtQuery.isPending
 
   const errors = {
     user: userQuery.isError,

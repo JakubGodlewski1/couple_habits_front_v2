@@ -23,7 +23,7 @@ export default function AddRewardBtn({ type = "initial", setTab }: Props) {
     if (!user.hasPartner) {
       Alert.alert(
         `Connect with ${user.partnerName} first`,
-        `You have to connect with ${user.partnerName} before creating your first habit.`,
+        `You have to connect with ${user.partnerName} before creating your first reward.`,
       )
     } else if (data?.user.length === 0 || data?.partner.length === 0) {
       Alert.alert(
