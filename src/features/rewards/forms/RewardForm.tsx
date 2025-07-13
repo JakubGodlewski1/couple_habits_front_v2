@@ -59,8 +59,8 @@ export default function RewardForm({
             <>
               <Input
                 errorMessage={errors.label?.message}
-                className="grow"
-                placeholder="Go to the cinema  🎬"
+                className="flex-1"
+                placeholder="Go to the cinema"
                 label="Reward name"
                 value={value}
                 onChangeText={onChange}

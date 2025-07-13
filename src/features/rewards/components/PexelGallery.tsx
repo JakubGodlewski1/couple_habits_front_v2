@@ -28,7 +28,7 @@ export function PexelsGallery({ visible, onClose, onSelect }: Props) {
         </View>
         <View className="gap-2">
           <Input
-            placeholder="cinema"
+            placeholder="eg. cinema"
             onSubmitEditing={() => {
               if (searchedPhrase.length > 1) {
                 search(searchedPhrase)

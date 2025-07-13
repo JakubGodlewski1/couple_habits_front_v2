@@ -30,7 +30,7 @@ export default function RewardCard({ reward, setTab }: Props) {
         disabled={updateDisabled}
         onPress={() => setIsModalOpen(true)}
         activeOpacity={0.8}
-        className="shadow-sm bg-white rounded-xl"
+        className="shadow-sm bg-white rounded-xl grow"
       >
         <View className="h-28">
           <Image
@@ -38,19 +38,21 @@ export default function RewardCard({ reward, setTab }: Props) {
             source={{ uri: imageUrl }}
           />
         </View>
-        <View className="p-3 gap-2">
+        <View className="p-3 gap-2 grow">
           <Text type="sm" className="font-main600">
             {label}
           </Text>
-          <Text type="h3" className="font-main800 text-primary">
-            {price} points
-          </Text>
-          <StateButton
-            moveToPurchasedTab={() => setTab("purchased")}
-            price={price}
-            id={id}
-            state={state}
-          />
+          <View className="gap-2 mt-auto">
+            <Text type="h3" className="font-main800 text-primary">
+              {price} points
+            </Text>
+            <StateButton
+              moveToPurchasedTab={() => setTab("purchased")}
+              price={price}
+              id={id}
+              state={state}
+            />
+          </View>
         </View>
       </TouchableOpacity>
       <Modal onClose={() => setIsModalOpen(false)} isOpen={isModalOpen}>
