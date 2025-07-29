@@ -2,7 +2,7 @@
   "expo": {
     "name": "Couple Habits",
     "slug": "couple-habits",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "orientation": "portrait",
     "icon": "./src/assets/icons/icon.png",
     "scheme": "myapp",

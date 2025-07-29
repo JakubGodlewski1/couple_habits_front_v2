@@ -1,7 +1,7 @@
 {
   "name": "couple_habits",
   "main": "expo-router/entry",
-  "version": "2.1.5",
+  "version": "2.2.1",
   "scripts": {
     "prod": "NODE_ENV=production expo start --minify --no-dev",
     "dev": "NODE_ENV=development expo start",
@@ -63,6 +63,7 @@
     "react-icons": "^5.5.0",
     "react-native": "0.79.5",
     "react-native-bouncy-checkbox": "^4.1.2",
+    "react-native-confetti-cannon": "^1.5.2",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-modal": "^13.0.1",

@@ -10,6 +10,7 @@ import SpecificDaysIndicator from "@/features/habits/components/habitCard/compon
 import { vibrate } from "@/utils/vibrate"
 import { playClickSound } from "@/utils/playPop"
 import { useShowCompletedHabitsContext } from "@/features/showCompletedHabits/contexts/showCompletedHabitsContext"
+import { useShowConfettiOnHabitsCompleted } from "@/features/habits/hooks/useShowConfettiOnHabitsCompleted"
 
 type Props = {
   owner: "partner" | "user"
@@ -28,6 +29,7 @@ export default function HabitCard({
   const { showCompletedHabits } = useShowCompletedHabitsContext()
   const { toggleHabit, isPending } = useToggleHabit()
   const isReadOnly = owner === "partner" || toggleHidden
+  useShowConfettiOnHabitsCompleted()
 
   const opacity = useRef(new Animated.Value(1)).current
   const [isAnimating, setIsAnimating] = useState(false)
